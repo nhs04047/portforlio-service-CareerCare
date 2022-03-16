@@ -22,6 +22,11 @@ class EducationService{
     return createdNewEducation;
   }
 
+  static async getEducationList({ user_id }) {
+    const educations = await Education.findByUserId({ user_id });
+    return educations;
+  }
+
 }
 
 export { EducationService };

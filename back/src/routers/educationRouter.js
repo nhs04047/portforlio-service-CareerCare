@@ -40,5 +40,15 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
+educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
+  try {
+    const {user_id} = req.params;
+    const educationList = await EducationService.getEducationList({ user_id });
+    res.status(200).send(educationList);
+  } catch (error) {
+    next(error);
+  }
+})
+
 export {educationRouter}
 
