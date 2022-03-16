@@ -15,9 +15,9 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
       description,
       whenDate,
     });
-    //프로젝트 정보는 res.data
+    //자격증 정보는 res.data
     const updatedProject = res.data;
-    //해당 프로젝트 정보로 project 세팅함
+    //해당 자격증 정보로 project 세팅함
     setCertificate(updatedProject);
     //isEditing을 false로 세팅함
     setIsEditing(false);
@@ -30,7 +30,7 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
           <Form.Group controlId='useEditProjectTitle' className='mb-3'>
             <Form.Control
               type='text'
-              placeholder='프로젝트 제목'
+              placeholder='자격증 제목'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />

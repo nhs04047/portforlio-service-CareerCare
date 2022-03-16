@@ -1,11 +1,14 @@
 import { Card, Button, Col, Row } from 'react-bootstrap';
+import ProjectList from './ProjectList';
 
 function ProjectCard({ project, setIsEditing, isEditable }) {
   return (
     <Card style={{ width: '100%' }}>
       <Card.Body>
         <Card.Title>프로젝트</Card.Title>
-        <Card.Text></Card.Text>
+        <Card.Text>
+          <ProjectList project={project} />
+        </Card.Text>
         {isEditable && (
           <Col>
             <Row className='mt-3 text-center text-info'>
