@@ -28,7 +28,7 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
   } catch (error) {
     error(next);
   }
-})
+});
 
 // 해당 award 아이디에 맞는 award 반환(login_required 미들웨어 사용)
 awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
@@ -42,8 +42,23 @@ awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   } catch (error) {
     next(error);
   }
-})
+});
 
-awardRouter
+awardRouter.put("/awards/:id", login_required, async function(req,res,next) {
+  try {
+    const awardId = req.params.id;
+
+    const title = req.body.title ?? null;
+    const description = req.body.description ?? null;
+
+    const toUpdate = {title, description};
+
+    const award = await AwardService.setAward({awardId, toUpdate});
+
+    res.status(200).send(award);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export {awardRouter};

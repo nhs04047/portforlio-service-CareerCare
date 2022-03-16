@@ -30,6 +30,28 @@ class AwardService {
     }
     return award;
   }
+
+  static async setAward({awardId, toUpdate}) {
+    let award = await Award.findById({awardId});
+
+    if (!award) {
+      const errorMessage = "해당 id를 가진 수상 데이터가 없습니다";
+      return {errorMessage};
+    }
+
+    if(toUpdate.title){
+      const fieldToUpdate = "title";
+      const newValue = toUpdate.title;
+      award = await Award.update({awardId, fieldToUpdate, newValue})
+    }
+
+    if(toUpdate.description){
+      const fieldToUpdate = "description";
+      const newValue = toUpdate.description;
+      award = await Award.update({awardId, fieldToUpdate, newValue});
+    }
+    return award;
+  }
 }
 
 export {AwardService};
