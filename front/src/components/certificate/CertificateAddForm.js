@@ -3,14 +3,14 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
+function CertificateAddForm({ certificate, setIsAdding, setCertificate }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [whenDate, setWhenDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await Api.put(`certificates/${certificate.id}`, {
+    const res = await Api.post(`certificates/${certificate.id}`, {
       title,
       description,
       whenDate,
@@ -20,14 +20,14 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
     //해당 자격증 정보로 project 세팅함
     setCertificate(updatedProject);
     //isEditing을 false로 세팅함
-    setIsEditing(false);
+    setIsAdding(false);
   };
 
   return (
     <Card className='mb-2'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId='certificateEditTitle' className='mb-3'>
+          <Form.Group controlId='certificateAddTitle' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='자격증 제목'
@@ -36,7 +36,7 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
             />
           </Form.Group>
 
-          <Form.Group controlId='certificateEditDescription' className='mb-3'>
+          <Form.Group controlId='certificateAddDescription' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='상세내역'
@@ -45,7 +45,7 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
             />
           </Form.Group>
 
-          <Form.Group as={Row} controlId='certificateEditDate'>
+          <Form.Group as={Row} controlId='certificateAddDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
                 style={{ width: '5rem' }}
@@ -60,7 +60,7 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
               <Button variant='primary' type='submit' className='me-3'>
                 확인
               </Button>
-              <Button variant='secondary' onClick={() => setIsEditing(false)}>
+              <Button variant='secondary' onClick={() => setIsAdding(false)}>
                 취소
               </Button>
             </Col>
@@ -71,4 +71,4 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
   );
 }
 
-export default CertificateEditForm;
+export default CertificateAddForm;

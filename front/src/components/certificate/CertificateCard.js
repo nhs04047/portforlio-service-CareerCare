@@ -1,31 +1,46 @@
-import { Card, Button, Col, Row } from 'react-bootstrap';
-import CertificateList from './CertificateList';
+import React, { useState } from 'react';
+import { Card, Button, Stack } from 'react-bootstrap';
 
-function CertificateCard({ certificate, setIsEditing, isEditable }) {
+import CertificateEditForm from './CertificateEditForm';
+
+function CertificateCard({ certificate, isEditable, setCertificate }) {
+  const { title, description, whenDate } = certificate;
+  const [isEditing, setIsEditing] = useState(false);
   return (
-    <Card style={{ width: '100%' }}>
-      <Card.Body>
-        <Card.Title>자격증</Card.Title>
-        <Card.Text>
-          <CertificateList certificate={certificate} />
-        </Card.Text>
-        {isEditable && (
-          <Col>
-            <Row className='mt-3 text-center text-info'>
-              <Col sm={{ span: 20 }}>
-                <Button
-                  variant='primary'
-                  size='md'
-                  onClick={() => setIsEditing(true)}
-                >
-                  +
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        )}
-      </Card.Body>
-    </Card>
+    <>
+      {isEditing ? (
+        <CertificateEditForm
+          certificate={certificate}
+          setCertificate={setCertificate}
+          setIsEditing={setIsEditing}
+        />
+      ) : (
+        <Card className='my-1'>
+          <Card.Body>
+            <Stack direction='horizontal'>
+              <div>
+                <Card.Title>{title}</Card.Title>
+                <Card.Subtitle>{description}</Card.Subtitle>
+                <Card.Text>{whenDate}</Card.Text>
+              </div>
+              <div className='ms-auto px-3'>
+                {isEditable && (
+                  <Button
+                    variant='outline-info'
+                    size='sm'
+                    onClick={() => {
+                      setIsEditing(true);
+                    }}
+                  >
+                    편집
+                  </Button>
+                )}
+              </div>
+            </Stack>
+          </Card.Body>
+        </Card>
+      )}
+    </>
   );
 }
 

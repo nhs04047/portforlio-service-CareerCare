@@ -1,20 +1,18 @@
-import { Card, Col, Container } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
+import React from 'react';
+import CertificateCard from './CertificateCard';
 
-function CertificateList({ certificate }) {
+function CertificateList({ certificate, isEditable, setCertificate }) {
   return (
     <Container fluid>
       <Col>
-        {certificate.map((certificate) => {
-          return (
-            <Card>
-              <Card.Body>
-                <Card.Title>{certificate.title}</Card.Title>
-                <Card.Subtitle>{certificate.description}</Card.Subtitle>
-                <Card.Text>{certificate.whenDate}</Card.Text>
-              </Card.Body>
-            </Card>
-          );
-        })}
+        {certificate.map((v) => (
+          <CertificateCard
+            certificate={v}
+            isEditable={isEditable}
+            setProject={setCertificate}
+          />
+        ))}
       </Col>
     </Container>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ProjectAddForm from './ProjectAddForm';
 import { Card, Button, Col, Row } from 'react-bootstrap';
+
+import ProjectAddForm from './ProjectAddForm';
 import ProjectList from './ProjectList';
-// import ProjectList from './ProjectList';
 import * as Api from '../../api';
 
 const initProjectList = [
@@ -51,7 +51,7 @@ function Project({ portfolioOwnerId, isEditable }) {
           </Card.Text>
           {isEditable && (
             <Col>
-              <Row className='mt-3 text-center text-info'>
+              <Row className='mt-3 text-center text-info my-3'>
                 <Col sm={{ span: 20 }}>
                   <Button
                     variant='primary'
@@ -64,17 +64,17 @@ function Project({ portfolioOwnerId, isEditable }) {
               </Row>
             </Col>
           )}
+          {isAdding ? (
+            <ProjectAddForm
+              project={project}
+              setIsAdding={setIsAdding}
+              setProject={setProject}
+            />
+          ) : (
+            <></>
+          )}
         </Card.Body>
       </Card>
-      {isAdding ? (
-        <ProjectAddForm
-          project={project}
-          setIsAdding={setIsAdding}
-          setProject={setProject}
-        />
-      ) : (
-        <></>
-      )}
     </>
   );
 }

@@ -65,15 +65,18 @@ function Portfolio() {
         <Col>
           <div>
             <Project
+              className='my-2'
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
             <br />
             <Certificate
+              className='my-5'
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
+          <br />
         </Col>
       </Row>
     </Container>

@@ -8,7 +8,6 @@ function ProjectList({ project, isEditable, setProject }) {
       <Col>
         {project.map((v) => (
           <ProjectCard
-            key={v.id}
             project={v}
             isEditable={isEditable}
             setProject={setProject}

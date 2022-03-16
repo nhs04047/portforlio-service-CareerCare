@@ -36,7 +36,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
     <Card className='mb-2'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId='useEditTitle' className='mb-3'>
+          <Form.Group controlId='projectEditTitle' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='프로젝트 제목'
@@ -45,7 +45,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
             />
           </Form.Group>
 
-          <Form.Group controlId='userEditDescription' className='mb-3'>
+          <Form.Group controlId='projectEditDescription' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='상세내역'
@@ -54,7 +54,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
             />
           </Form.Group>
 
-          <Form.Group as={Row} controlId='userEditDate'>
+          <Form.Group as={Row} controlId='projectEditDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
                 style={{ width: '5rem' }}
