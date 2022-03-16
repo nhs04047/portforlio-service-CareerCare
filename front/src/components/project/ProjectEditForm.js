@@ -11,10 +11,10 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   //   const [toDate, setToDate] = useState(project.to_date);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
 
-  const [startDate, setStartDate] = useState(new Date());
+  //   const [startDate, setStartDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,12 +58,12 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
             <Col sm={{ span: 20 }}>
               <DatePicker
                 style={{ width: '5rem' }}
-                selected={startDate}
+                selected={fromDate}
                 onChange={(date) => setFromDate(date)}
               />
               <DatePicker
                 style={{ width: '5rem' }}
-                selected={startDate}
+                selected={toDate}
                 onChange={(date) => setToDate(date)}
               />
             </Col>
