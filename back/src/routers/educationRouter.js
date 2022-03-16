@@ -40,9 +40,16 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
-educationRouter.get("education/:id", async function(req, res, next)){
+educationRouter.get("education/:education_id", async function(req, res, next)){
   try{
+    const {educationId} = req.params
+    const education = EducationService.getEducationList({educationId})
 
+    if(education.errorMessage){
+      throw new Error(education.errorMessage)
+    }
+
+    res.status(200).send(education)
   }catch(error){
     naxt(error);
   };
