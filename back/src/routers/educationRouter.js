@@ -40,10 +40,10 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
-educationRouter.get("education/:education_id", async function(req, res, next){
+educationRouter.get("/education/:id", async function(req, res, next){
   try{
-    const {educationId} = req.params
-    const education = EducationService.getEducationList({educationId})
+    const educationId = req.params.id
+    const education = await EducationService.getEducation({educationId})
 
     if(education.errorMessage){
       throw new Error(education.errorMessage)
@@ -51,7 +51,7 @@ educationRouter.get("education/:education_id", async function(req, res, next){
 
     res.status(200).send(education)
   }catch(error){
-    naxt(error);
+    next(error);
   };
 });
 
@@ -65,6 +65,8 @@ educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
     next(error);
   }
 })
+
+educationRouter.put("")
 
 
 export {educationRouter}

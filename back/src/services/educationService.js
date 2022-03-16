@@ -26,12 +26,13 @@ class EducationService{
     return createdNewEducation;
   }
 
-  static async getEducationList({educationId}){
-    const education = await Education.findByUserId({educationId})
+  static async getEducation({educationId}){
+    const education = await Education.findById({educationId})
     if(!education){
-      const errorMessae = "해당 id를 가진 학력 정보는 없습니다."
+      const errorMessage = "해당 id를 가진 학력 정보는 없습니다."
       return { errorMessage }
     }
+    return education
   }
 
   // db에서 학력 정보들 찾기
