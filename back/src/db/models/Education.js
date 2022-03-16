@@ -8,12 +8,13 @@ import { EducationModel} from "../schemas/education";
 
 class Education {
 
-  //db에 학력정보 생성 적용
+  //db에 학력 정보 생성 적용
   static async create({newEducation}){
     const createdNewEducation = await EducationModel.create(newEducation);
     return createdNewEducation;
   }
 
+  //db에서 학력 정보 찾기 적용
   static async findByUserId({ user_id }) {
     const education = await EducationModel.find({ user_id });
     return education;

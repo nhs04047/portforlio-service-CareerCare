@@ -21,7 +21,7 @@ class EducationService{
 
     return createdNewEducation;
   }
-
+  // db에서 학력 정보들 찾기
   static async getEducationList({ user_id }) {
     const educations = await Education.findByUserId({ user_id });
     return educations;

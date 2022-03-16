@@ -40,6 +40,7 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
+// 특정 user_id를 이용해 학력 정보들을 찾기 위한 get요청
 educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   try {
     const {user_id} = req.params;
