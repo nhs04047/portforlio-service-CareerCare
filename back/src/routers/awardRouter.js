@@ -6,6 +6,7 @@
 
 import is from "@sindresorhus/is";
 import { Router } from "express";
+import { nextTick } from "process";
 import { login_required } from "../middlewares/login_required";
 import { AwardService } from "../services/awardService";
 
@@ -26,6 +27,20 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
     res.status(201).json(newAward);
   } catch (error) {
     error(next);
+  }
+})
+
+// 해당 아이디에 맞는 award 반환
+awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
+  try {
+    // req에서 id 가져오기
+    const awardId = req.params.id;
+    // 해당 아이디에 맞는 award를 db에서 찾기
+    const award = await AwardService.getAward({awardId});
+
+    res.status(200).send(award);
+  } catch (error) {
+    next(error);
   }
 })
 

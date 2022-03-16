@@ -12,6 +12,11 @@ class Award {
     return createdNewAward;
   }
 
+  static async findById({awardId}) {
+    const award = await AwardModel.findOne({id: awardId});
+
+    return award;
+  }
 }
 
 export {Award}

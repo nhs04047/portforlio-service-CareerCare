@@ -18,6 +18,15 @@ class AwardService {
 
     return createdNewAward;
   }
+
+  static async getAward({awardId}) {
+    const award = await Award.findById({ awardId });
+    if (!award) {
+      const errorMessage = "해당 id를 가진 수상 데이터가 없습니다";
+      return {errorMessage};
+    }
+    return award;
+  }
 }
 
 export {AwardService};
