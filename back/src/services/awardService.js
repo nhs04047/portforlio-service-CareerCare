@@ -31,12 +31,12 @@ class AwardService {
     return award;
   }
 
-  // awardId와 갱신할 toUpdate를 받아 db에 저장히기 위한 로직 생성하여 갱신된 내용 반환
+  // awardId와 갱신할 toUpdate를 받아 db에 저장히기 위한 로직 생성하여 갱신된 내용 반환한다.
   static async setAward({awardId, toUpdate}) {
     // 해당 awardId가 db에 있는 확인하기 위한 변수 선언(award를 변경하기 위하여 const가 아닌 let으로 선언)
     let award = await Award.findById({awardId});
 
-    // award가 존재하지 않다면 error message 출력
+    // award가 존재하지 않다면 error message 출력한다.
     if (!award) {
       const errorMessage = "해당 id를 가진 수상 데이터가 없습니다";
       return {errorMessage};
@@ -56,6 +56,13 @@ class AwardService {
       award = await Award.update({awardId, fieldToUpdate, newValue});
     }
     return award;
+  }
+
+  // user_id를 db의 findByUserId와 같은 데이터의 award들을 조회한다.
+  static async getAwardList({user_id}) {
+    const awards = await Award.findByUserId({user_id});
+
+    return awards;
   }
 }
 

@@ -13,7 +13,7 @@ import { AwardService } from "../services/awardService";
 const awardRouter = Router();
 awardRouter.use(login_required);
 
-// 수상이력을 만드는 router(로그인이 된 상태여야지 수상이력을 만들 수 있으니깐 login_required 미들웨어 사용)
+// 수상이력을 만드는 router api(로그인이 된 상태여야지 수상이력을 만들 수 있으니깐 login_required 미들웨어 사용)
 awardRouter.post("/award/create", login_required, async function(req, res, next){
   try {
     // req에서 데이터 가져오기(user_id, title, description)
@@ -30,7 +30,7 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
   }
 });
 
-// 해당 award 아이디에 맞는 award 반환(login_required 미들웨어 사용)
+// 해당 award 아이디에 맞는 award 반환하는 조회 api(login_required 미들웨어 사용)
 awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   try {
     // URI params에서 id 가져오기
@@ -44,7 +44,7 @@ awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   }
 });
 
-// 해당 award 아이디에 맞는 수정된 award 반환
+// 해당 award 아이디에 맞는 수정된 award 반환하는 수정 api
 awardRouter.put("/awards/:id", login_required, async function(req,res,next) {
   try {
     // URI params에서 id 가져오기
@@ -59,6 +59,19 @@ awardRouter.put("/awards/:id", login_required, async function(req,res,next) {
     const award = await AwardService.setAward({awardId, toUpdate});
 
     res.status(200).send(award);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// user_id에 알맞는 사용자의 award 리스트를 보여주는 목록 조회 api
+awardRouter.get("/awardlist/:user_id", login_required, async function(req, res, next) {
+  try {
+    // URI params에서 user_id 가져오기
+    const user_id = req.params.user_id;
+    // 해당 user_id에 맞는 award 목록 db에서 가져와 조회
+    const awardList = await AwardService.getAwardList({user_id});
+    res.status(200).send(awardList);
   } catch (err) {
     next(err);
   }

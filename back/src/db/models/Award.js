@@ -33,6 +33,12 @@ class Award {
 
     return updatedAward;
   }
+
+  // AwardModel.find을 사용하여 db에서 해당 user_id에 알맞는 award 목록을 획득.
+  static async findByUserId({user_id}) {
+    const awards = await AwardModel.find({user_id});
+    return awards;
+  }
 }
 
 export {Award}
