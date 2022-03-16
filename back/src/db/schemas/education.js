@@ -9,6 +9,10 @@ import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+    },
     user_id: {
       type: String,
       required: true,
