@@ -1,31 +1,48 @@
-import { Card, Button, Col, Row } from 'react-bootstrap';
-import ProjectList from './ProjectList';
+import React, { useState } from 'react';
+import { Card, Col, Container, Button } from 'react-bootstrap';
 
-function ProjectCard({ project, setIsEditing, isEditable }) {
+import ProjectEditForm from './ProjectEditForm';
+
+function ProjectCard({ project, isEditable, setProject }) {
+  const [isEditing, setIsEditing] = useState(false);
   return (
-    <Card style={{ width: '100%' }}>
-      <Card.Body>
-        <Card.Title>프로젝트</Card.Title>
-        <Card.Text>
-          <ProjectList project={project} />
-        </Card.Text>
-        {isEditable && (
+    <>
+      {isEditing ? (
+        <ProjectEditForm
+          project={project}
+          setIsAdding={setIsEditing}
+          setProject={setProject}
+          setIsEditing={setIsEditing}
+        />
+      ) : (
+        <Container fluid>
           <Col>
-            <Row className='mt-3 text-center text-info'>
-              <Col sm={{ span: 20 }}>
-                <Button
-                  variant='primary'
-                  size='md'
-                  onClick={() => setIsEditing(true)}
-                >
-                  +
-                </Button>
-              </Col>
-            </Row>
+            {project.map((project) => {
+              return (
+                <Card>
+                  <Card.Body>
+                    <Card.Title>{project.title}</Card.Title>
+                    <Card.Subtitle>{project.description}</Card.Subtitle>
+                    <Card.Text>
+                      {project.fromDate} ~ {project.toDate}
+                    </Card.Text>
+                    {isEditable && (
+                      <Button
+                        variant='outline-info'
+                        size='sm'
+                        onClick={() => setIsEditing(true)}
+                      >
+                        편집
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              );
+            })}
           </Col>
-        )}
-      </Card.Body>
-    </Card>
+        </Container>
+      )}
+    </>
   );
 }
 

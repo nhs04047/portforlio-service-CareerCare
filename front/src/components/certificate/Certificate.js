@@ -34,11 +34,19 @@ function Certificate({ portfolioOwnerId, isEditable }) {
   return (
     <>
       {isEditing ? (
-        <CertificateEditForm
-          certificate={certificate}
-          setIsEditing={setIsEditing}
-          setCertificate={setCertificate}
-        />
+        <div>
+          <CertificateCard
+            certificate={certificate}
+            setProject={setCertificate}
+            setIsEditing={setIsEditing}
+            isEditable={isEditable}
+          />
+          <CertificateEditForm
+            certificate={certificate}
+            setIsEditing={setIsEditing}
+            setCertificate={setCertificate}
+          />
+        </div>
       ) : (
         <CertificateCard
           certificate={certificate}

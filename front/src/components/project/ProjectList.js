@@ -1,24 +1,35 @@
-import { Card, Col, Container } from 'react-bootstrap';
+import { Card, Button, Col, Row } from 'react-bootstrap';
+import ProjectCard from './ProjectCard';
 
-function ProjectList({ project }) {
+function ProjectList({ project, isEditable, setIsAdding, setProject }) {
   return (
-    <Container fluid>
-      <Col>
-        {project.map((project) => {
-          return (
-            <Card>
-              <Card.Body>
-                <Card.Title>{project.title}</Card.Title>
-                <Card.Subtitle>{project.description}</Card.Subtitle>
-                <Card.Text>
-                  {project.fromDate} ~ {project.toDate}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          );
-        })}
-      </Col>
-    </Container>
+    <Card style={{ width: '100%' }}>
+      <Card.Body>
+        <Card.Title>프로젝트</Card.Title>
+        <Card.Text>
+          <ProjectCard
+            project={project}
+            isEditable={isEditable}
+            setProject={setProject}
+          />
+        </Card.Text>
+        {isEditable && (
+          <Col>
+            <Row className='mt-3 text-center text-info'>
+              <Col sm={{ span: 20 }}>
+                <Button
+                  variant='primary'
+                  size='md'
+                  onClick={() => setIsAdding(true)}
+                >
+                  +
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        )}
+      </Card.Body>
+    </Card>
   );
 }
 

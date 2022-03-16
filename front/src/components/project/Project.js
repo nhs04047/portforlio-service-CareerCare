@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ProjectEditForm from './ProjectEditForm';
+import ProjectAddForm from './ProjectAddForm';
+import { Card, Button, Col, Row } from 'react-bootstrap';
 import ProjectCard from './ProjectCard';
+// import ProjectList from './ProjectList';
 import * as Api from '../../api';
 
 const initProjectList = [
@@ -25,8 +27,8 @@ const initProjectList = [
 ];
 
 function Project({ portfolioOwnerId, isEditable }) {
-  const [isEditing, setIsEditing] = useState(false);
-  // const [user, setUser] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   // useState 훅을 통해 project 상태를 생성함
   const [project, setProject] = useState(initProjectList);
 
@@ -37,19 +39,41 @@ function Project({ portfolioOwnerId, isEditable }) {
 
   return (
     <>
-      {isEditing ? (
-        <ProjectEditForm
+      <Card style={{ width: '100%' }}>
+        <Card.Body>
+          <Card.Title>프로젝트</Card.Title>
+          <Card.Text>
+            <ProjectCard
+              project={project}
+              isEditable={isEditable}
+              setProject={setProject}
+            />
+          </Card.Text>
+          {isEditable && (
+            <Col>
+              <Row className='mt-3 text-center text-info'>
+                <Col sm={{ span: 20 }}>
+                  <Button
+                    variant='primary'
+                    size='md'
+                    onClick={() => setIsAdding(true)}
+                  >
+                    +
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          )}
+        </Card.Body>
+      </Card>
+      {isAdding ? (
+        <ProjectAddForm
           project={project}
-          setIsEditing={setIsEditing}
+          setIsAdding={setIsAdding}
           setProject={setProject}
         />
       ) : (
-        <ProjectCard
-          project={project}
-          setProject={setProject}
-          setIsEditing={setIsEditing}
-          isEditable={isEditable}
-        />
+        <></>
       )}
     </>
   );
