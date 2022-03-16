@@ -33,7 +33,7 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
 // 해당 award 아이디에 맞는 award 반환(login_required 미들웨어 사용)
 awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   try {
-    // req에서 id 가져오기
+    // URI params에서 id 가져오기
     const awardId = req.params.id;
     // 해당 award 아이디에 맞는 award를 db에서 찾기
     const award = await AwardService.getAward({awardId});
@@ -44,15 +44,18 @@ awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   }
 });
 
+// 해당 award 아이디에 맞는 수정된 award 반환
 awardRouter.put("/awards/:id", login_required, async function(req,res,next) {
   try {
+    // URI params에서 id 가져오기
     const awardId = req.params.id;
 
+    // body data로 부터 수정하기 위한 title, description 정보 추출(수정하지 않는다면 null)
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
-
+    // title, description 정보를 하나의 객체로 선언
     const toUpdate = {title, description};
-
+    // 해당 award 아이디에 맞는 데이터를 db에 갱신, 업데이트 내용이 없을 시 생략
     const award = await AwardService.setAward({awardId, toUpdate});
 
     res.status(200).send(award);

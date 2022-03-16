@@ -31,20 +31,25 @@ class AwardService {
     return award;
   }
 
+  // awardId와 갱신할 toUpdate를 받아 db에 저장히기 위한 로직 생성하여 갱신된 내용 반환
   static async setAward({awardId, toUpdate}) {
+    // 해당 awardId가 db에 있는 확인하기 위한 변수 선언(award를 변경하기 위하여 const가 아닌 let으로 선언)
     let award = await Award.findById({awardId});
 
+    // award가 존재하지 않다면 error message 출력
     if (!award) {
       const errorMessage = "해당 id를 가진 수상 데이터가 없습니다";
       return {errorMessage};
     }
 
+    // title이 업데이트 대상이라면 db에 findOneAndUpdate 형식에 맞게 넘겨준다. (null일 경우 업데이트 대상이 아니라서 생략)
     if(toUpdate.title){
       const fieldToUpdate = "title";
       const newValue = toUpdate.title;
       award = await Award.update({awardId, fieldToUpdate, newValue})
     }
 
+    // description 업데이트 대상이라면 db에 findOneAndUpdate 형식에 맞게 넘겨준다. (null일 경우 업데이트 대상이 아니라서 생략)
     if(toUpdate.description){
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;

@@ -17,12 +17,16 @@ class Award {
 
     return award;
   }
-
+  
+  // DB에 awardId와 같은 award document 하나의 객체를 넘어온 파라미터에 맞게 수정하여 return
   static async update({awardId, fieldToUpdate, newValue}) {
+    // findOneAndUpdate 함수의 필수 매개변수 선언(filter, update)
+    // filter : awardId와 id가 같은 조건, update : 필드명에 맞는 새로운 값으로 갱신, option : ?
     const filter = {id: awardId};
     const update = {[fieldToUpdate]: newValue};
-    const option = {returnOriginal: false};
+    const option = {returnOriginal: false}; 
 
+    // db에서 findOneAndUpdate(filter, update, option)에 맞게 수정된 데이터 반환
     const updatedAward = await AwardModel.findOneAndUpdate(
       filter, update, option
     );
