@@ -11,7 +11,7 @@ class Award {
     const createdNewAward = await AwardModel.create(newAward);
     return createdNewAward;
   }
-
+  // DB에 awardId와 같은 award document 하나의 객체를 return
   static async findById({awardId}) {
     const award = await AwardModel.findOne({id: awardId});
 

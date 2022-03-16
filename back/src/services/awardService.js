@@ -8,6 +8,7 @@ import {Award} from "../db"
 import { v4 as uuidv4 } from "uuid"; // 중복되지 않는 아이디 값 사용을 위해 import
 
 class AwardService {
+  // user_id, title, description를 받아서 새로운 award 데이터 생성
   static async addAward({user_id, title, description}) {
     // 유니크한 id값 생성
     const id = uuidv4();
@@ -19,7 +20,9 @@ class AwardService {
     return createdNewAward;
   }
 
+  // awardId를 통해서 Award 데이터 반환
   static async getAward({awardId}) {
+    // findById를 통해 해당 awardId와 같은 Id를 찾아서 데이터 반환
     const award = await Award.findById({ awardId });
     if (!award) {
       const errorMessage = "해당 id를 가진 수상 데이터가 없습니다";

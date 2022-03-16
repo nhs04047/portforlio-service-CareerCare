@@ -30,12 +30,12 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
   }
 })
 
-// 해당 아이디에 맞는 award 반환
+// 해당 award 아이디에 맞는 award 반환(login_required 미들웨어 사용)
 awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
   try {
     // req에서 id 가져오기
     const awardId = req.params.id;
-    // 해당 아이디에 맞는 award를 db에서 찾기
+    // 해당 award 아이디에 맞는 award를 db에서 찾기
     const award = await AwardService.getAward({awardId});
 
     res.status(200).send(award);
@@ -43,5 +43,7 @@ awardRouter.get("/awards/:id", login_required, async function(req, res, next) {
     next(error);
   }
 })
+
+awardRouter
 
 export {awardRouter};
