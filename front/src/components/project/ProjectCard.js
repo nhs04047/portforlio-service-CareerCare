@@ -1,4 +1,4 @@
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Col, Row } from 'react-bootstrap';
 
 function ProjectCard({ project, setIsEditing, isEditable }) {
   return (
@@ -6,9 +6,21 @@ function ProjectCard({ project, setIsEditing, isEditable }) {
       <Card.Body>
         <Card.Title>프로젝트</Card.Title>
         <Card.Text></Card.Text>
-        <div className='text-center'>
-          <Button variant='primary'>+</Button>
-        </div>
+        {isEditable && (
+          <Col>
+            <Row className='mt-3 text-center text-info'>
+              <Col sm={{ span: 20 }}>
+                <Button
+                  variant='primary'
+                  size='md'
+                  onClick={() => setIsEditing(true)}
+                >
+                  +
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        )}
       </Card.Body>
     </Card>
   );

@@ -64,7 +64,10 @@ function Portfolio() {
         </Col>
         <Col>
           <div>
-            <Project />
+            <Project
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
             <br />
             <Certificate />
           </div>
