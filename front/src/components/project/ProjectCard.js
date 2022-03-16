@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Card, Col, Container, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 
 import ProjectEditForm from './ProjectEditForm';
 
-function ProjectCard({ project, isEditable, setProject }) {
+function ProjectCard({ key, project, isEditable, setProject }) {
+  const { title, description, fromDate, toDate } = project;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -15,32 +16,29 @@ function ProjectCard({ project, isEditable, setProject }) {
           setIsEditing={setIsEditing}
         />
       ) : (
-        <Container fluid>
-          <Col>
-            {project.map((project) => {
-              return (
-                <Card>
-                  <Card.Body>
-                    <Card.Title>{project.title}</Card.Title>
-                    <Card.Subtitle>{project.description}</Card.Subtitle>
-                    <Card.Text>
-                      {project.fromDate} ~ {project.toDate}
-                    </Card.Text>
-                    {isEditable && (
-                      <Button
-                        variant='outline-info'
-                        size='sm'
-                        onClick={() => setIsEditing(true)}
-                      >
-                        편집
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              );
-            })}
-          </Col>
-        </Container>
+        <Card>
+          <Card.Body>
+            <Card.Title>{title}</Card.Title>
+            <Card.Subtitle>{description}</Card.Subtitle>
+            <Card.Text>
+              {fromDate} ~ {toDate}
+            </Card.Text>
+            {isEditable && (
+              <Button
+                variant='outline-info'
+                size='sm'
+                onClick={() => {
+                  setIsEditing(true);
+                  console.log(project);
+                  console.log(project[1].title);
+                  console.log(key);
+                }}
+              >
+                편집
+              </Button>
+            )}
+          </Card.Body>
+        </Card>
       )}
     </>
   );

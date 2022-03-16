@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProjectAddForm from './ProjectAddForm';
 import { Card, Button, Col, Row } from 'react-bootstrap';
-import ProjectCard from './ProjectCard';
+import ProjectList from './ProjectList';
 // import ProjectList from './ProjectList';
 import * as Api from '../../api';
 
@@ -43,7 +43,7 @@ function Project({ portfolioOwnerId, isEditable }) {
         <Card.Body>
           <Card.Title>프로젝트</Card.Title>
           <Card.Text>
-            <ProjectCard
+            <ProjectList
               project={project}
               isEditable={isEditable}
               setProject={setProject}
