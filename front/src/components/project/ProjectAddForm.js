@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Card, Col, Row } from 'react-bootstrap';
+import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
@@ -53,18 +53,27 @@ function ProjectAddForm({ project, setIsAdding, setProject }) {
           </Form.Group>
 
           <Form.Group as={Row} controlId='projectAddDate'>
-            <Col sm={{ span: 20 }}>
+            <Stack direction='horizontal'>
               <DatePicker
-                style={{ width: '5rem' }}
                 selected={fromDate}
                 onChange={(date) => setFromDate(date)}
               />
               <DatePicker
-                style={{ width: '5rem' }}
                 selected={toDate}
                 onChange={(date) => setToDate(date)}
               />
-            </Col>
+            </Stack>
+          </Form.Group>
+
+          <Form.Group>
+            <DatePicker
+              dateFormat='yyyy/MM/dd'
+              selected={fromDate}
+              onChange={(date) => {
+                setFromDate(date);
+                console.log(date);
+              }}
+            />
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
