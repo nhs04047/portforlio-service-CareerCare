@@ -14,12 +14,20 @@ class CertificateService {
       const id = uuid4();
 
       const newCertificate = {id, user_id, title, description, when_date};
-      
+
       const createdNewCertificate = await Certificate.create({newCertificate});
 
       return createdNewCertificate;
   }
-
+  // 자격증 id에 해당하는 자격증이 db에 있다면 정보를 넘겨준다. 없다면 에러처리
+  static async getCertificate({certificateId}) {
+    const certificate = await Certificate.findById({certificateId});
+    if (!certificate) {
+      const message = "해당 id를 가진 자격증 데이터가 없습니다.";
+      return {message};
+    }
+    return certificate;
+  }
 
 }
 

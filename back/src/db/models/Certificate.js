@@ -12,7 +12,11 @@ class Certificate {
     const createdNewCertificate = await CertificateModel.create(newCertificate)
 
     return createdNewCertificate;
-
+  }
+  // db에 id가 certificateId에 해당하는 자격증 정보를 반환한다. 실패시 null 리턴
+  static async findById({certificateId}){
+    const certificate = await CertificateModel.findOne({id:certificateId});
+    return certificate;
   }
 }
 

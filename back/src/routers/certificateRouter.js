@@ -27,5 +27,21 @@ certificateRouter.post("/certificate/create", async function(req,res,next) {
     next(error)
   }
 })
+// 클라이언트로 넘어온 자격증 id로 db에 그에 맞는 자격증 정보를 클라이언트에게 돌려준다.
+certificateRouter.get("/certificates/:id", async function(req,res,next) {
+  try {
+    const certificateId = req.params.id;
+
+    const certificate = await CertificateService.getCertificate({certificateId});
+
+    res.status(200).json(certificate);
+  } catch (err) {
+    next(err);
+  }
+})
+
+
+
+
 
 export {certificateRouter};
