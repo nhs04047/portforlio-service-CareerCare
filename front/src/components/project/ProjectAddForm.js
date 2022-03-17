@@ -4,15 +4,15 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
-  // useState로 title, description, fromDate, toDate 생성
+  // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
-  //   const [fromDate, setFromDate] = useState(project.from_date);
-  //   const [toDate, setToDate] = useState(project.to_date);
+  //   const [from_date, setFrom_date] = useState(project.from_date);
+  //   const [to_date, setTo_date] = useState(project.to_date);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [from_date, setFrom_date] = useState(new Date());
+  const [to_date, setTo_date] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +21,8 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
       user_id,
       title,
       description,
-      fromDate,
-      toDate,
+      from_date,
+      to_date,
     });
     //프로젝트 정보는 res.data
     const updatedProject = res.data;
@@ -58,17 +58,17 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
             <Stack direction='horizontal' gap={0}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={fromDate}
+                selected={from_date}
                 onChange={(date) => {
-                  setFromDate(date);
+                  setFrom_date(date);
                   console.log(date);
                 }}
               />
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={toDate}
-                minDate={fromDate}
-                onChange={(date) => setToDate(date)}
+                selected={to_date}
+                minDate={from_date}
+                onChange={(date) => setTo_date(date)}
               />
             </Stack>
           </Form.Group>

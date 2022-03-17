@@ -4,15 +4,15 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function ProjectEditForm({ project, setIsEditing, setProject }) {
-  // useState로 title, description, fromDate, toDate 생성
+  // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
-  //   const [fromDate, setFromDate] = useState(project.from_date);
-  //   const [toDate, setToDate] = useState(project.to_date);
+  //   const [from_date, setFrom_date] = useState(project.from_date);
+  //   const [to_date, setTo_date] = useState(project.to_date);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [from_date, setFrom_date] = useState(new Date());
+  const [to_date, setTo_date] = useState(new Date());
 
   //   const [startDate, setStartDate] = useState(new Date());
 
@@ -23,8 +23,8 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
       user_id,
       title,
       description,
-      fromDate,
-      toDate,
+      from_date,
+      to_date,
     });
     //프로젝트 정보는 res.data
     const updatedProject = res.data;
@@ -60,13 +60,13 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
             <Col sm={{ span: 20 }}>
               <DatePicker
                 style={{ width: '5rem' }}
-                selected={fromDate}
-                onChange={(date) => setFromDate(date)}
+                selected={from_date}
+                onChange={(date) => setFrom_date(date)}
               />
               <DatePicker
                 style={{ width: '5rem' }}
-                selected={toDate}
-                onChange={(date) => setToDate(date)}
+                selected={to_date}
+                onChange={(date) => setTo_date(date)}
               />
             </Col>
           </Form.Group>
