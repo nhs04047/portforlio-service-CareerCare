@@ -5,6 +5,7 @@ import ProjectAddForm from './ProjectAddForm';
 import ProjectList from './ProjectList';
 import * as Api from '../../api';
 
+// test위해 작성 backend와 연결 후 정상작동하면 삭제 예정
 const initProjectList = [
   {
     title: '제목예시1',
@@ -25,10 +26,13 @@ const initProjectList = [
     toDate: '2022.03.16',
   },
 ];
-
+/**
+ * Project의 main Component
+ * isEditable이 true일 경우 편집, 추가 버튼 활성화
+ * isAdding이 true일 경우 AddForm 활성화
+ */
 function Project({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
-  // const [isEditing, setIsEditing] = useState(false);
   // useState 훅을 통해 project 상태를 생성함
   const [project, setProject] = useState(initProjectList);
 

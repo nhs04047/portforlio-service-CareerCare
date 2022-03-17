@@ -4,6 +4,10 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function ProjectEditForm({ project, setIsEditing, setProject }) {
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
   // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
@@ -14,7 +18,6 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   const [from_date, setFrom_date] = useState(new Date());
   const [to_date, setTo_date] = useState(new Date());
 
-  //   const [startDate, setStartDate] = useState(new Date());
   function filterDate(d) {
     return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
   }

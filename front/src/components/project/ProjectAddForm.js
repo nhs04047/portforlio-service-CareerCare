@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-
+/**
+ * isAdding이 true일 경우 활성화되는 component
+ */
 function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
   // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
@@ -13,11 +19,15 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   const [description, setDescription] = useState('');
   const [from_date, setFrom_date] = useState(new Date());
   const [to_date, setTo_date] = useState(new Date());
+
+  //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
   function filterDate(d) {
     return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // post 요청시 user_id가 필요해서 얻어옴
     const user_id = portfolioOwnerId;
     await Api.post('project/create', {
       user_id,
