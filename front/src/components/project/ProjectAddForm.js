@@ -59,9 +59,9 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
               <DatePicker
                 dateFormat='yyyy/MM/dd'
                 selected={fromDate}
-                onChange={(day) => {
-                  setFromDate(day);
-                  console.log(day);
+                onChange={(date) => {
+                  setFromDate(date);
+                  console.log(date);
                 }}
               />
               <DatePicker
