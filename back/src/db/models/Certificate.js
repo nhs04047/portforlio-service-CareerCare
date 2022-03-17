@@ -7,6 +7,7 @@
 import {CertificateModel} from "../schemas/certificate";
 
 class Certificate {
+  // db 모델에 넘어온 정보들을 create 저장하고 그 내용을 return
   static async create({newCertificate}) {
     const createdNewCertificate = await CertificateModel.create(newCertificate)
 

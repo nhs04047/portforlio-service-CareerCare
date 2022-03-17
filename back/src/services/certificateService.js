@@ -8,11 +8,13 @@ import {Certificate} from "../db"
 import { v4 as uuid4} from "uuid";
 
 class CertificateService {
+  // 자격증을 추가하기 위하여 고유한 id값을 생성하고, 함께 db에 정보를 넘겨준다.
   static async addCertificate({user_id, title, description, when_date}) {
+      // uuid를 사용하여 고유 id 생성한다.
       const id = uuid4();
 
       const newCertificate = {id, user_id, title, description, when_date};
-
+      
       const createdNewCertificate = await Certificate.create({newCertificate});
 
       return createdNewCertificate;
