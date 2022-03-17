@@ -5,7 +5,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { UserStateContext } from '../App';
 import * as Api from '../api';
 import User from './user/User';
-import Project from './project/Project';
+// import Project from './project/Project';
 import Certificate from './certificate/Certificate';
 
 function Portfolio() {
@@ -64,12 +64,6 @@ function Portfolio() {
         </Col>
         <Col>
           <div>
-            <Project
-              className='my-2'
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
-            />
-            <br />
             <Certificate
               className='my-5'
               portfolioOwnerId={portfolioOwner.id}
