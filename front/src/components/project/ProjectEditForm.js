@@ -18,7 +18,9 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user_id = project.user_id;
     const res = await Api.put(`projects/${project.id}`, {
+      user_id,
       title,
       description,
       fromDate,
