@@ -6,18 +6,21 @@ import * as Api from '../../api';
 function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [whenDate, setWhenDate] = useState(new Date());
-
+  const [when_date, setWhen_date] = useState(new Date());
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = portfolioOwnerId;
-    const res = await Api.post('certificate/create', {
+    await Api.post('certificate/create', {
       user_id,
       title,
       description,
-      whenDate,
+      when_date: filterDate(when_date),
     });
     //자격증 정보는 res.data
+    const res = await Api.get('certificatelist', user_id);
     const updatedProject = res.data;
     //해당 자격증 정보로 project 세팅함
     setCertificate(updatedProject);
@@ -51,8 +54,8 @@ function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
             <Col sm={{ span: 20 }}>
               <DatePicker
                 style={{ width: '5rem' }}
-                selected={whenDate}
-                onChange={(date) => setWhenDate(date)}
+                selected={when_date}
+                onChange={(date) => setWhen_date(date)}
               />
             </Col>
           </Form.Group>

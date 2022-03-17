@@ -15,17 +15,20 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   const [to_date, setTo_date] = useState(new Date());
 
   //   const [startDate, setStartDate] = useState(new Date());
-
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = project.user_id;
-    const res = await Api.put(`projects/${project.id}`, {
+    await Api.put(`projects/${project.id}`, {
       user_id,
       title,
       description,
-      from_date,
-      to_date,
+      from_date: filterDate(from_date),
+      to_date: filterDate(to_date),
     });
+    const res = await Api.get('projectlist', user_id);
     //프로젝트 정보는 res.data
     const updatedProject = res.data;
     //해당 프로젝트 정보로 project 세팅함

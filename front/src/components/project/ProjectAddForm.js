@@ -13,18 +13,21 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   const [description, setDescription] = useState('');
   const [from_date, setFrom_date] = useState(new Date());
   const [to_date, setTo_date] = useState(new Date());
-
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = portfolioOwnerId;
-    const res = await Api.post('project/create', {
+    await Api.post('project/create', {
       user_id,
       title,
       description,
-      from_date,
-      to_date,
+      from_date: filterDate(from_date),
+      to_date: filterDate(to_date),
     });
     //프로젝트 정보는 res.data
+    const res = await Api.get('projectlist', user_id);
     const updatedProject = res.data;
     //해당 프로젝트 정보로 project 세팅함
     setProject(updatedProject);
@@ -90,3 +93,5 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
 }
 
 export default ProjectAddForm;
+
+new Date().toDateString();
