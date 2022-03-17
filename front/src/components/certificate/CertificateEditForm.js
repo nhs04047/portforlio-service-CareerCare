@@ -51,7 +51,7 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
           <Form.Group as={Row} controlId='certificateEditDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
-                style={{ width: '5rem' }}
+                dateFormat='yyyy/MM/dd'
                 selected={whenDate}
                 onChange={(date) => setWhenDate(date)}
               />
