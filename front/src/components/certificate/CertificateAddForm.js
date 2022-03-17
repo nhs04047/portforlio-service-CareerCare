@@ -4,19 +4,31 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
+  // useState로 title, description, when_date 생성
+  //   const [title, setTitle] = useState(certificate.title);
+  //   const [description, setDescription] = useState(certificate.description);
+  //   const [when_date, setWhenDate] = useState(certificate.when_date);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [whenDate, setWhenDate] = useState(new Date());
-
+  const [when_date, setWhenDate] = useState(new Date());
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = portfolioOwnerId;
-    const res = await Api.post('certificate/create', {
+    await Api.post('certificate/create', {
       user_id,
       title,
       description,
-      whenDate,
+      when_date: filterDate(when_date),
     });
+    const res = await Api.get('certificatetlist', user_id);
     //자격증 정보는 res.data
     const updatedProject = res.data;
     //해당 자격증 정보로 project 세팅함
@@ -51,7 +63,7 @@ function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
             <Col sm={{ span: 20 }}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={whenDate}
+                selected={when_date}
                 onChange={(date) => setWhenDate(date)}
               />
             </Col>

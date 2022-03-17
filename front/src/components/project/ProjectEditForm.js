@@ -4,28 +4,34 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function ProjectEditForm({ project, setIsEditing, setProject }) {
-  // useState로 title, description, fromDate, toDate 생성
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
+  // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
-  //   const [fromDate, setFromDate] = useState(project.from_date);
-  //   const [toDate, setToDate] = useState(project.to_date);
+  //   const [from_date, setFrom_date] = useState(project.from_date);
+  //   const [to_date, setTo_date] = useState(project.to_date);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [from_date, setFrom_date] = useState(new Date());
+  const [to_date, setTo_date] = useState(new Date());
 
-  //   const [startDate, setStartDate] = useState(new Date());
-
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = project.user_id;
-    const res = await Api.put(`projects/${project.id}`, {
+    await Api.put(`projects/${project.id}`, {
       user_id,
       title,
       description,
-      fromDate,
-      toDate,
+      from_date: filterDate(from_date),
+      to_date: filterDate(to_date),
     });
+    const res = await Api.get('projectlist', user_id);
     //프로젝트 정보는 res.data
     const updatedProject = res.data;
     //해당 프로젝트 정보로 project 세팅함
@@ -59,14 +65,14 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
           <Form.Group as={Row} controlId='projectEditDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
-                style={{ width: '5rem' }}
-                selected={fromDate}
-                onChange={(date) => setFromDate(date)}
+                dateFormat='yyyy/MM/dd'
+                selected={from_date}
+                onChange={(date) => setFrom_date(date)}
               />
               <DatePicker
-                style={{ width: '5rem' }}
-                selected={toDate}
-                onChange={(date) => setToDate(date)}
+                dateFormat='yyyy/MM/dd'
+                selected={to_date}
+                onChange={(date) => setTo_date(date)}
               />
             </Col>
           </Form.Group>

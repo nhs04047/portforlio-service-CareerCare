@@ -4,21 +4,32 @@ import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
 function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
+  // useState로 title, description, from_date, to_date 생성
+  //   const [title, setTitle] = useState(certificate.title);
+  //   const [description, setDescription] = useState(certificate.description);
+  // const [when_date, setWhen_date] = useState(new Date());
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [whenDate, setWhenDate] = useState(new Date());
-
+  const [when_date, setWhen_date] = useState(new Date());
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = certificate.user_id;
-
-    const res = await Api.put(`certificates/${certificate.id}`, {
+    await Api.put(`certificates/${certificate.id}`, {
       user_id,
       title,
       description,
-      whenDate,
+      when_date: filterDate(when_date),
     });
     //자격증 정보는 res.data
+    const res = await Api.get('certificatelist', user_id);
     const updatedProject = res.data;
     //해당 자격증 정보로 project 세팅함
     setCertificate(updatedProject);
@@ -52,8 +63,8 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
             <Col sm={{ span: 20 }}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={whenDate}
-                onChange={(date) => setWhenDate(date)}
+                selected={when_date}
+                onChange={(date) => setWhen_date(date)}
               />
             </Col>
           </Form.Group>

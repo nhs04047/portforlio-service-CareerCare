@@ -2,29 +2,42 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-
+/**
+ * isAdding이 true일 경우 활성화되는 component
+ */
 function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
-  // useState로 title, description, fromDate, toDate 생성
+  /**
+   * test위해 initial state를 임의로 작성해놓음
+   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
+   */
+  // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
-  //   const [fromDate, setFromDate] = useState(project.from_date);
-  //   const [toDate, setToDate] = useState(project.to_date);
+  //   const [from_date, setFrom_date] = useState(project.from_date);
+  //   const [to_date, setTo_date] = useState(project.to_date);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [from_date, setFrom_date] = useState(new Date());
+  const [to_date, setTo_date] = useState(new Date());
+
+  //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
+  function filterDate(d) {
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // post 요청시 user_id가 필요해서 얻어옴
     const user_id = portfolioOwnerId;
-    const res = await Api.post('project/create', {
+    await Api.post('project/create', {
       user_id,
       title,
       description,
-      fromDate,
-      toDate,
+      from_date: filterDate(from_date),
+      to_date: filterDate(to_date),
     });
     //프로젝트 정보는 res.data
+    const res = await Api.get('projectlist', user_id);
     const updatedProject = res.data;
     //해당 프로젝트 정보로 project 세팅함
     setProject(updatedProject);
@@ -55,29 +68,22 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
           </Form.Group>
 
           <Form.Group as={Row} controlId='projectAddDate'>
-            <Stack direction='horizontal'>
+            <Stack direction='horizontal' gap={0}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={fromDate}
-                onChange={(date) => setFromDate(date)}
+                selected={from_date}
+                onChange={(date) => {
+                  setFrom_date(date);
+                  console.log(date);
+                }}
               />
               <DatePicker
                 dateFormat='yyyy/MM/dd'
-                selected={toDate}
-                onChange={(date) => setToDate(date)}
+                selected={to_date}
+                minDate={from_date}
+                onChange={(date) => setTo_date(date)}
               />
             </Stack>
-          </Form.Group>
-
-          <Form.Group>
-            <DatePicker
-              dateFormat='yyyy/MM/dd'
-              selected={fromDate}
-              onChange={(date) => {
-                setFromDate(date);
-                console.log(date);
-              }}
-            />
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
@@ -97,3 +103,5 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
 }
 
 export default ProjectAddForm;
+
+new Date().toDateString();
