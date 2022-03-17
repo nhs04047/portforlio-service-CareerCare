@@ -3,7 +3,7 @@ import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-function ProjectAddForm({ project, setIsAdding, setProject }) {
+function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   // useState로 title, description, fromDate, toDate 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
@@ -16,7 +16,9 @@ function ProjectAddForm({ project, setIsAdding, setProject }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user_id = portfolioOwnerId;
     const res = await Api.post('project/create', {
+      user_id,
       title,
       description,
       fromDate,
@@ -55,10 +57,12 @@ function ProjectAddForm({ project, setIsAdding, setProject }) {
           <Form.Group as={Row} controlId='projectAddDate'>
             <Stack direction='horizontal'>
               <DatePicker
+                dateFormat='yyyy/MM/dd'
                 selected={fromDate}
                 onChange={(date) => setFromDate(date)}
               />
               <DatePicker
+                dateFormat='yyyy/MM/dd'
                 selected={toDate}
                 onChange={(date) => setToDate(date)}
               />

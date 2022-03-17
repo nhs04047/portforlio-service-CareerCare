@@ -66,7 +66,7 @@ function Project({ portfolioOwnerId, isEditable }) {
           )}
           {isAdding ? (
             <ProjectAddForm
-              project={project}
+              portfolioOwnerId={portfolioOwnerId}
               setIsAdding={setIsAdding}
               setProject={setProject}
             />
