@@ -10,7 +10,10 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user_id = certificate.user_id;
+
     const res = await Api.put(`certificates/${certificate.id}`, {
+      user_id,
       title,
       description,
       whenDate,
