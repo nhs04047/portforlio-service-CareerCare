@@ -40,6 +40,7 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
+//학력 정보 유니크 id로 학력정보 찾기 
 educationRouter.get("/education/:id", async function(req, res, next){
   try{
     const educationId = req.params.id
