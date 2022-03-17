@@ -55,29 +55,22 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
           </Form.Group>
 
           <Form.Group as={Row} controlId='projectAddDate'>
-            <Stack direction='horizontal'>
+            <Stack direction='horizontal' gap={0}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
                 selected={fromDate}
-                onChange={(date) => setFromDate(date)}
+                onChange={(day) => {
+                  setFromDate(day);
+                  console.log(day);
+                }}
               />
               <DatePicker
                 dateFormat='yyyy/MM/dd'
                 selected={toDate}
+                minDate={fromDate}
                 onChange={(date) => setToDate(date)}
               />
             </Stack>
-          </Form.Group>
-
-          <Form.Group>
-            <DatePicker
-              dateFormat='yyyy/MM/dd'
-              selected={fromDate}
-              onChange={(date) => {
-                setFromDate(date);
-                console.log(date);
-              }}
-            />
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
