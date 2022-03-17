@@ -34,6 +34,22 @@ certificateRouter.get("/certificates/:id", async function(req,res,next) {
 
     const certificate = await CertificateService.getCertificate({certificateId});
 
+    res.status(200).send(certificate);
+  } catch (err) {
+    next(err);
+  }
+})
+
+certificateRouter.put("/certificates/:id", async function(req, res, next) {
+  try {
+    const certificateId = req.params.id;
+
+    const title = req.body.title ?? null;
+    const description = req.body.description ?? null;
+    const when_date = req.body.when_date ?? null;
+
+    const toUpdate = {title, description, when_date};
+    const certificate = await CertificateService.setCertificate({certificateId, toUpdate});
     res.status(200).json(certificate);
   } catch (err) {
     next(err);

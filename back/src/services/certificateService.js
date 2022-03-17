@@ -29,6 +29,31 @@ class CertificateService {
     return certificate;
   }
 
+  static async setCertificate({certificateId, toUpdate}) {
+    let certificate = await Certificate.findById({certificateId});
+    if (!certificate) {
+      const message = "해당 id를 가진 자격증 데이터가 없습니다.";
+      return {message};
+    }
+    if(toUpdate.title){
+      const fieldToUpdate = "title";
+      const newValue = toUpdate.title;
+      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
+    }
+    if(toUpdate.description){
+      const fieldToUpdate = "description";
+      const newValue = toUpdate.description;
+      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
+    }
+    if(toUpdate.when_date){
+      const fieldToUpdate = "when_date";
+      const newValue = toUpdate.when_date;
+      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
+    }
+
+    return certificate;
+  }
+
 }
 
 export {CertificateService};
