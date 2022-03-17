@@ -62,12 +62,12 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
           <Form.Group as={Row} controlId='projectEditDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
-                style={{ width: '5rem' }}
+                dateFormat='yyyy/MM/dd'
                 selected={from_date}
                 onChange={(date) => setFrom_date(date)}
               />
               <DatePicker
-                style={{ width: '5rem' }}
+                dateFormat='yyyy/MM/dd'
                 selected={to_date}
                 onChange={(date) => setTo_date(date)}
               />
