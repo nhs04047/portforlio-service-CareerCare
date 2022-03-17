@@ -25,6 +25,20 @@ class Education {
     const education = await EducationModel.find({ user_id });
     return education;
   }
+
+  //db에 변경사랑 적용
+  static async update({ educationId, fieldToUpdate, newValue }) {
+    const filter = { id: educationId };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
+
+    const updatedEducation = await EducationModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedEducation;
+  }
 }
 
 export {Education}

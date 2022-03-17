@@ -7,6 +7,7 @@
 
 import is from "@sindresorhus/is";
 import { Router } from "express";
+import { Education } from "../db";
 import { login_required } from "../middlewares/login_required";
 import { EducationService} from "../services/educationService"
 
@@ -67,7 +68,34 @@ educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   }
 })
 
-educationRouter.put("")
+// 학력 정보 id를 통해 put요청 (update)
+educationRouter.put('/education/:id', async function (req, res, next){
+  try {
+    const educationId = req.params.id;
+
+    
+    const school = req.body.school ?? null;
+    const major = req.body.major ?? null;
+    const degree = req.body.degree ?? null;
+
+    const toUpdate = { 
+      school,
+      major,
+      degree
+    };
+    
+    const education = await EducationService.setEducation({ educationId, toUpdate });
+
+    if (education.errorMessage) {
+      throw new Error(education.errorMessage);
+    }
+
+    res.status(200).send(education);
+  } catch (error) {
+    next(error);
+  }
+})
+
 
 
 export {educationRouter}
