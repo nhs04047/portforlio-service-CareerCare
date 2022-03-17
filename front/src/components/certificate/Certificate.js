@@ -65,7 +65,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
           )}
           {isAdding ? (
             <CertificateAddForm
-              certificate={certificate}
+              portfolioOwnerId={portfolioOwnerId}
               setIsAdding={setIsAdding}
               setCertificate={setCertificate}
             />

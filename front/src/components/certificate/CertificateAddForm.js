@@ -3,14 +3,16 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-function CertificateAddForm({ certificate, setIsAdding, setCertificate }) {
+function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [whenDate, setWhenDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user_id = portfolioOwnerId;
     const res = await Api.post('certificate/create', {
+      user_id,
       title,
       description,
       whenDate,
