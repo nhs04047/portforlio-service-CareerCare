@@ -6,8 +6,9 @@ function ProjectList({ project, isEditable, setProject }) {
   return (
     <Container fluid>
       <Col>
-        {project.map((v) => (
+        {project.map((v, index) => (
           <ProjectCard
+            key={index}
             project={v}
             isEditable={isEditable}
             setProject={setProject}

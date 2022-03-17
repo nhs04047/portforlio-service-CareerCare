@@ -6,8 +6,9 @@ function CertificateList({ certificate, isEditable, setCertificate }) {
   return (
     <Container fluid>
       <Col>
-        {certificate.map((v) => (
+        {certificate.map((v, index) => (
           <CertificateCard
+            key={index}
             certificate={v}
             isEditable={isEditable}
             setProject={setCertificate}
