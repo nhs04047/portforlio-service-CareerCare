@@ -56,6 +56,16 @@ certificateRouter.put("/certificates/:id", async function(req, res, next) {
   }
 })
 
+certificateRouter.get("/certificatelist/:user_id", async function(req, res, next) {
+  try {
+    const user_id = req.params.user_id;
+    const certificateList = await CertificateService.getCertificateList({user_id});
+    res.status(200).send(certificateList);
+  } catch (err) {
+    next(err);
+  }
+})
+
 
 
 
