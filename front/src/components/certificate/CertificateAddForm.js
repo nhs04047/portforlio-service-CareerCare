@@ -10,7 +10,7 @@ function CertificateAddForm({ certificate, setIsAdding, setCertificate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await Api.post(`certificates/${certificate.id}`, {
+    const res = await Api.post('certificate/create', {
       title,
       description,
       whenDate,

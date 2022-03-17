@@ -16,7 +16,7 @@ function ProjectAddForm({ project, setIsAdding, setProject }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await Api.post(`projects/${project.id}`, {
+    const res = await Api.post('project/create', {
       title,
       description,
       fromDate,
