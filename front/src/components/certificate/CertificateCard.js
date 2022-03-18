@@ -4,7 +4,7 @@ import { Card, Button, Stack } from 'react-bootstrap';
 import CertificateEditForm from './CertificateEditForm';
 
 function CertificateCard({ certificate, isEditable, setCertificate }) {
-  const { title, description, whenDate } = certificate;
+  const { title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -21,7 +21,7 @@ function CertificateCard({ certificate, isEditable, setCertificate }) {
               <div>
                 <Card.Title>{title}</Card.Title>
                 <Card.Subtitle>{description}</Card.Subtitle>
-                <Card.Text>{whenDate}</Card.Text>
+                <Card.Text>{when_date}</Card.Text>
               </div>
               <div className='ms-auto px-3'>
                 {isEditable && (
