@@ -33,11 +33,11 @@ const ProjectSchema = new Schema(
       default: "상세내역",
     },
     from_date: {
-      type: Date,
+      type: String,
       required: true,
     },
     to_date: {
-      type: Date,
+      type: String,
       required: true,
     },
   },
