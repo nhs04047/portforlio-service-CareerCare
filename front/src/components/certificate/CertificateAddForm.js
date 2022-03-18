@@ -2,22 +2,16 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-
+/**작성자 - 이예슬
+ ** certificate 추가 컴포넌트
+ *기능 - user id를 api에 요청, 입력값을 바탕으로 certificate 카드 추가
+ */
 function CertificateAddForm({
   portfolioOwnerId,
   setIsAdding,
   setCertificate,
   certificate,
 }) {
-  /**
-   * test위해 initial state를 임의로 작성해놓음
-   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
-   */
-  // useState로 title, description, when_date 생성
-  //   const [title, setTitle] = useState(certificate.title);
-  //   const [description, setDescription] = useState(certificate.description);
-  //   const [when_date, setWhenDate] = useState(certificate.when_date);
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [when_date, setWhenDate] = useState(new Date());

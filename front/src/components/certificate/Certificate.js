@@ -5,26 +5,9 @@ import CertificateAddForm from './CertificateAddForm';
 import CertificateList from './CertificateList';
 import * as Api from '../../api';
 
-// test위해 작성 backend와 연결 후 정상작동하면 삭제 예정
-const initCertificateList = [
-  {
-    title: '제목예시1',
-    description: '내용 예시1',
-    whenDate: '2022.03.15',
-  },
-  {
-    title: '제목예시2',
-    description: '내용 예시2',
-    whenDate: '2022.03.15',
-  },
-  {
-    title: '제목예시3',
-    description: '내용 예시3',
-    whenDate: '2022.03.15',
-  },
-];
 /**
- * certificate의 main component 
+ * 작성자 - 이예슬
+ ** certificate의 main component 
  * isEditable이 true일 경우 편집, 추가 버튼 활성화
  * isAdding이 true일 경우 AddForm 활성화
 

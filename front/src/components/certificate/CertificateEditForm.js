@@ -2,20 +2,10 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-
+/**작성자 - 이예슬
+ **기능 - user id를 api에 요청, 입력값을 바탕으로 certificate 카드 수정
+ */
 function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
-  /**
-   * test위해 initial state를 임의로 작성해놓음
-   * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
-   */
-  // useState로 title, description, from_date, to_date 생성
-  //   const [title, setTitle] = useState(certificate.title);
-  //   const [description, setDescription] = useState(certificate.description);
-  // const [when_date, setWhen_date] = useState(new Date());
-
-  // let month   = ('0' + (d.getMonth() +  1 )).slice(-2);
-  // let day     = ('0' + d.getDate()).slice(-2);
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [when_date, setWhen_date] = useState(new Date());

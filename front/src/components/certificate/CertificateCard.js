@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Card, Button, Stack } from 'react-bootstrap';
 
 import CertificateEditForm from './CertificateEditForm';
-
+/**작성자 - 이예슬
+ **기능 - certificate Card를 만들어준다
+ * Card의 형태를 나타내줌
+ */
 function CertificateCard({
   certificate,
   isEditable,
