@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 class EducationService{
   
   // db에 학력 정보 생성
-  static async addEducation({user_id, school, major, degree}){
+  static async addEducation({user_id, school, major, position}){
     
     const id = uuidv4();
 
@@ -19,7 +19,7 @@ class EducationService{
       user_id,
       school,
       major,
-      degree
+      position
     };
     const createdNewEducation = await Education.create({newEducation});
 
@@ -64,9 +64,9 @@ class EducationService{
       education = await Education.update({ educationId, fieldToUpdate, newValue });
     }
 
-    if (toUpdate.degree) {
-      const fieldToUpdate = "degree";
-      const newValue = toUpdate.degree;
+    if (toUpdate.position) {
+      const fieldToUpdate = "position";
+      const newValue = toUpdate.position;
       education = await Education.update({ educationId, fieldToUpdate, newValue });
     }
 

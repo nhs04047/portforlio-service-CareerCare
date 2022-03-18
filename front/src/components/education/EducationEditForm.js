@@ -50,30 +50,38 @@ function EducationEditForm({ setEdit, setEducations, education }) {
 
         <Form.Check className="mt-3"
           inline
+          type="radio"
+          name="position"
           label="재학중"
-          name="position"
-          type={"radio"}
+          value="재학중"
+          checked={position === "재학중"}
           onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
+          type="radio"
+          name="position"
           label="학사졸업"
-          name="position"
-          type={"radio"}
+          value="학사졸업"
+          checked={position === "학사졸업"}
           onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
+          type="radio"
+          name="position"
           label="석사졸업"
-          name="position"
-          type={"radio"}
+          value="석사졸업"
+          checked={position === "석사졸업"}
           onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
-          label="박사졸업"
+          type="radio"
           name="position"
-          type={"radio"}
+          label="박사졸업"
+          value="박사졸업"
+          checked={position === "박사졸업"}
           onChange={(e) => setPosition(e.target.value)}
         />
 

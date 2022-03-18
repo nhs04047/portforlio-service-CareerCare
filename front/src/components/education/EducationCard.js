@@ -7,7 +7,7 @@ function EducationCard({ isEditable, setEdit, education }) {
       <Col>
         <span>{education.school}</span>
         <br />
-        <span className="text-muted">{`${education.major} ${education.position}`}</span>   {/*전공, 체크 된 졸업 정보 UI*/}
+        <span className="text-muted">{`${education.major} (${education.position})`}</span>   {/*전공, 체크 된 졸업 정보 UI*/}
       </Col>
       {isEditable && 
       <Col xs lg="1">
