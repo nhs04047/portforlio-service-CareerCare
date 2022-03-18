@@ -7,6 +7,8 @@ import * as Api from '../api';
 import User from './user/User';
 // import Project from './project/Project';
 import Certificate from './certificate/Certificate';
+import Awards from './award/Awards';
+import Educations from './education/Educations';
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -52,7 +54,7 @@ function Portfolio() {
   if (!isFetchCompleted) {
     return 'loading...';
   }
-
+  // 컴포넌트를 불러와서 페이지에 표시해줌.
   return (
     <Container fluid>
       <Row>
@@ -63,14 +65,21 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <div>
-            <Certificate
-              className='my-5'
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
-            />
-          </div>
-          <br />
+          <Educations
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <div className='mb-2' />
+          <Awards
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <div className='mb-2' />
+          <Certificate
+            className='my-5'
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
         </Col>
       </Row>
     </Container>
