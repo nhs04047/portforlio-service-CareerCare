@@ -25,7 +25,7 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    degree: {
+    position: {
       type: String,
       required: true,
     },

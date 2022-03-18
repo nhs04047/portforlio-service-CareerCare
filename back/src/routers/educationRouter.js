@@ -26,13 +26,13 @@ educationRouter.post("/education/create", async function (req, res, next) {
     const {user_id} = req.body;
     const {school} = req.body;
     const {major} = req.body;
-    const {degree} = req.body;
+    const {position} = req.body;
 
     const newEducation = await EducationService.addEducation({
       user_id,
       school,
       major,
-      degree
+      position
     });
 
     res.status(201).json(newEducation);
@@ -42,7 +42,7 @@ educationRouter.post("/education/create", async function (req, res, next) {
 });
 
 //학력 정보 유니크 id로 학력정보 찾기 
-educationRouter.get("/education/:id", async function(req, res, next){
+educationRouter.get("/educations/:id", async function(req, res, next){
   try{
     const educationId = req.params.id
     const education = await EducationService.getEducation({educationId})
@@ -58,7 +58,7 @@ educationRouter.get("/education/:id", async function(req, res, next){
 });
 
 // 특정 user_id를 이용해 학력 정보들을 찾기 위한 get요청
-educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
+educationRouter.get("/educationlists/:user_id", async function (req, res, next) {
   try {
     const {user_id} = req.params;
     const educationList = await EducationService.getEducationList({ user_id });
@@ -69,19 +69,19 @@ educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
 })
 
 // 학력 정보 id를 통해 put요청 (update)
-educationRouter.put('/education/:id', async function (req, res, next){
+educationRouter.put('/educations/:id', async function (req, res, next){
   try {
     const educationId = req.params.id;
 
     
     const school = req.body.school ?? null;
     const major = req.body.major ?? null;
-    const degree = req.body.degree ?? null;
+    const position = req.body.position ?? null;
 
     const toUpdate = { 
       school,
       major,
-      degree
+      position
     };
     
     const education = await EducationService.setEducation({ educationId, toUpdate });
