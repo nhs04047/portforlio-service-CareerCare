@@ -3,7 +3,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 
 // 수상이력 카드 컴포넌트 - 작성자: 이영우
 // 기능 - title, description을 props로 받아와 입력받은 값을 화면에 표시해줍니다.
-// 완성여부 - 백엔드와 통신 테스트 전입니다.
+// 완성여부 - placeholder이 현재 값으로 뜨지 않는 것 제외, 완성했습니다.
 
 function AwardCard({ isEditable, setEdit, award }) {
     return <Card.Text>

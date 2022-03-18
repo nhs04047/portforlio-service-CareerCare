@@ -6,12 +6,11 @@ import AwardAddForm from "./AwardAddForm";
 
 // 수상이력 UI 그려주는 컴포넌트 - 작성자: 이영우
 // 기능 - Award 컴포넌트의 UI를 그려주고, 조건을 관리합니다.
-// 완성여부 - 백엔드와 통신 테스트 전입니다. (아래와 같이 기본 값을 주면 UI가 표시됩니다.)
+// 완성여부 - placeholder이 현재 값으로 뜨지 않는 것 제외, 완성했습니다.
 
 function Awards({ portfolioOwnerId, isEditable }) {
-  //useState로 awards 상태를 생성해야함
-  const [awards, setAwards] = useState([{title : "이상한 말투 상", description: "괜찬잖아버리기~"}]);
-  //useState로 addAward 상태를 생성해야함
+  //useState로 awards, addAward 상태를 생성
+  const [awards, setAwards] = useState([]);
   const [addAward, setAddAward] = useState(false);
   useEffect(() => {
     // "awardlist/id" GET 요청, response의 data -> awards를 세팅

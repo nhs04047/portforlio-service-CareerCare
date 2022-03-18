@@ -4,7 +4,7 @@ import * as Api from '../../api';
 
 // 수상이력 추가 컴포넌트 - 작성자: 이영우
 // 기능 - user id를 api에 요청, 입력값을 바탕으로 award 카드를 추가합니다. 
-// 완성여부 - 백엔드와 통신 테스트 전입니다.
+// 완성여부 - placeholder이 현재 값으로 뜨지 않는 것 제외, 완성했습니다.
 
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setAddAward }) {
