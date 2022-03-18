@@ -13,8 +13,8 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   // useState로 title, description, from_date, to_date 생성
   //   const [title, setTitle] = useState(project.title);
   //   const [description, setDescription] = useState(project.description);
-  //   const [from_date, setFrom_date] = useState(project.from_date);
-  //   const [to_date, setTo_date] = useState(project.to_date);
+  //   const [from_date, setFrom_date] = useState(new Date());
+  //   const [to_date, setTo_date] = useState(new Date());
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [from_date, setFrom_date] = useState(new Date());
@@ -29,20 +29,24 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
     e.preventDefault();
     // post 요청시 user_id가 필요해서 얻어옴
     const user_id = portfolioOwnerId;
-    await Api.post('project/create', {
-      user_id,
-      title,
-      description,
-      from_date: filterDate(from_date),
-      to_date: filterDate(to_date),
-    });
-    //프로젝트 정보는 res.data
-    const res = await Api.get('projectlist', user_id);
-    const updatedProject = res.data;
-    //해당 프로젝트 정보로 project 세팅함
-    setProject(updatedProject);
-    //isEditing을 false로 세팅함
-    setIsAdding(false);
+    if (title !== '') {
+      await Api.post('project/create', {
+        user_id,
+        title,
+        description,
+        from_date: filterDate(from_date),
+        to_date: filterDate(to_date),
+      });
+      //프로젝트 정보는 res.data
+      const res = await Api.get('projectlist', user_id);
+      const updatedProject = res.data;
+      //해당 프로젝트 정보로 project 세팅함
+      setProject(updatedProject);
+      //isEditing을 false로 세팅함
+      setIsAdding(false);
+    } else {
+      console.log('%내용이 없습니다!');
+    }
   };
 
   return (
