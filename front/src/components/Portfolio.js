@@ -65,7 +65,7 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <Educations
+          {/* <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
@@ -73,7 +73,7 @@ function Portfolio() {
           <Awards
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          /> */}
           <div className='mb-2' />
           <Certificate
             className='my-5'
