@@ -7,7 +7,6 @@
 
 import is from "@sindresorhus/is";
 import { Router } from "express";
-import { Education } from "../db";
 import { login_required } from "../middlewares/login_required";
 import { EducationService} from "../services/educationService"
 
@@ -58,7 +57,7 @@ educationRouter.get("/educations/:id", async function(req, res, next){
 });
 
 // 특정 user_id를 이용해 학력 정보들을 찾기 위한 get요청
-educationRouter.get("/educationlists/:user_id", async function (req, res, next) {
+educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   try {
     const {user_id} = req.params;
     const educationList = await EducationService.getEducationList({ user_id });
