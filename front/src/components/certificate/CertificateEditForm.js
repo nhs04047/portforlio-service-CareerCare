@@ -12,14 +12,17 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
   //   const [title, setTitle] = useState(certificate.title);
   //   const [description, setDescription] = useState(certificate.description);
   // const [when_date, setWhen_date] = useState(new Date());
+
+  // let month   = ('0' + (d.getMonth() +  1 )).slice(-2);
   // let day     = ('0' + d.getDate()).slice(-2);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [when_date, setWhen_date] = useState(new Date());
   function filterDate(d) {
-    return `${d.getFullYear()}-${
-      ('0' + d.getMonth()).slice(-2) + 1
-    }-${d.getDate()}`;
+    return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
+      '0' + d.getDate()
+    ).slice(-2)}`;
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
