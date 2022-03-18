@@ -19,22 +19,27 @@ function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
   function filterDate(d) {
     return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = portfolioOwnerId;
-    await Api.post('certificate/create', {
-      user_id,
-      title,
-      description,
-      when_date: filterDate(when_date),
-    });
-    const res = await Api.get('certificatetlist', user_id);
-    //자격증 정보는 res.data
-    const updatedProject = res.data;
-    //해당 자격증 정보로 project 세팅함
-    setCertificate(updatedProject);
-    //isEditing을 false로 세팅함
-    setIsAdding(false);
+    if (title !== '') {
+      await Api.post('certificate/create', {
+        user_id,
+        title,
+        description,
+        when_date: filterDate(when_date),
+      });
+      const res = await Api.get('certificatetlist', user_id);
+      //자격증 정보는 res.data
+      const updatedProject = res.data;
+      //해당 자격증 정보로 project 세팅함
+      setCertificate(updatedProject);
+      //isEditing을 false로 세팅함
+      setIsAdding(false);
+    } else {
+      console.log('내용이 없습니다!', 'color: #bada55');
+    }
   };
 
   return (
