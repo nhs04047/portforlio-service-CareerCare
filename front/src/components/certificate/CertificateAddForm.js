@@ -22,7 +22,9 @@ function CertificateAddForm({
   const [description, setDescription] = useState('');
   const [when_date, setWhenDate] = useState(new Date());
   function filterDate(d) {
-    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
+      '0' + d.getDate()
+    ).slice(-2)}`;
   }
 
   const handleSubmit = async (e) => {
