@@ -5,9 +5,9 @@ function EducationCard({ isEditable, setEdit, education }) {
     return <Card.Text>
     <Row className="align-items-center">
       <Col>
-        <span>{education.title}</span>
+        <span>{education.school}</span>
         <br />
-        <span className="text-muted">{`${education.description} ${education.graduated}`}</span>   {/*전공, 체크 된 졸업 정보 UI*/}
+        <span className="text-muted">{`${education.major} ${education.position}`}</span>   {/*전공, 체크 된 졸업 정보 UI*/}
       </Col>
       {isEditable && 
       <Col xs lg="1">

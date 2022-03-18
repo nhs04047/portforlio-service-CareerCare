@@ -4,9 +4,9 @@ import * as Api from '../../api';
 
 function EducationAddForm({ portfolioOwnerId, setEducations, setAddEducation }) {
     //학교 이름, 전공, 졸업 정보 상태 세팅 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [graduated, setGraduated] = useState("");
+    const [school, setSchool] = useState("");
+    const [major, setMajor] = useState("");
+    const [position, setPosition] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,9 +14,9 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setAddEducation }) 
         // "education/create" end-point로 post요청
         await Api.post("education/create", {
           user_id: portfolioOwnerId,
-          title,
-          description,
-          graduated,
+          school,
+          major,
+          position,
         });
         // "educationlist/유저id" end-point로 get요청
         const res = await Api.get("educationlist", user_id);
@@ -32,8 +32,8 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setAddEducation }) 
           <Form.Control
             type="text"
             placeholder="학교 이름"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
           />
         </Form.Group>
 
@@ -41,8 +41,8 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setAddEducation }) 
           <Form.Control
             type="text"
             placeholder="전공"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
           />
         </Form.Group>
 
@@ -51,28 +51,28 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setAddEducation }) 
           label="재학중"
           name="position"
           type={"radio"}
-          onChange={(e) => setGraduated(e.target.value)}
+          onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
           label="학사졸업"
           name="position"
           type={"radio"}
-          onChange={(e) => setGraduated(e.target.value)}
+          onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
           label="석사졸업"
           name="position"
           type={"radio"}
-          onChange={(e) => setGraduated(e.target.value)}
+          onChange={(e) => setPosition(e.target.value)}
         />
         <Form.Check
           inline
           label="박사졸업"
           name="position"
           type={"radio"}
-          onChange={(e) => setGraduated(e.target.value)}
+          onChange={(e) => setPosition(e.target.value)}
         />
 
         <Form.Group className="mt-3 text-center mb-4">
