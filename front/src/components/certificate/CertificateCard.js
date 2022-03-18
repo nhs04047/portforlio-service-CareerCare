@@ -3,8 +3,13 @@ import { Card, Button, Stack } from 'react-bootstrap';
 
 import CertificateEditForm from './CertificateEditForm';
 
-function CertificateCard({ certificate, isEditable, setCertificate }) {
-  const { user_id, title, description, when_date } = certificate;
+function CertificateCard({
+  certificate,
+  isEditable,
+  setCertificate,
+  portfolioOwnerId,
+}) {
+  const { title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -13,6 +18,7 @@ function CertificateCard({ certificate, isEditable, setCertificate }) {
           certificate={certificate}
           setCertificate={setCertificate}
           setIsEditing={setIsEditing}
+          portfolioOwnerId={portfolioOwnerId}
         />
       ) : (
         <Card className='my-1'>

@@ -31,8 +31,9 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
     //자격증 정보는 res.data
     const res = await Api.get('certificatelist', user_id);
     const updatedProject = res.data;
+    console.log(updatedProject);
     //해당 자격증 정보로 project 세팅함
-    setCertificate(updatedProject);
+    setCertificate(res.data);
     //isEditing을 false로 세팅함
     setIsEditing(false);
   };

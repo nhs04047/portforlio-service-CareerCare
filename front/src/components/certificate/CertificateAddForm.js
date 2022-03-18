@@ -3,7 +3,12 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
+function CertificateAddForm({
+  portfolioOwnerId,
+  setIsAdding,
+  setCertificate,
+  certificate,
+}) {
   /**
    * test위해 initial state를 임의로 작성해놓음
    * backend와 연결 후 정상작동 시 주석 코드로 대체 예정
@@ -30,11 +35,12 @@ function CertificateAddForm({ portfolioOwnerId, setIsAdding, setCertificate }) {
         description,
         when_date: filterDate(when_date),
       });
-      const res = await Api.get('certificatetlist', user_id);
+      const res = await Api.get('certificatelist', user_id);
       //자격증 정보는 res.data
-      const updatedProject = res.data;
+      const updatedCertificate = res.data;
       //해당 자격증 정보로 project 세팅함
-      setCertificate(updatedProject);
+      setCertificate(updatedCertificate);
+      console.log(certificate);
       //isEditing을 false로 세팅함
       setIsAdding(false);
     } else {

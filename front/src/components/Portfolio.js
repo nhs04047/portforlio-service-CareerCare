@@ -9,7 +9,7 @@ import User from './user/User';
 import Certificate from './certificate/Certificate';
 // import Awards from './award/Awards';
 // import Educations from './education/Educations';
-import Project from './project/Project';
+// import Project from './project/Project';
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -81,13 +81,13 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-          <div>
+          {/* <div>
             <Project
               className='my-2'
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
-          </div>
+          </div> */}
           <br />
         </Col>
       </Row>

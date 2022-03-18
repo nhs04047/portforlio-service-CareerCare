@@ -32,7 +32,7 @@ const initCertificateList = [
 function Certificate({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
   // useState 훅을 통해 certificate 상태를 생성함
-  const [certificate, setCertificate] = useState(initCertificateList);
+  const [certificate, setCertificate] = useState([]);
 
   useEffect(() => {
     // "certificates/유저id" 엔드포인트로 GET 요청을 하고, certificate를 response의 data로 세팅함.
@@ -51,6 +51,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
               certificate={certificate}
               isEditable={isEditable}
               setCertificate={setCertificate}
+              portfolioOwnerId={portfolioOwnerId}
             />
           </Card.Text>
           {isEditable && (
@@ -72,6 +73,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
             <CertificateAddForm
               portfolioOwnerId={portfolioOwnerId}
               setIsAdding={setIsAdding}
+              certificate={certificate}
               setCertificate={setCertificate}
             />
           ) : (

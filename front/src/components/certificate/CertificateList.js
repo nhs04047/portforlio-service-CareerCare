@@ -2,7 +2,12 @@ import { Col, Container } from 'react-bootstrap';
 import React from 'react';
 import CertificateCard from './CertificateCard';
 
-function CertificateList({ certificate, isEditable, setCertificate }) {
+function CertificateList({
+  certificate,
+  isEditable,
+  setCertificate,
+  portfolioOwnerId,
+}) {
   return (
     <Container fluid>
       <Col>
@@ -12,6 +17,7 @@ function CertificateList({ certificate, isEditable, setCertificate }) {
             certificate={v}
             isEditable={isEditable}
             setProject={setCertificate}
+            portfolioOwnerId={portfolioOwnerId}
           />
         ))}
       </Col>
