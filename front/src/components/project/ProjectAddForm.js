@@ -22,6 +22,7 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
 
   //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
   function filterDate(d) {
+    // return toLocaleString(d);
     return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
   }
 
@@ -34,7 +35,10 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
         user_id,
         title,
         description,
+        // from_date,
+        // to_date,
         from_date: filterDate(from_date),
+        // from_date: filterDate(from_date),
         to_date: filterDate(to_date),
       });
       //프로젝트 정보는 res.data

@@ -4,7 +4,7 @@ import { Card, Button, Stack } from 'react-bootstrap';
 import ProjectEditForm from './ProjectEditForm';
 
 function ProjectCard({ project, isEditable, setProject }) {
-  const { title, description, fromDate, toDate } = project;
+  const { title, description, from_date, to_date } = project;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -22,7 +22,7 @@ function ProjectCard({ project, isEditable, setProject }) {
                 <Card.Title>{title}</Card.Title>
                 <Card.Subtitle>{description}</Card.Subtitle>
                 <Card.Text>
-                  {fromDate} ~ {toDate}
+                  {from_date} ~ {to_date}
                 </Card.Text>
               </div>
               <div className='ms-auto px-3'>

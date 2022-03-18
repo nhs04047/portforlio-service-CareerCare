@@ -10,20 +10,8 @@ const initProjectList = [
   {
     title: '제목예시1',
     description: '내용 예시1',
-    fromDate: '2022.03.15',
-    toDate: '2022.03.16',
-  },
-  {
-    title: '제목예시2',
-    description: '내용 예시2',
-    fromDate: '2022.03.15',
-    toDate: '2022.03.16',
-  },
-  {
-    title: '제목예시3',
-    description: '내용 예시3',
-    fromDate: '2022.03.15',
-    toDate: '2022.03.16',
+    from_date: '2022.03.15',
+    to_date: '2022.03.16',
   },
 ];
 /**
@@ -34,11 +22,16 @@ const initProjectList = [
 function Project({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
   // useState 훅을 통해 project 상태를 생성함
-  const [project, setProject] = useState(initProjectList);
+  const [project, setProject] = useState([]);
 
   useEffect(() => {
     // "projects/유저id" 엔드포인트로 GET 요청을 하고, project를 response의 data로 세팅함.
-    Api.get('projects', portfolioOwnerId).then((res) => setProject(res.data));
+    const asynchronous = async () => {
+      await Api.get('projects', portfolioOwnerId).then((res) =>
+        setProject(res.data)
+      );
+    };
+    asynchronous();
   }, [portfolioOwnerId]);
 
   return (
