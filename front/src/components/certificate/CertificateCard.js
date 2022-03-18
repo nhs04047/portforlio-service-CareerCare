@@ -4,7 +4,7 @@ import { Card, Button, Stack } from 'react-bootstrap';
 import CertificateEditForm from './CertificateEditForm';
 
 function CertificateCard({ certificate, isEditable, setCertificate }) {
-  const { title, description, when_date } = certificate;
+  const { user_id, title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
