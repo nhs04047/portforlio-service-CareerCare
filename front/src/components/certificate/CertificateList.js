@@ -16,7 +16,7 @@ function CertificateList({
             key={index}
             certificate={v}
             isEditable={isEditable}
-            setProject={setCertificate}
+            setCertificate={setCertificate}
             portfolioOwnerId={portfolioOwnerId}
           />
         ))}
