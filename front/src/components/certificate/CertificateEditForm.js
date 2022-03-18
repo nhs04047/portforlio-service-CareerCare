@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
+
 /**작성자 - 이예슬
  **기능 - user id를 api에 요청, 입력값을 바탕으로 certificate 카드 수정
  */
-function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
+  const [title, setTitle] = useState(certificate.title);
+  const [description, setDescription] = useState(certificate.description);
   const [when_date, setWhen_date] = useState(new Date());
+
+  // new Date로 생성한 date에서 yyyy-mm-dd로 date form을 주는 함수
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
       '0' + d.getDate()
     ).slice(-2)}`;
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = certificate.user_id;
@@ -23,13 +27,9 @@ function CertificateEditForm({ certificate, setIsEditing, setCertificate }) {
       description,
       when_date: filterDate(when_date),
     });
-    //자격증 정보는 res.data
     const res = await Api.get('certificatelist', user_id);
     const updatedProject = res.data;
-    console.log(updatedProject);
-    //해당 자격증 정보로 project 세팅함
-    setCertificate(res.data);
-    //isEditing을 false로 세팅함
+    setCertificate(updatedProject);
     setIsEditing(false);
   };
 

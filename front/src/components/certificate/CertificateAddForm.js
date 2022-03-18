@@ -9,12 +9,12 @@ import * as Api from '../../api';
 function CertificateAddForm({
   portfolioOwnerId,
   setIsAdding,
-  setCertificate,
   certificate,
+  setCertificate,
 }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [when_date, setWhenDate] = useState(new Date());
+  const [when_date, setWhen_date] = useState(new Date());
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
       '0' + d.getDate()
@@ -32,12 +32,8 @@ function CertificateAddForm({
         when_date: filterDate(when_date),
       });
       const res = await Api.get('certificatelist', user_id);
-      //자격증 정보는 res.data
       const updatedCertificate = res.data;
-      //해당 자격증 정보로 project 세팅함
       setCertificate(updatedCertificate);
-      console.log(certificate);
-      //isEditing을 false로 세팅함
       setIsAdding(false);
     } else {
       console.log('내용이 없습니다!', 'color: #bada55');
@@ -71,7 +67,7 @@ function CertificateAddForm({
               <DatePicker
                 dateFormat='yyyy/MM/dd'
                 selected={when_date}
-                onChange={(date) => setWhenDate(date)}
+                onChange={(date) => setWhen_date(date)}
               />
             </Col>
           </Form.Group>

@@ -8,8 +8,8 @@ import CertificateCard from './CertificateCard';
  */
 function CertificateList({
   certificate,
-  isEditable,
   setCertificate,
+  isEditable,
   portfolioOwnerId,
 }) {
   return (

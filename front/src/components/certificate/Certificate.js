@@ -32,8 +32,8 @@ function Certificate({ portfolioOwnerId, isEditable }) {
           <Card.Text>
             <CertificateList
               certificate={certificate}
-              isEditable={isEditable}
               setCertificate={setCertificate}
+              isEditable={isEditable}
               portfolioOwnerId={portfolioOwnerId}
             />
           </Card.Text>

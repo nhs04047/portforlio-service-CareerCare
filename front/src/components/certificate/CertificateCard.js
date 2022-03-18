@@ -21,7 +21,6 @@ function CertificateCard({
           certificate={certificate}
           setCertificate={setCertificate}
           setIsEditing={setIsEditing}
-          portfolioOwnerId={portfolioOwnerId}
         />
       ) : (
         <Card className='my-1'>
