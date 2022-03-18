@@ -23,7 +23,9 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
   function filterDate(d) {
     // return toLocaleString(d);
-    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
+      '0' + d.getDate()
+    ).slice(-2)}`;
   }
 
   const handleSubmit = async (e) => {
