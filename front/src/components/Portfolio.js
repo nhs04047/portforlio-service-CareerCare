@@ -9,6 +9,8 @@ import User from './user/User';
 import Awards from './award/Awards';
 import Educations from './education/Educations';
 import Project from './project/Project';
+import Certificate from './certificate/Certificate';
+
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -74,12 +76,19 @@ function Portfolio() {
           <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          /> 
           <div className='mb-2' />
           <Awards
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
+          <div className='mb-2' />
+          <Certificate
+            className='my-5'
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <br />
         </Col>
       </Row>
     </Container>
