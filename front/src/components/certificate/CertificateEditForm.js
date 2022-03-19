@@ -27,9 +27,10 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
       description,
       when_date: filterDate(when_date),
     });
+
     const res = await Api.get('certificatelist', user_id);
-    const updatedProject = res.data;
-    updatedProject.when_date = filterDate(when_date);
+    const updatedCertificate = res.data;
+    setCertificate(updatedCertificate);
     setIsEditing(false);
   };
 
