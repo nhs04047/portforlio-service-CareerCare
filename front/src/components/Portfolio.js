@@ -1,10 +1,21 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Col, Row } from 'react-bootstrap';
 
+<<<<<<< HEAD
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+=======
+import { UserStateContext } from '../App';
+import * as Api from '../api';
+import User from './user/User';
+// import Project from './project/Project';
+import Certificate from './certificate/Certificate';
+// import Awards from './award/Awards';
+// import Educations from './education/Educations';
+// import Project from './project/Project';
+>>>>>>> certificate-mvp
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -18,7 +29,7 @@ function Portfolio() {
 
   const fetchPorfolioOwner = async (ownerId) => {
     // 유저 id를 가지고 "/users/유저id" 엔드포인트로 요청해 사용자 정보를 불러옴.
-    const res = await Api.get("users", ownerId);
+    const res = await Api.get('users', ownerId);
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
     // portfolioOwner을 해당 사용자 정보로 세팅함.
@@ -30,7 +41,7 @@ function Portfolio() {
   useEffect(() => {
     // 전역 상태의 user가 null이라면 로그인이 안 된 상태이므로, 로그인 페이지로 돌림.
     if (!userState.user) {
-      navigate("/login", { replace: true });
+      navigate('/login', { replace: true });
       return;
     }
 
@@ -48,24 +59,54 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return 'loading...';
   }
+<<<<<<< HEAD
 
+=======
+  // 컴포넌트를 불러와서 페이지에 표시해줌.
+>>>>>>> certificate-mvp
   return (
     <Container fluid>
       <Row>
-        <Col md="3" lg="3">
+        <Col md='3' lg='3'>
           <User
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
         <Col>
+<<<<<<< HEAD
 
           <div style={{ textAlign: "center" }}>
             학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
           </div>
 
+=======
+          {/* <Educations
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <div className='mb-2' />
+          <Awards
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          /> */}
+          <div className='mb-2' />
+          <Certificate
+            className='my-5'
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          {/* <div>
+            <Project
+              className='my-2'
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div> */}
+          <br />
+>>>>>>> certificate-mvp
         </Col>
       </Row>
     </Container>
