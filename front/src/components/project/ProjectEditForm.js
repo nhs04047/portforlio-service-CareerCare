@@ -7,8 +7,8 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   // useState로 title, description, from_date, to_date 생성
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
-  const [from_date, setFrom_date] = useState(new Date());
-  const [to_date, setTo_date] = useState(new Date());
+  const [from_date, setFrom_date] = useState(new Date(project.from_date));
+  const [to_date, setTo_date] = useState(new Date(project.to_date));
 
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(

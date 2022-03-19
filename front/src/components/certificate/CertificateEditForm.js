@@ -9,7 +9,7 @@ import * as Api from '../../api';
 function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
   const [title, setTitle] = useState(certificate.title);
   const [description, setDescription] = useState(certificate.description);
-  const [when_date, setWhen_date] = useState(new Date());
+  const [when_date, setWhen_date] = useState(new Date(certificate.when_date));
 
   // new Date로 생성한 date에서 yyyy-mm-dd로 date form을 주는 함수
   function filterDate(d) {
@@ -29,7 +29,7 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
     });
     const res = await Api.get('certificatelist', user_id);
     const updatedProject = res.data;
-    setCertificate(updatedProject);
+    updatedProject.when_date = filterDate(when_date);
     setIsEditing(false);
   };
 
