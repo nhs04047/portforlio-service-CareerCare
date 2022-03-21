@@ -1,0 +1,8 @@
+.card-text > .container-fluid {
+  padding: 0;
+  margin: 0;
+}
+
+.card-text > .container-fluid .card-body {
+  margin: 0;
+}

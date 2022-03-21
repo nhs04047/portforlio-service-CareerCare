@@ -5,15 +5,6 @@ import ProjectAddForm from './ProjectAddForm';
 import ProjectList from './ProjectList';
 import * as Api from '../../api';
 
-// test위해 작성 backend와 연결 후 정상작동하면 삭제 예정
-const initProjectList = [
-  {
-    title: '제목예시1',
-    description: '내용 예시1',
-    from_date: '2022.03.15',
-    to_date: '2022.03.16',
-  },
-];
 /**
  * Project의 main Component
  * isEditable이 true일 경우 편집, 추가 버튼 활성화
