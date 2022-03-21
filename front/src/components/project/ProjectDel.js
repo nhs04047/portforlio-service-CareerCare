@@ -5,8 +5,9 @@ import * as Api from '../../api';
 function ProjectDel({ project, portfolioOwnerId, setProject }) {
   const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleClose = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     // console.log(portfolioOwnerId);
     // const user_id = portfolioOwnerId;
@@ -37,7 +38,7 @@ function ProjectDel({ project, portfolioOwnerId, setProject }) {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleClose}>
+          <Button variant='primary' onClick={handleDelete}>
             Delete
           </Button>
         </Modal.Footer>
