@@ -15,13 +15,13 @@ class Education {
   }
 
   //db에서 id로 학력 정보 찾기 적용
-  static async findById({educationId}){
+  static async findOneById({educationId}){
     const education = await EducationModel.findOne({ id : educationId});
     return education
   }
 
   //db에서 user_id로 학력 정보 찾기 적용
-  static async findByUserId({ user_id }) {
+  static async findManyByUserId({ user_id }) {
     const education = await EducationModel.find({ user_id });
     return education;
   }
