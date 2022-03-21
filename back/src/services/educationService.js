@@ -28,7 +28,7 @@ class EducationService{
 
   //db에서 id로 학력정보 찾기
   static async getEducation({educationId}){
-    const education = await Education.findById({educationId})
+    const education = await Education.findOneById({educationId})
     if(!education){
       const errorMessage = "해당 id를 가진 학력 정보는 없습니다."
       return { errorMessage }
@@ -38,13 +38,13 @@ class EducationService{
 
   // db에서 user_id로 학력 정보들 찾기
   static async getEducationList({ user_id }) {
-    const educations = await Education.findByUserId({ user_id });
+    const educations = await Education.findManyByUserId({ user_id });
     return educations;
   }
 
   //db에서 학력 정보 id로 데이터 유무 판단, 객체 요소가 null이 아니면 변경사항 보내기
   static async setEducation({educationId, toUpdate }) {
-    let education = await Education.findById({ educationId });
+    let education = await Education.findOneById({ educationId });
 
     if (!education) {
       const errorMessage =
@@ -52,22 +52,13 @@ class EducationService{
       return { errorMessage };
     }
 
-    if (toUpdate.school) {
-      const fieldToUpdate = "school";
-      const newValue = toUpdate.school;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.major) {
-      const fieldToUpdate = "major";
-      const newValue = toUpdate.major;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.position) {
-      const fieldToUpdate = "position";
-      const newValue = toUpdate.position;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i<myKeys.length; i++) {
+      if(toUpdate[myKeys[i]]) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        education = await Education.update({educationId, fieldToUpdate, newValue});
+      }
     }
 
     return education;

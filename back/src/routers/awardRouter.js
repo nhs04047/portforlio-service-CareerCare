@@ -17,9 +17,9 @@ awardRouter.use(login_required);
 awardRouter.post("/award/create", async function(req, res, next){
   try {
     // req에서 데이터 가져오기(user_id, title, description)
-    const user_id = req.body.user_id;
-    const title = req.body.title;
-    const description = req.body.description;
+    const {user_id} = req.body;
+    const {title} = req.body;
+    const {description} = req.body;
 
     // 위 데이터를 AwardService -> Award -> DB에 저장
     const newAward = await AwardService.addAward({user_id, title, description});

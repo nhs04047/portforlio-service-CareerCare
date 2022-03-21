@@ -21,7 +21,7 @@ class CertificateService {
   }
   // 자격증 id에 해당하는 자격증이 db에 있다면 정보를 넘겨준다. 없다면 에러처리
   static async getCertificate({certificateId}) {
-    const certificate = await Certificate.findById({certificateId});
+    const certificate = await Certificate.findOneById({certificateId});
     if (!certificate) {
       const message = "해당 id를 가진 자격증 데이터가 없습니다.";
       return {message};
@@ -30,32 +30,26 @@ class CertificateService {
   }
 
   static async setCertificate({certificateId, toUpdate}) {
-    let certificate = await Certificate.findById({certificateId});
+    let certificate = await Certificate.findOneById({certificateId});
     if (!certificate) {
       const message = "해당 id를 가진 자격증 데이터가 없습니다.";
       return {message};
     }
-    if(toUpdate.title){
-      const fieldToUpdate = "title";
-      const newValue = toUpdate.title;
-      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
-    }
-    if(toUpdate.description){
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
-    }
-    if(toUpdate.when_date){
-      const fieldToUpdate = "when_date";
-      const newValue = toUpdate.when_date;
-      certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
+
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i<myKeys.length; i++) {
+      if(toUpdate[myKeys[i]]) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        certificate = await Certificate.update({certificateId, fieldToUpdate, newValue});
+      }
     }
 
     return certificate;
   }
 
   static async getCertificateList({user_id}) {
-    const certificates = await Certificate.findByUserId({user_id});
+    const certificates = await Certificate.findManyByUserId({user_id});
     return certificates;
   }
 }
