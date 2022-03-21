@@ -69,7 +69,7 @@ class AwardService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!isDataDeleted) {
       const errorMessage =
-        "해당 id를 가진 수상 데이터는 없습니다.";
+        "해당 id를 가진 데이터는 없습니다.";
       return { errorMessage };
     }
 
