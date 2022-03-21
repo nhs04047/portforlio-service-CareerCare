@@ -6,28 +6,29 @@ class Project {
        *새로운 project를 생성하고 return하는 함수
        */
       static async create({ newProject }) {
-        const createdNewProject = await ProjectModel.create(newProject);
-        return createdNewProject;
+        return ProjectModel.create(newProject);
       }
 
       /*
-       * findById()
+       * findOneById()
        *project 컬렉션에서 project_id와 매칭되는 document 하나를 찾고 return하는 함수
        */
-      static async findById({ projectId }) {
-        const project = await ProjectModel.findOne({ id: projectId });
-        return project;
+      static async findOneById({ projectId }) {
+        return ProjectModel.findOne({ id: projectId });
       }
 
       /*
-       * findByUserId()
+       * findManyByUserId()
        *매개변수로 보낸 user_id와 매칭되는 project 컬렉션의 documents를 return하는 함수
        */
-      static async findByUserId({user_id}) {
-        console.log('모델 유저아이디',user_id)
-        const projectList = await ProjectModel.find({user_id}).exec();
-        console.log(projectList);
-        return projectList;
+      static async findManyByUserId({user_id}) {
+        return ProjectModel.find({user_id});
+      }
+
+
+
+      static async deleteOneProject({ projectId }){
+        return ProjectModel.deleteOne({ id: projectId });
       }
 
       /*

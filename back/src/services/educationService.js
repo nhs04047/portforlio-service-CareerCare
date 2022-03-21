@@ -52,22 +52,13 @@ class EducationService{
       return { errorMessage };
     }
 
-    if (toUpdate.school) {
-      const fieldToUpdate = "school";
-      const newValue = toUpdate.school;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.major) {
-      const fieldToUpdate = "major";
-      const newValue = toUpdate.major;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.position) {
-      const fieldToUpdate = "position";
-      const newValue = toUpdate.position;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i<myKeys.length; i++) {
+      if(toUpdate[myKeys[i]]) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        education = await Education.update({educationId, fieldToUpdate, newValue});
+      }
     }
 
     return education;
