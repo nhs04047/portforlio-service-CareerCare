@@ -64,6 +64,19 @@ class EducationService{
     return education;
   }
 
+    // db에서 educationId로 학력 정보를 찾아 삭제
+    static async deleteEducation({ educationId }) {
+      const isDataDeleted = await Education.deleteOneById({ educationId });
+  
+      // db에서 찾지 못한 경우, 에러 메시지 반환
+      if (!isDataDeleted) {
+        const errorMessage =
+          "해당 id를 가진 데이터는 없습니다.";
+        return { errorMessage };
+      }
+  
+      return { status: "ok" };
+    }
 }
 
 export { EducationService };
