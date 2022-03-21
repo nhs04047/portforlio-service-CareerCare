@@ -24,7 +24,7 @@ class projectService {
    *
    */
   static async getProject({projectId}) {
-    const project = await Project.findById({projectId});
+    const project = await Project.findOneById({projectId});
     return project;
   }
 
@@ -33,31 +33,21 @@ class projectService {
    *
    */
   static async setProject({projectId, toUpdate}) {
-    let project = await Project.findById({projectId});
-    console.log(project);
+    let project = await Project.findOneById({projectId});
 
-    if (toUpdate.title) {
-      const fieldToUpdate = "title";
-      const newValue = toUpdate.title;
-      project = await Project.update({projectId, fieldToUpdate, newValue});
+    if (!project) {
+      const errorMessage =
+      "해당 id의 프로젝트는 없습니다.";
+      return { errorMessage };
     }
 
-    if (toUpdate.description) {
-      const fieldToUpdate = "description";
-      const newValue = toUpdate.description;
-      project = await Project.update({projectId, fieldToUpdate, newValue});
-    }
-
-    if (toUpdate.from_date) {
-      const fieldToUpdate = "from_date";
-      const newValue = toUpdate.from_date;
-      project = await Project.update({projectId, fieldToUpdate, newValue});
-    }
-
-    if (toUpdate.to_date) {
-      const fieldToUpdate = "to_date";
-      const newValue = toUpdate.to_date;
-      project = await Project.update({projectId, fieldToUpdate, newValue});
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i<myKeys.length; i++) {
+      if(toUpdate[myKeys[i]]) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        project = await Project.update({projectId, fieldToUpdate, newValue});
+      }
     }
 
     return project;
@@ -68,10 +58,15 @@ class projectService {
    *
    */
   static async getProjectList({user_id}) {
-    console.log("서비스 유저아이디", user_id);
-    const projectList = await Project.findByUserId({user_id});
+    const projectList = await Project.findManyByUserId({user_id});
     return projectList;
   }
+
+  static async deleteProject({projectId}) {
+    const project = await Project.deleteOneProject({projectId});
+    return project;
+  }
+
 }
 
 export {projectService};

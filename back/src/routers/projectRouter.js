@@ -19,11 +19,11 @@ projectRouter.use(login_required);
       }
   
       // req (request) 에서 데이터 가져오기
-      const user_id = req.body.user_id;
-      const title = req.body.title;
-      const description = req.body.description;
-      const from_date = req.body.from_date;
-      const to_date = req.body.to_date;
+      const {user_id} = req.body;
+      const {title} = req.body;
+      const {description} = req.body;
+      const {from_date} = req.body;
+      const {to_date} = req.body;
   
       // 위 데이터를 프로젝트 db에 추가하기
       const newProject = await projectService.addProject({
@@ -33,7 +33,6 @@ projectRouter.use(login_required);
         from_date,
         to_date,
       });
-      console.log(newProject);
       if (newProject.errorMessage) {
         throw new Error(newProject.errorMessage);
       }
@@ -59,7 +58,6 @@ projectRouter.use(login_required);
         }
   
         res.status(200).send(currentProject);
-        console.log(currentProject);
     } catch (error) {
       next(error);
     }
@@ -80,7 +78,6 @@ projectRouter.use(login_required);
       const from_date = req.body.from_date ?? null;
       const to_date = req.body.to_date ?? null;
 
-      console.log(title, description, from_date, to_date)
       const toUpdate = {title, description, from_date, to_date};
 
       // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
@@ -101,9 +98,26 @@ projectRouter.use(login_required);
    */
   projectRouter.get("/projectlist/:user_id", async function (req, res, next){
     try {
-      const user_id = req.params.user_id;
+      const {user_id} = req.params;
       const projectList=await projectService.getProjectList({user_id});
       res.status(200).send(projectList);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  projectRouter.delete("/projects/:id",async function (req, res, next) {
+    try {
+        // url로부터 project_Id 를 추출함.
+        const projectId = req.params.id;
+        await projectService.deleteProject({projectId});
+        const projectList=await projectService.getProjectList({user_id});
+  
+        if (currentProject.errorMessage) {
+          throw new Error(currentProject.errorMessage);
+        }
+  
+        res.status(200).send(projectList);
     } catch (error) {
       next(error);
     }
