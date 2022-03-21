@@ -14,10 +14,10 @@ certificateRouter.use(login_required);
 certificateRouter.post("/certificate/create", async function(req,res,next) {
   try {
     // id, title, description, when_date 클라이언트에게 받는다.
-    const user_id = req.body.user_id;
-    const title = req.body.title;
-    const description = req.body.description;
-    const when_date = req.body.when_date;
+    const {user_id} = req.body;
+    const {title} = req.body;
+    const {description} = req.body;
+    const {when_date} = req.body;
 
     // db로 가기 전 각 자격증을 구별하기 위해서 CertificateService로 넘겨준다.
     const newCertificate = await CertificateService.addCertificate({user_id, title, description, when_date});
