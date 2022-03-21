@@ -8,14 +8,11 @@ import {AwardModel} from "../schemas/award";
 class Award {
   // 새로운 수상이력에 대한 정보를 DB에 만들고 return
   static async create({newAward}) {
-    const createdNewAward = await AwardModel.create(newAward);
-    return createdNewAward;
+    return  AwardModel.create(newAward);
   }
   // DB에 awardId와 같은 award document 하나의 객체를 return
-  static async findById({awardId}) {
-    const award = await AwardModel.findOne({id: awardId});
-
-    return award;
+  static async findOneById({awardId}) {
+    return AwardModel.findOne({id: awardId});
   }
   
   // DB에 awardId와 같은 award document 하나의 객체를 넘어온 파라미터에 맞게 수정하여 return
@@ -35,9 +32,8 @@ class Award {
   }
 
   // AwardModel.find을 사용하여 db에서 해당 user_id에 알맞는 award 목록을 획득.
-  static async findByUserId({user_id}) {
-    const awards = await AwardModel.find({user_id});
-    return awards;
+  static async findManyByUserId({user_id}) {
+    return AwardModel.find({user_id});
   }
 }
 
