@@ -8,7 +8,10 @@ function ProjectDel({ project, portfolioOwnerId, setProject }) {
   const handleShow = () => setShow(true);
   const handleClose = async (e) => {
     e.preventDefault();
-    const user_id = portfolioOwnerId;
+    // console.log(portfolioOwnerId);
+    // const user_id = portfolioOwnerId;
+    const user_id = project.user_id;
+    console.log(user_id);
 
     await Api.del(`projects/${project.id}`);
 

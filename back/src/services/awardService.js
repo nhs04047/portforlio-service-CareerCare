@@ -42,6 +42,7 @@ class AwardService {
       return { errorMessage };
     }
 
+    // Object.keys를 사용해 field의 수가 얼마가 되는 반복문을 이용해 간결하게 update를 진행한다.
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
       if (toUpdate[myKeys[i]]) {
@@ -59,6 +60,19 @@ class AwardService {
     const awards = await Award.findManyByUserId({ user_id });
 
     return awards;
+  }
+
+  // awardId와 알맞는 award 데이터를 삭제하고 성공 메시지를 반환하는데, 알맞는 ID가 없을 시 에러메시지 반환
+  static async deleteAward({ awardId }) {
+    const isDataDeleted = await Award.deleteOneById({ awardId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!isDataDeleted) {
+      const errorMessage = '해당 id를 가진 수상 데이터는 없습니다.';
+      return { errorMessage };
+    }
+
+    return { status: 'ok' };
   }
 }
 

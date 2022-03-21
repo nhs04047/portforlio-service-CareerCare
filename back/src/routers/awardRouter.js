@@ -81,4 +81,23 @@ awardRouter.get('/awardlist/:user_id', async function (req, res, next) {
   }
 });
 
+// 해당 award 아이디에 맞는 award를 삭제하고 성공 메시지 반환
+awardRouter.delete('/awards/:id', async function (req, res, next) {
+  try {
+    // req (request) 에서 id 가져오기
+    const awardId = req.params.id;
+
+    // 위 id를 이용하여 db에서 데이터 삭제하기
+    const result = await AwardService.deleteAward({ awardId });
+
+    if (result.errorMessage) {
+      throw new Error(result.errorMessage);
+    }
+
+    res.status(200).send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { awardRouter };
