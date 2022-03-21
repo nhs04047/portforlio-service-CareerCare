@@ -4,36 +4,33 @@
   2022/03/17
 */
 
-import {CertificateModel} from "../schemas/certificate";
+import { CertificateModel } from '../schemas/certificate';
 
 class Certificate {
   // db 모델에 넘어온 정보들을 create 저장하고 그 내용을 return
-  static async create({newCertificate}) {
-    const createdNewCertificate = await CertificateModel.create(newCertificate)
-
-    return createdNewCertificate;
+  static async create({ newCertificate }) {
+    return CertificateModel.create(newCertificate);
   }
   // db에 id가 certificateId에 해당하는 자격증 정보를 반환한다. 실패시 null 리턴
-  static async findById({certificateId}){
-    const certificate = await CertificateModel.findOne({id:certificateId});
-    return certificate;
+  static async findOneById({ certificateId }) {
+    return CertificateModel.findOne({ id: certificateId });
   }
 
-  static async update({certificateId, fieldToUpdate, newValue}) {
-    const filter = { id : certificateId };
-    const update = {[fieldToUpdate]: newValue};
-    const option = {returnOriginal: false};
+  static async update({ certificateId, fieldToUpdate, newValue }) {
+    const filter = { id: certificateId };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
     const updateCertificate = await CertificateModel.findOneAndUpdate(
-      filter, update, option
-    )
+      filter,
+      update,
+      option
+    );
     return updateCertificate;
   }
 
-  static async findByUserId({user_id}) {
-    const certificates = await CertificateModel.find({user_id});
-    return certificates;
+  static async findManyByUserId({ user_id }) {
+    return CertificateModel.find({ user_id });
   }
 }
 
-
-export {Certificate};
+export { Certificate };

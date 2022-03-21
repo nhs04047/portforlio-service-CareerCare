@@ -35,6 +35,7 @@ function Project({ portfolioOwnerId, isEditable }) {
               project={project}
               isEditable={isEditable}
               setProject={setProject}
+              portfolioOwnerId={portfolioOwnerId}
             />
           </Card.Text>
           {isEditable && (

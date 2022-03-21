@@ -6,20 +6,18 @@ function ProjectDel({ project, portfolioOwnerId, setProject }) {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
-  const handleClose = async () => {
-    setShow(false);
-    await Api.del(`projects/${project.id}`);
-  };
+  const handleClose = async (e) => {
+    e.preventDefault();
+    const user_id = portfolioOwnerId;
 
-  // useEffect(() => {
-  //   const asynchronous = async () => {
-  //     await Api.del(`projects/${project.id}`);
-  //     // await Api.get('projectlist', portfolioOwnerId).then((res) =>
-  //     //   setProject(res.data)
-  //     // );
-  //   };
-  //   asynchronous();
-  // }, [show]);
+    await Api.del(`projects/${project.id}`);
+
+    const res = await Api.get('projectlist', user_id);
+    const updatedProject = res.data;
+
+    setProject(updatedProject);
+    setShow(false);
+  };
 
   return (
     <>

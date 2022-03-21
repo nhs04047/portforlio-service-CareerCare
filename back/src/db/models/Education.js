@@ -4,24 +4,23 @@
 2022/03/17
 김보현
 */
-import { EducationModel} from "../schemas/education";
+import { EducationModel } from '../schemas/education';
 
 class Education {
-
   //db에 학력 정보 생성 적용
-  static async create({newEducation}){
+  static async create({ newEducation }) {
     const createdNewEducation = await EducationModel.create(newEducation);
     return createdNewEducation;
   }
 
   //db에서 id로 학력 정보 찾기 적용
-  static async findById({educationId}){
-    const education = await EducationModel.findOne({ id : educationId});
-    return education
+  static async findOneById({ educationId }) {
+    const education = await EducationModel.findOne({ id: educationId });
+    return education;
   }
 
   //db에서 user_id로 학력 정보 찾기 적용
-  static async findByUserId({ user_id }) {
+  static async findManyByUserId({ user_id }) {
     const education = await EducationModel.find({ user_id });
     return education;
   }
@@ -41,4 +40,4 @@ class Education {
   }
 }
 
-export {Education}
+export { Education };

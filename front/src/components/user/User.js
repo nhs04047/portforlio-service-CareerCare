@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import UserEditForm from './UserEditForm';
+import ChangePw from './ChangePw';
 import UserCard from './UserCard';
 import * as Api from '../../api';
 
 function User({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);
+  const [editingPw, setEditingPw] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
 
@@ -27,8 +29,17 @@ function User({ portfolioOwnerId, isEditable }) {
           user={user}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
+          setEditingPw={setEditingPw}
         />
       )}
+      {editingPw ? (
+        <ChangePw
+          user={user}
+          setIsEditing={setIsEditing}
+          setUser={setUser}
+          setEditingPw={setEditingPw}
+        />
+      ) : null}
     </>
   );
 }
