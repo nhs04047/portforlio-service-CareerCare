@@ -42,6 +42,7 @@ class AwardService {
       return {errorMessage};
     }
 
+    // Object.keys를 사용해 field의 수가 얼마가 되는 반복문을 이용해 간결하게 update를 진행한다.
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i<myKeys.length; i++) {
       if(toUpdate[myKeys[i]]) {
@@ -61,6 +62,7 @@ class AwardService {
     return awards;
   }
 
+  // awardId와 알맞는 award 데이터를 삭제하고 성공 메시지를 반환하는데, 알맞는 ID가 없을 시 에러메시지 반환
   static async deleteAward({ awardId }) {
     const isDataDeleted = await Award.deleteOneById({ awardId });
 

@@ -53,6 +53,7 @@ class CertificateService {
     return certificates;
   }
 
+  // certificateId 알맞는 certificate 데이터를 삭제하고 성공 메시지를 반환하는데, 알맞는 ID가 없을 시 에러메시지 반환
   static async deleteCertificate({ certificateId }) {
     const isDataDeleted = await Certificate.deleteOneById({ certificateId });
 

@@ -30,8 +30,10 @@ class Certificate {
     return CertificateModel.find({user_id});
   }
 
+  // CertificateModel.deleteOne을 사용하여 db에서 해당 certificateId에 알맞는 데이터 삭제
   static async deleteOneById({ certificateId }) {
     const deleteResult = await CertificateModel.deleteOne({ id: certificateId });
+    // deleteResult의 반환 값이 deletedCount가 있는데, deletedCount 값이 1이면 삭제되었다는 의미이므로 true를 반환한다.
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
   }
