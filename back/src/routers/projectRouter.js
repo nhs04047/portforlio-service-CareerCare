@@ -108,16 +108,14 @@ projectRouter.use(login_required);
 
   projectRouter.delete("/projects/:id",async function (req, res, next) {
     try {
-        // url로부터 project_Id 를 추출함.
+        // url로부터 user_id와 project_Id 를 추출함.
         const projectId = req.params.id;
+        //projectId와 매칭되는 프로젝트 정보를 삭제함
         await projectService.deleteProject({projectId});
-        const projectList=await projectService.getProjectList({user_id});
-  
-        if (currentProject.errorMessage) {
-          throw new Error(currentProject.errorMessage);
-        }
-  
-        res.status(200).send(projectList);
+
+        res.status(200).json({
+          result:"ok",
+        });
     } catch (error) {
       next(error);
     }
