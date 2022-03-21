@@ -8,7 +8,7 @@ import CertificateDel from './CertificateDel';
  **기능 - certificate Card를 만들어준다
  * Card의 형태를 나타내줌
  */
-function CertificateCard({ certificate, isEditable, setCertificate }) {
+function CertificateCard({ isEditable, certificate, setCertificate }) {
   const { title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
