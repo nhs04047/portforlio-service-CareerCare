@@ -29,6 +29,12 @@ class Certificate {
   static async findManyByUserId({user_id}) {
     return CertificateModel.find({user_id});
   }
+
+  static async deleteOneById({ certificateId }) {
+    const deleteResult = await CertificateModel.deleteOne({ id: certificateId });
+    const isDataDeleted = deleteResult.deletedCount === 1;
+    return isDataDeleted;
+  }
 }
 
 

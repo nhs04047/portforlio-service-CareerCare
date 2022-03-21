@@ -52,6 +52,19 @@ class CertificateService {
     const certificates = await Certificate.findManyByUserId({user_id});
     return certificates;
   }
+
+  static async deleteCertificate({ certificateId }) {
+    const isDataDeleted = await Certificate.deleteOneById({ certificateId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!isDataDeleted) {
+      const errorMessage =
+        "해당 id를 가진 수상 데이터는 없습니다.";
+      return { errorMessage };
+    }
+
+    return { status: "ok" };
+  }
 }
 
 export {CertificateService};

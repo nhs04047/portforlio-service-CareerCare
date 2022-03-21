@@ -35,6 +35,12 @@ class Award {
   static async findManyByUserId({user_id}) {
     return AwardModel.find({user_id});
   }
+
+  static async deleteOneById({ awardId }) {
+    const deleteResult = await AwardModel.deleteOne({ id: awardId });
+    const isDataDeleted = deleteResult.deletedCount === 1;
+    return isDataDeleted;
+  }
 }
 
 export {Award}
