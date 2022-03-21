@@ -25,10 +25,6 @@ class Project {
     return ProjectModel.find({ user_id });
   }
 
-  static async deleteOneProject({ projectId }) {
-    return ProjectModel.deleteOne({ id: projectId });
-  }
-
   /*
    * update()
    *기존의 project를 수정하고 수정한 project를 return 하는 함수
@@ -48,6 +44,16 @@ class Project {
       option
     );
     return updatedProject;
+  }
+
+  /*
+   * deleteOneById()
+   *project 컬렉션에서 project_id와 매칭되는 document 하나를 삭제하는 함수
+   */
+  static async deleteOneById({ projectId }) {
+    const deleteResult = await ProjectModel.deleteOne({ id: projectId });
+    const isDataDeleted = deleteResult.deletedCount === 1;
+    return isDataDeleted;
   }
 }
 

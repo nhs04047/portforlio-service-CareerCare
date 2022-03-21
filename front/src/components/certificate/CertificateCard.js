@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 
 import CertificateEditForm from './CertificateEditForm';
+import CertificateDel from './CertificateDel';
+
 /**작성자 - 이예슬
  **기능 - certificate Card를 만들어준다
  * Card의 형태를 나타내줌
  */
-function CertificateCard({
-  certificate,
-  isEditable,
-  setCertificate,
-  portfolioOwnerId,
-}) {
+function CertificateCard({ certificate, isEditable, setCertificate }) {
   const { title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
@@ -43,6 +40,12 @@ function CertificateCard({
                 >
                   편집
                 </Button>
+                <div className='mb-2' />
+
+                <CertificateDel
+                  certificate={certificate}
+                  setCertificate={setCertificate}
+                />
               </Col>
             )}
           </Row>

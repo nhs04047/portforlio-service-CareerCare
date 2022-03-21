@@ -39,12 +39,7 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
                   편집
                 </Button>
                 <div className='mb-2' />
-
-                <ProjectDel
-                  project={project}
-                  setProject={setProject}
-                  portfolioOwnerId={portfolioOwnerId}
-                />
+                <ProjectDel project={project} setProject={setProject} />
               </Col>
             )}
           </Row>

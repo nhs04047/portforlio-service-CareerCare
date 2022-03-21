@@ -106,18 +106,23 @@ projectRouter.get('/projectlist/:user_id', async function (req, res, next) {
   }
 });
 
+/*
+ * project 삭제
+ * delete 요청 - /projects/:id
+ */
 projectRouter.delete('/projects/:id', async function (req, res, next) {
   try {
-    // url로부터 project_Id 를 추출함.
+    // url로부터 projectId 를 추출함.
     const projectId = req.params.id;
-    await projectService.deleteProject({ projectId });
-    const projectList = await projectService.getProjectList({ user_id });
 
-    if (currentProject.errorMessage) {
-      throw new Error(currentProject.errorMessage);
+    //projectId와 매칭되는 프로젝트 정보를 삭제함
+    const result = await projectService.deleteProject({ projectId });
+
+    if (result.errorMessage) {
+      throw new Error(result.errorMessage);
     }
 
-    res.status(200).send(projectList);
+    res.status(200).send(result);
   } catch (error) {
     next(error);
   }

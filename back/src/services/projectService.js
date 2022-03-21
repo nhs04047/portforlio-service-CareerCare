@@ -60,9 +60,19 @@ class projectService {
     return projectList;
   }
 
+  /*
+   * deleteProject
+   *
+   */
   static async deleteProject({ projectId }) {
-    const project = await Project.deleteOneProject({ projectId });
-    return project;
+    const isDataDeleted = await Project.deleteOneById({ projectId });
+
+    if (!isDataDeleted) {
+      const errorMessage = '해당 id를 가진 데이터는 없습니다.';
+      return { errorMessage };
+    }
+
+    return { status: 'ok' };
   }
 }
 

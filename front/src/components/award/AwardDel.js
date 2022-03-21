@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
-function ProjectDel({ project, setProject }) {
+function AwardDel({ award, setAwards }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleDelete = async (e) => {
     e.preventDefault();
-    const user_id = project.user_id;
+    const user_id = award.user_id;
 
-    await Api.del(`projects/${project.id}`);
+    await Api.del(`awards/${award.id}`);
 
-    const res = await Api.get('projectlist', user_id);
-    const updatedProject = res.data;
+    const res = await Api.get('awardlist', user_id);
+    const updatedAward = res.data;
 
-    await setProject(updatedProject);
+    await setAwards(updatedAward);
     setShow(false);
   };
 
@@ -28,7 +28,7 @@ function ProjectDel({ project, setProject }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>프로젝트 삭제</Modal.Title>
+          <Modal.Title>수상이력 삭제</Modal.Title>
         </Modal.Header>
         <Modal.Body>정말로 삭제하시겠습니까?</Modal.Body>
         <Modal.Footer>
@@ -44,4 +44,4 @@ function ProjectDel({ project, setProject }) {
   );
 }
 
-export default ProjectDel;
+export default AwardDel;
