@@ -4,14 +4,12 @@
 2022/03/17
 김보현
 */
-import {Education} from "../db";
-import { v4 as uuidv4 } from "uuid";
+import { Education } from '../db';
+import { v4 as uuidv4 } from 'uuid';
 
-class EducationService{
-  
+class EducationService {
   // db에 학력 정보 생성
-  static async addEducation({user_id, school, major, position}){
-    
+  static async addEducation({ user_id, school, major, position }) {
     const id = uuidv4();
 
     const newEducation = {
@@ -19,21 +17,21 @@ class EducationService{
       user_id,
       school,
       major,
-      position
+      position,
     };
-    const createdNewEducation = await Education.create({newEducation});
+    const createdNewEducation = await Education.create({ newEducation });
 
     return createdNewEducation;
   }
 
   //db에서 id로 학력정보 찾기
-  static async getEducation({educationId}){
-    const education = await Education.findOneById({educationId})
-    if(!education){
-      const errorMessage = "해당 id를 가진 학력 정보는 없습니다."
-      return { errorMessage }
+  static async getEducation({ educationId }) {
+    const education = await Education.findOneById({ educationId });
+    if (!education) {
+      const errorMessage = '해당 id를 가진 학력 정보는 없습니다.';
+      return { errorMessage };
     }
-    return education
+    return education;
   }
 
   // db에서 user_id로 학력 정보들 찾기
@@ -43,40 +41,42 @@ class EducationService{
   }
 
   //db에서 학력 정보 id로 데이터 유무 판단, 객체 요소가 null이 아니면 변경사항 보내기
-  static async setEducation({educationId, toUpdate }) {
+  static async setEducation({ educationId, toUpdate }) {
     let education = await Education.findOneById({ educationId });
 
     if (!education) {
-      const errorMessage =
-      "해당 id를 가진 학력 정보는 없습니다.";
+      const errorMessage = '해당 id를 가진 학력 정보는 없습니다.';
       return { errorMessage };
     }
 
     const myKeys = Object.keys(toUpdate);
-    for (let i = 0; i<myKeys.length; i++) {
-      if(toUpdate[myKeys[i]]) {
+    for (let i = 0; i < myKeys.length; i++) {
+      if (toUpdate[myKeys[i]]) {
         const fieldToUpdate = myKeys[i];
         const newValue = toUpdate[myKeys[i]];
-        education = await Education.update({educationId, fieldToUpdate, newValue});
+        education = await Education.update({
+          educationId,
+          fieldToUpdate,
+          newValue,
+        });
       }
     }
 
     return education;
   }
 
-    // db에서 educationId로 학력 정보를 찾아 삭제
-    static async deleteEducation({ educationId }) {
-      const isDataDeleted = await Education.deleteOneById({ educationId });
-  
-      // db에서 찾지 못한 경우, 에러 메시지 반환
-      if (!isDataDeleted) {
-        const errorMessage =
-          "해당 id를 가진 데이터는 없습니다.";
-        return { errorMessage };
-      }
-  
-      return { status: "ok" };
+  // db에서 educationId로 학력 정보를 찾아 삭제
+  static async deleteEducation({ educationId }) {
+    const isDataDeleted = await Education.deleteOneById({ educationId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!isDataDeleted) {
+      const errorMessage = '해당 id를 가진 데이터는 없습니다.';
+      return { errorMessage };
     }
+
+    return { status: 'ok' };
+  }
 }
 
 export { EducationService };

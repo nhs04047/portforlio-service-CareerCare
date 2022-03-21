@@ -1,11 +1,11 @@
-import {ProjectModel} from "../schemas/project";
+import { ProjectModel } from '../schemas/project';
 
 class Project {
   /*
    * create()
    *새로운 project를 생성하고 return하는 함수
    */
-  static async create({newProject}) {
+  static async create({ newProject }) {
     return ProjectModel.create(newProject);
   }
 
@@ -13,16 +13,16 @@ class Project {
    * findOneById()
    *project 컬렉션에서 project_id와 매칭되는 document 하나를 찾고 return하는 함수
    */
-  static async findOneById({projectId}) {
-    return ProjectModel.findOne({id: projectId});
+  static async findOneById({ projectId }) {
+    return ProjectModel.findOne({ id: projectId });
   }
 
   /*
    * findManyByUserId()
    *매개변수로 보낸 user_id와 매칭되는 project 컬렉션의 documents를 return하는 함수
    */
-  static async findManyByUserId({user_id}) {
-    return ProjectModel.find({user_id});
+  static async findManyByUserId({ user_id }) {
+    return ProjectModel.find({ user_id });
   }
 
   /*
@@ -33,10 +33,10 @@ class Project {
    *2. update 변수 : 수정 할 내용
    *3. option 변수 : 기본값 false, 값이 true인 경우 수정된 문서를 반환한다.
    */
-  static async update({projectId, fieldToUpdate, newValue}) {
-    const filter = {id: projectId};
-    const update = {[fieldToUpdate]: newValue};
-    const option = {returnOriginal: false};
+  static async update({ projectId, fieldToUpdate, newValue }) {
+    const filter = { id: projectId };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
 
     const updatedProject = await ProjectModel.findOneAndUpdate(
       filter,
@@ -50,11 +50,11 @@ class Project {
    * deleteOneById()
    *project 컬렉션에서 project_id와 매칭되는 document 하나를 삭제하는 함수
    */
-  static async deleteOneById({projectId}) {
-    const deleteResult = await ProjectModel.deleteOne({id: projectId});
+  static async deleteOneById({ projectId }) {
+    const deleteResult = await ProjectModel.deleteOne({ id: projectId });
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
   }
 }
 
-export {Project};
+export { Project };
