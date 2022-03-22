@@ -14,8 +14,6 @@ function ChangePw({ user, setEditingPw, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`현재 비밀번호 : ${pw}`)
-    console.log(`새 비밀번호 : ${newPw}`)
 
     // // "users/password:id" PUT 요청
     const res = await Api.put(`users/password/${user.id}`, {

@@ -23,6 +23,7 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
               <br />
               <span className='text-muted'>{description}</span>
               <br />
+              <span className='text-muted'>링크: </span>
               <a href={projectLink} target="__blank">{projectLink}</a>
               <br />
               <span className='text-muted'>
