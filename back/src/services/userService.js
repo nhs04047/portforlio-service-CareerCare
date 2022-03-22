@@ -1,3 +1,12 @@
+/**
+ * 2022-03-22 user 탈퇴 기능 구현 
+ * - user 데이터 삭제 : 완료
+ * - user_id에 따른 mvp 정보 삭제 구현 : 진행중 
+ * 작성자 : 장정민
+ * 
+ */
+
+
 import { User } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
@@ -108,6 +117,30 @@ class userAuthService {
 
     return user;
   }
+
+  /*
+   * deleteUser
+   *
+   */
+  static async deleteUser({ user_id }) {
+    const user = await User.deleteOneUser({ user_id });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+    return user;
+  }
+
+  /*
+   // deleteUserAllInfo
+
+  static async deleteUserAllInfo({ user_id }){
+    await User.deleteAllByUserId({ user_id });
+  }
+  */
+
 }
 
 export { userAuthService };

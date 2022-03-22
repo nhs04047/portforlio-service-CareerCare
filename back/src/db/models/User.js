@@ -1,4 +1,8 @@
 import { UserModel } from "../schemas/user";
+import { AwardModel } from '../schemas/award';
+import { CertificateModel } from '../schemas/certificate';
+import { EducationModel } from '../schemas/education';
+import { ProjectModel } from '../schemas/project';
 
 class User {
   static async create({ newUser }) {
@@ -33,6 +37,28 @@ class User {
     );
     return updatedUser;
   }
+
+  /*
+   * deleteOneUser()
+   *user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
+   */
+   static async deleteOneUser({ user_id }) {
+     const user = await UserModel.deleteOne({ id: user_id });
+    return user;
+  }
+
+  /*
+   // deleteAllByUserId()
+   //각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
+   
+   static async deleteAllByUserId({ user_id }) {
+    await AwardModel.deleteMany({id: user_id});
+    await CertificateModel.deleteMany({id: user_id});
+    await EducationModel.deleteMany({id: user_id});
+    await ProjectModel.deleteMany({id: user_id});
+  }
+  */
+
 }
 
 export { User };
