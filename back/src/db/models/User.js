@@ -39,9 +39,9 @@ class User {
   }
 
 
-  static async findByPassword({nowPassword}) {
-    const password = await UserModel.findOne({password : nowPassword});
-    return password;
+  static async findByPassword({user_id}) {
+    const user = await UserModel.findOne({id:user_id});
+    return user.password;
   }
 
     /*

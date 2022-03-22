@@ -86,13 +86,11 @@ class userAuthService {
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id });
-
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
       if (toUpdate[myKeys[i]]) {
@@ -122,9 +120,19 @@ class userAuthService {
 
   static async setPassword({user_id, toUpdate}) {
     let user = await User.findById({user_id});
+    const password = toUpdate.pw;
+    const userPassword = await User.findByPassword({user_id});
+    // compare(새로 입력된 패스워드, 해쉬된 패스워드) -> 같으면 true, false
+    const compareResult = await bcrypt.compare(password, userPassword);
+
     if (!user) {
       const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
+    }
+
+    if(!compareResult) {
+      const errorMessage = '현재 비밀번호가 일치하지 않습니다.';
+      return {errorMessage};
     }
 
     if (toUpdate.newPw) {

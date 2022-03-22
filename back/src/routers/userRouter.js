@@ -152,7 +152,8 @@ userAuthRouter.put(
       const toUpdate = {pw, newPw};
 
       const updatedPassword = await userAuthService.setPassword({user_id, toUpdate});
-      console.log(updatedPassword);
+      // res.write(`<script>alert${updatedPassword}(</script>`);
+      // console.log(updatedPassword);
       res.status(200).json(updatedPassword);
     } catch (error) {
       next(error);
