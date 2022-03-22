@@ -44,7 +44,7 @@ class User {
     return user.password;
   }
 
-    /*
+  /*
    * deleteOneUser()
    *user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
    */
@@ -53,18 +53,18 @@ class User {
    return user;
   }
 
- /*
-  // deleteAllByUserId()
-  //각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
-  
+ 
+  /*
+   * deleteAllByUserId()
+   *각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
+   */
   static async deleteAllByUserId({ user_id }) {
-   await AwardModel.deleteMany({id: user_id});
-   await CertificateModel.deleteMany({id: user_id});
-   await EducationModel.deleteMany({id: user_id});
-   await ProjectModel.deleteMany({id: user_id});
+    await AwardModel.deleteMany({user_id});
+    await CertificateModel.deleteMany({user_id});
+    await EducationModel.deleteMany({user_id});
+    await ProjectModel.deleteMany({user_id});
   }
- */
-
+ 
 }
 
 export { User };

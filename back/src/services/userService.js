@@ -1,7 +1,7 @@
 /**
  * 2022-03-22 user 탈퇴 기능 구현 
  * - user 데이터 삭제 : 완료
- * - user_id에 따른 mvp 정보 삭제 구현 : 진행중 
+ * - user_id에 따른 mvp 정보 삭제 구현 : 완료 
  * 작성자 : 장정민
  * 
  */
@@ -148,7 +148,7 @@ class userAuthService {
     return true;
   }
 
-    /*
+  /*
    * deleteUser
    *
    */
@@ -163,13 +163,15 @@ class userAuthService {
       return user;
     }
   
-    /*
-     // deleteUserAllInfo
-  
+    
+  /*
+   * deleteUserAllInfo
+   *
+   */
     static async deleteUserAllInfo({ user_id }){
       await User.deleteAllByUserId({ user_id });
     }
-    */
+    
 }
 
 export { userAuthService };

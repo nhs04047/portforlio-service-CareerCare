@@ -170,14 +170,10 @@ userAuthRouter.delete(
       //유저 삭제하는 메소드 호출
       await userAuthService.deleteUser({ user_id });
 
-      /*
       //유저 mvp 정보 삭제하는 메소드 호출
       await userAuthService.deleteUserAllInfo({ user_id });
-      */
-
-      // 기본 페이지로 리다이렉트
-      // 기본 method가 GET으로 설정된 redirect를 해당 요청에서 사용하기 위해 303 status 부여
-      res.redirect(303, "/");
+      
+      res.status(200).send();
 
     } catch (error){
       next(error);
