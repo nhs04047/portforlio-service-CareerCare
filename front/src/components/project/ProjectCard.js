@@ -23,7 +23,8 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
               <br />
               <span className='text-muted'>{description}</span>
               <br />
-              <a href='#'>{projectLink}</a>
+              <a href={projectLink} target="__blank">{projectLink}</a>
+              <br />
               <span className='text-muted'>
                 {from_date} ~ {to_date}
               </span>
