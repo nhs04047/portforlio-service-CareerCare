@@ -5,7 +5,7 @@ import ProjectEditForm from './ProjectEditForm';
 import ProjectDel from './ProjectDel';
 
 function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
-  const { title, description, from_date, to_date } = project;
+  const { title, description, projectLink, from_date, to_date } = project;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -23,6 +23,7 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
               <br />
               <span className='text-muted'>{description}</span>
               <br />
+              <a href='#'>{projectLink}</a>
               <span className='text-muted'>
                 {from_date} ~ {to_date}
               </span>

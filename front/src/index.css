@@ -7,10 +7,10 @@ body {
   overflow-x: hidden;
 }
 
-.container-fluid {
-  width: 1390px !important;
-  padding: 0 !important;
-  margin: 0 0 70px 70px !important;
+.container-fluid  {
+    width: 1390px !important;
+    padding: 0 !important;
+    margin: 0 0 70px 70px !important;
 }
 
 .card-title {

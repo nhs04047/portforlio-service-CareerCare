@@ -17,6 +17,7 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   //   const [to_date, setTo_date] = useState(new Date());
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [projectLink, setProjectLink] = useState('');
   const [from_date, setFrom_date] = useState(new Date());
   const [to_date, setTo_date] = useState(new Date());
 
@@ -37,6 +38,7 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
         user_id,
         title,
         description,
+        projectLink,
         // from_date,
         // to_date,
         from_date: filterDate(from_date),
@@ -74,6 +76,15 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
               placeholder='상세내역'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className='mb-3'>
+            <Form.Control
+              type='text'
+              placeholder='프로젝트 링크'
+              value={projectLink}
+              onChange={(e) => setProjectLink(e.target.value)}
             />
           </Form.Group>
 
