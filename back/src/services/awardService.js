@@ -42,7 +42,7 @@ class AwardService {
       return { errorMessage };
     }
 
-    // Object.keys를 사용해 field의 수가 얼마가 되는 반복문을 이용해 간결하게 update를 진행한다.
+    // Object.keys를 사용해 field의 수가 많아도 반복문을 이용해 간결하게 update를 진행한다.
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
       if (toUpdate[myKeys[i]]) {
