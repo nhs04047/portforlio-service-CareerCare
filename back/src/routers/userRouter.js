@@ -138,6 +138,27 @@ userAuthRouter.get(
   }
 );
 
+userAuthRouter.put(
+  '/users/password/:id',
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+
+      const {pw} = req.body;
+      const {newPw} = req.body;
+
+      const toUpdate = {pw, newPw};
+
+      const updatedPassword = await userAuthService.setPassword({user_id, toUpdate});
+      console.log(updatedPassword);
+      res.status(200).json(updatedPassword);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
   res
@@ -146,5 +167,7 @@ userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+
 
 export { userAuthRouter };
