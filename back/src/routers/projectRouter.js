@@ -22,6 +22,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
     const { user_id } = req.body;
     const { title } = req.body;
     const { description } = req.body;
+    const { projectLink } = req.body;
     const { from_date } = req.body;
     const { to_date } = req.body;
 
@@ -30,6 +31,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
       user_id,
       title,
       description,
+      projectLink,
       from_date,
       to_date,
     });
