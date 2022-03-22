@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import * as Api from '../../api';
 
 function ChangePw({ user, setEditingPw, setUser }) {
   const [pw, setPw] = useState("");
   const [newPw, setNewPw] = useState("")
   const [confirmNewPw, setConfirmNewPw] = useState("");
+  const navigate = useNavigate();
   
   const curPwCheck = pw.length >= 1;
   const pwLengthCheck = newPw.length >= 4;
@@ -14,13 +16,21 @@ function ChangePw({ user, setEditingPw, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // // "users/password:id" PUT 요청
+    //"users/password:id" PUT 요청
     const res = await Api.put(`users/password/${user.id}`, {
         pw,
         newPw,
     });
+    console.log(user.id)
     const updatedUser = res.data;
+    if(!updatedUser) {
+      alert("현재 비밀번호가 일치하지 않습니다.");
+      window.location = '/';
+    }
+    else {
+      alert("비밀번호가 변경되었습니다!");
+      window.location = '/login';
+    }
     setUser(updatedUser);
     setEditingPw(false);
   };
