@@ -33,6 +33,11 @@ class User {
     );
     return updatedUser;
   }
+
+  static async findByPassword({nowPassword}) {
+    const password = await UserModel.findOne({password : nowPassword});
+    return password;
+  }
 }
 
 export { User };
