@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import { BsPersonCircle } from 'react-icons/bs';
 
+import UserDel from './user/UserDel';
+
 import { UserStateContext, DispatchContext } from '../App';
 // import { Navbar } from 'react-bootstrap';
 
@@ -42,25 +44,29 @@ function Header() {
               <Nav.Link onClick={() => navigate('/network')}>네트워크</Nav.Link>
             </Nav.Item>
             {isLogin && (
-              <Nav.Item id='my-nav-item'>
-                <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-              </Nav.Item>
+              <>
+                <Nav.Item id='my-nav-item'>
+                  <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                </Nav.Item>
+                <NavDropdown
+                  className='ms-1'
+                  title={<BsPersonCircle size='2rem' />}
+                  id='basic-nav-dropdown'
+                >
+                  <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
+                  <NavDropdown.Item href='#action/3.2'>
+                    Another action
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href='#action/3.3'>
+                    Something
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href='#action/3.4'>
+                    <UserDel />
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
             )}
-            <NavDropdown
-              className='ms-1'
-              title={<BsPersonCircle size='2rem' />}
-              id='basic-nav-dropdown'
-            >
-              <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.2'>
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='#action/3.4'>
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
