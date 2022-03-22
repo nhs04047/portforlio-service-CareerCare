@@ -26,7 +26,7 @@ function ChangePw({ user, setEditingPw, setUser }) {
   };
 
   return (
-    <Card className='mb-2'>
+    <Card className='mb-2 ms-3'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className='mb-3'>
