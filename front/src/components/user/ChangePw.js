@@ -3,7 +3,7 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import * as Api from '../../api';
 
 function ChangePw({ user, setEditingPw, setUser }) {
-  const [pw, setPw] = useState(false);
+  const [pw, setPw] = useState("");
   const [newPw, setNewPw] = useState("")
   const [confirmNewPw, setConfirmNewPw] = useState("");
   
@@ -14,24 +14,19 @@ function ChangePw({ user, setEditingPw, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`현재 비밀번호 : ${pw}`)
-    console.log(`새 비밀번호 : ${newPw}`)
 
-    // // "users/유저id" 엔드포인트로 PUT 요청함.
-    // const res = await Api.put(`users/${user.id}`, {
-    //     pw,
-    // });
-    // // 유저 정보는 response의 data임.
-    // const updatedUser = res.data;
-    // // 해당 유저 정보로 user을 세팅함.
-    // setUser(updatedUser);
-
-    // isEditing을 false로 세팅함.
+    // // "users/password:id" PUT 요청
+    const res = await Api.put(`users/password/${user.id}`, {
+        pw,
+        newPw,
+    });
+    const updatedUser = res.data;
+    setUser(updatedUser);
     setEditingPw(false);
   };
 
   return (
-    <Card className='mb-2'>
+    <Card className='mb-2 ms-3'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className='mb-3'>

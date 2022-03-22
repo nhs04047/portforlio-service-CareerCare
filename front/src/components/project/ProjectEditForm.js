@@ -7,6 +7,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   // useState로 title, description, from_date, to_date 생성
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
+  const [projectLink, setProjectLink] = useState(project.projectLink);
   const [from_date, setFrom_date] = useState(new Date(project.from_date));
   const [to_date, setTo_date] = useState(new Date(project.to_date));
 
@@ -22,6 +23,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
       user_id,
       title,
       description,
+      projectLink,
       from_date: filterDate(from_date),
       to_date: filterDate(to_date),
     });
@@ -53,6 +55,15 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
               placeholder='상세내역'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className='mb-3'>
+            <Form.Control
+              type='text'
+              placeholder='프로젝트 링크'
+              value={projectLink}
+              onChange={(e) => setProjectLink(e.target.value)}
             />
           </Form.Group>
 

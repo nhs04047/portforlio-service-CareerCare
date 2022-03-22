@@ -22,6 +22,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
     const { user_id } = req.body;
     const { title } = req.body;
     const { description } = req.body;
+    const { projectLink } = req.body;
     const { from_date } = req.body;
     const { to_date } = req.body;
 
@@ -30,6 +31,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
       user_id,
       title,
       description,
+      projectLink,
       from_date,
       to_date,
     });
@@ -75,10 +77,11 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
     // body data 로부터 업데이트할 project 정보를 추출함.
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
+    const projectLink = req.body.projectLink ?? null;
     const from_date = req.body.from_date ?? null;
     const to_date = req.body.to_date ?? null;
 
-    const toUpdate = { title, description, from_date, to_date };
+    const toUpdate = { title, description, projectLink, from_date, to_date };
 
     // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
     const Project = await projectService.setProject({ projectId, toUpdate });

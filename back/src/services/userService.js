@@ -118,29 +118,46 @@ class userAuthService {
     return user;
   }
 
-  /*
+
+
+  static async setPassword({user_id, toUpdate}) {
+    let user = await User.findById({user_id});
+    if (!user) {
+      const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+
+    if (toUpdate.newPw) {
+      const fieldToUpdate = "password"
+      const hashednewPassword = await bcrypt.hash(toUpdate.newPw, 10);
+      const newValue = hashednewPassword;
+      user = await User.update({ user_id, fieldToUpdate, newValue });
+    }
+    return {status : "비밀번호 변경 성공"};
+  }
+
+    /*
    * deleteUser
    *
    */
-  static async deleteUser({ user_id }) {
-    const user = await User.deleteOneUser({ user_id });
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
-      return { errorMessage };
+    static async deleteUser({ user_id }) {
+      const user = await User.deleteOneUser({ user_id });
+      // db에서 찾지 못한 경우, 에러 메시지 반환
+      if (!user) {
+        const errorMessage =
+          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        return { errorMessage };
+      }
+      return user;
     }
-    return user;
-  }
-
-  /*
-   // deleteUserAllInfo
-
-  static async deleteUserAllInfo({ user_id }){
-    await User.deleteAllByUserId({ user_id });
-  }
-  */
-
+  
+    /*
+     // deleteUserAllInfo
+  
+    static async deleteUserAllInfo({ user_id }){
+      await User.deleteAllByUserId({ user_id });
+    }
+    */
 }
 
 export { userAuthService };

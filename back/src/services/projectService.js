@@ -6,10 +6,10 @@ class projectService {
    * addProject
    *
    */
-  static async addProject({ user_id, title, description, from_date, to_date }) {
+  static async addProject({ user_id, title, description, projectLink, from_date, to_date }) {
     // id 는 유니크 값 부여
     const id = uuidv4();
-    const newProject = { user_id, id, title, description, from_date, to_date };
+    const newProject = { user_id, id, title, description, projectLink, from_date, to_date };
 
     // db에 저장
     const createdNewProject = await Project.create({ newProject });

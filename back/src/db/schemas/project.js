@@ -32,6 +32,9 @@ const ProjectSchema = new Schema(
       required: true,
       default: "상세내역",
     },
+    projectLink: {
+      type: String,
+    },
     from_date: {
       type: String,
       required: true,
