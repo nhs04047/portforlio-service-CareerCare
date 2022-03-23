@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
+import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-import ProjectCheck from './ProjectCheck';
+import PrivateCheck from '../PrivateCheck';
 
 function ProjectEditForm({ project, setIsEditing, setProject }) {
   // useState로 title, description, from_date, to_date 생성
@@ -11,7 +11,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   const [projectLink, setProjectLink] = useState(project.projectLink);
   const [from_date, setFrom_date] = useState(new Date(project.from_date));
   const [to_date, setTo_date] = useState(new Date(project.to_date));
-  const [isPrivate, setIsPrivate] = useState(project.isPrivate); //string
+  const [isPrivate, setIsPrivate] = useState(project.isPrivate);
 
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
@@ -29,7 +29,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
       projectLink,
       from_date: filterDate(from_date),
       to_date: filterDate(to_date),
-      isPrivate, //string
+      isPrivate,
     });
     const res = await Api.get('projectlist', user_id);
     //프로젝트 정보는 res.data
@@ -72,25 +72,27 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
           </Form.Group>
 
           <Form.Group as={Row} controlId='projectAddDate'>
-            <Stack direction='horizontal'>
-              <Col>
-                <DatePicker
-                  dateFormat='yyyy/MM/dd'
-                  selected={from_date}
-                  onChange={(date) => {
-                    setFrom_date(date);
-                  }}
-                />
-                <DatePicker
-                  dateFormat='yyyy/MM/dd'
-                  selected={to_date}
-                  minDate={from_date}
-                  onChange={(date) => setTo_date(date)}
-                />
-              </Col>
-              <ProjectCheck isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
-            </Stack>
+            <Col>
+              <DatePicker
+                dateFormat='yyyy/MM/dd'
+                selected={from_date}
+                onChange={(date) => {
+                  setFrom_date(date);
+                }}
+              />
+              <DatePicker
+                dateFormat='yyyy/MM/dd'
+                selected={to_date}
+                minDate={from_date}
+                onChange={(date) => setTo_date(date)}
+              />
+            </Col>
           </Form.Group>
+          <PrivateCheck
+            className='ms-auto'
+            isPrivate={isPrivate}
+            setIsPrivate={setIsPrivate}
+          />
 
           <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>

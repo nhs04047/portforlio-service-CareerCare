@@ -9,7 +9,7 @@ import CertificateDel from './CertificateDel';
  * Card의 형태를 나타내줌
  */
 function CertificateCard({ isEditable, certificate, setCertificate }) {
-  const { title, description, when_date } = certificate;
+  const { title, description, when_date, isPrivate } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -22,14 +22,17 @@ function CertificateCard({ isEditable, certificate, setCertificate }) {
       ) : (
         <Card.Text>
           <Row className='align-items-center'>
-            <Col>
-              <span>{title}</span>
-              <br />
-              <span className='text-muted'>{description}</span>
-              <br />
-              <span className='text-muted'>{when_date}</span>
-            </Col>
-            {isEditable && (
+            {isPrivate && (
+              <Col>
+                <span>{title}</span>
+                <br />
+                <span className='text-muted'>{description}</span>
+                <br />
+                <span className='text-muted'>{when_date}</span>
+              </Col>
+            )}
+
+            {isEditable && isPrivate && (
               <Col xs lg='1'>
                 <Button
                   variant='outline-info'
@@ -41,7 +44,6 @@ function CertificateCard({ isEditable, certificate, setCertificate }) {
                   편집
                 </Button>
                 <div className='mb-2' />
-
                 <CertificateDel
                   certificate={certificate}
                   setCertificate={setCertificate}
