@@ -1,8 +1,16 @@
+/**
+ * <project 비공개 설정 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-23
+ * - projectRouter.post('/project/create') : req.body에서 isPrivate 필드도 받아와서 리턴
+ * - projectRouter.put('/projects/:id') : isPrivate 필드도 업데이트 가능하도록 수정
+ * - projectRouter.get('/projectlist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
+ * 
+ */
+
 import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { projectService } from '../services/projectService';
-import { userAuthService } from '../services/userService';
 
 const projectRouter = Router();
 projectRouter.use(login_required);
@@ -26,6 +34,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
     const { projectLink } = req.body;
     const { from_date } = req.body;
     const { to_date } = req.body;
+    const { isPrivate } = req.body;
 
     // 위 데이터를 프로젝트 db에 추가하기
     const newProject = await projectService.addProject({
@@ -35,6 +44,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
       projectLink,
       from_date,
       to_date,
+      isPrivate,
     });
     if (newProject.errorMessage) {
       throw new Error(newProject.errorMessage);
@@ -103,6 +113,7 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
  */
 projectRouter.get('/projectlist/:user_id', async function (req, res, next) {
   try {
+    //req에서 currentUserId 가져오기, login_required 파일 참고
     const currentUserId =req.currentUserId;
     const { user_id } = req.params;
 

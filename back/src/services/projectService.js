@@ -1,3 +1,11 @@
+/**
+ * <project 비공개 설정 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-23
+ * - addProject 함수 : project 컬렉션 db에 isPrivate필드 추가로 저장 
+ * - getProjectList 함수 : 읽기 권한을 구분하기 위해 현재 로그인한 currentUserId와 params에서 받아오는 user_id의 데이터 반환함수를 분리함.
+ * 
+ */
+
 import { Project } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,15 +64,14 @@ class projectService {
    *
    */
   static async getProjectList({ currentUserId, user_id }) {
-    //console.log("id", currentUserId);
-    //console.log("user_id",user_id);
+
+    //currentUserId와 user_id가 동일하면 => isPrivate 필터링 없이 모든 데이터 반환
     if (currentUserId==user_id) {
       return Project.findManyByUserId({ user_id });
     }
+    //currentUserId와 user_id가 동일하지 않으면 => isPrivate 필터링 처리한 데이터 반환
     else {
       return Project.findManyByAnotherUserId({ user_id });
-      //console.log("projectlist",projectlist);
-      //return projectlist;
     }
     
   }
