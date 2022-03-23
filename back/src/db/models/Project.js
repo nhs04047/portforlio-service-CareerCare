@@ -25,6 +25,10 @@ class Project {
     return ProjectModel.find({ user_id });
   }
 
+  static async findManyByAnotherUserId({ user_id }) {
+    return ProjectModel.find({ user_id }, { isPrivate : false });
+  }
+
   /*
    * update()
    *기존의 project를 수정하고 수정한 project를 return 하는 함수

@@ -2,6 +2,7 @@ import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { projectService } from '../services/projectService';
+import { userAuthService } from '../services/userService';
 
 const projectRouter = Router();
 projectRouter.use(login_required);
@@ -80,8 +81,9 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
     const projectLink = req.body.projectLink ?? null;
     const from_date = req.body.from_date ?? null;
     const to_date = req.body.to_date ?? null;
+    const isPrivate = req.body.isPrivate ?? null;
 
-    const toUpdate = { title, description, projectLink, from_date, to_date };
+    const toUpdate = { title, description, projectLink, from_date, to_date, isPrivate };
 
     // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
     const Project = await projectService.setProject({ projectId, toUpdate });
@@ -101,9 +103,12 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
  */
 projectRouter.get('/projectlist/:user_id', async function (req, res, next) {
   try {
+    const currentUserId =req.currentUserId;
     const { user_id } = req.params;
-    const projectList = await projectService.getProjectList({ user_id });
+
+    const projectList = await projectService.getProjectList({ currentUserId, user_id });
     res.status(200).send(projectList);
+    
   } catch (error) {
     next(error);
   }

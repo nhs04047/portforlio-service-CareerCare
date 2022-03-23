@@ -6,10 +6,10 @@ class projectService {
    * addProject
    *
    */
-  static async addProject({ user_id, title, description, projectLink, from_date, to_date }) {
+  static async addProject({ user_id, title, description, projectLink, from_date, to_date, isPrivate }) {
     // id 는 유니크 값 부여
     const id = uuidv4();
-    const newProject = { user_id, id, title, description, projectLink, from_date, to_date };
+    const newProject = { user_id, id, title, description, projectLink, from_date, to_date, isPrivate };
 
     // db에 저장
     const createdNewProject = await Project.create({ newProject });
@@ -55,9 +55,18 @@ class projectService {
    * getProjectList
    *
    */
-  static async getProjectList({ user_id }) {
-    const projectList = await Project.findManyByUserId({ user_id });
-    return projectList;
+  static async getProjectList({ currentUserId, user_id }) {
+    //console.log("id", currentUserId);
+    //console.log("user_id",user_id);
+    if (currentUserId==user_id) {
+      return Project.findManyByUserId({ user_id });
+    }
+    else {
+      return Project.findManyByAnotherUserId({ user_id });
+      //console.log("projectlist",projectlist);
+      //return projectlist;
+    }
+    
   }
 
   /*
