@@ -7,13 +7,15 @@ import * as Api from "../../api";
 function SearchUser() {
   const [searchUser, setSerachUser] = useState("");
   const [filtered, setFiltered] = useState([]);
+  const [searchUI, setSearchUI] = useState(false);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    
+  
     const res = await Api.get(`userlist/search/${searchUser}`);
     setFiltered(res.data);
     setSerachUser("");
+    setSearchUI(true);
   }
 
   return (
@@ -30,13 +32,15 @@ function SearchUser() {
         />
       </Form.Group>
     </Form>
+
+    {searchUI ? (
     <Container fluid>
       <Row xs="auto" className="jusify-content-center" >
         {filtered.map((user) => (
           <UserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
-    </Container>
+    </Container>) : <Network />}
     </>
 
   );
