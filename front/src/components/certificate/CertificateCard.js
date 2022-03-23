@@ -29,6 +29,7 @@ function CertificateCard({ isEditable, certificate, setCertificate }) {
               <br />
               <span className='text-muted'>{when_date}</span>
             </Col>
+
             {isEditable && (
               <Col xs lg='1'>
                 <Button
@@ -41,7 +42,6 @@ function CertificateCard({ isEditable, certificate, setCertificate }) {
                   편집
                 </Button>
                 <div className='mb-2' />
-
                 <CertificateDel
                   certificate={certificate}
                   setCertificate={setCertificate}

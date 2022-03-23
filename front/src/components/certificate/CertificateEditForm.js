@@ -3,6 +3,8 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
+import PrivateCheck from '../PrivateCheck';
+
 /**작성자 - 이예슬
  **기능 - user id를 api에 요청, 입력값을 바탕으로 certificate 카드 수정
  */
@@ -10,6 +12,7 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
   const [title, setTitle] = useState(certificate.title);
   const [description, setDescription] = useState(certificate.description);
   const [when_date, setWhen_date] = useState(new Date(certificate.when_date));
+  const [isPrivate, setIsPrivate] = useState(false);
 
   // new Date로 생성한 date에서 yyyy-mm-dd로 date form을 주는 함수
   function filterDate(d) {
@@ -26,6 +29,7 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
       title,
       description,
       when_date: filterDate(when_date),
+      isPrivate,
     });
 
     const res = await Api.get('certificatelist', user_id);
@@ -46,7 +50,6 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
               onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
-
           <Form.Group controlId='certificateEditDescription' className='mb-3'>
             <Form.Control
               type='text'
@@ -56,7 +59,7 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
             />
           </Form.Group>
 
-          <Form.Group as={Row} controlId='certificateEditDate'>
+          <Form.Group as={Row} controlId='certificateAddDate'>
             <Col sm={{ span: 20 }}>
               <DatePicker
                 dateFormat='yyyy/MM/dd'
@@ -64,6 +67,9 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
                 onChange={(date) => setWhen_date(date)}
               />
             </Col>
+          </Form.Group>
+          <Form.Group className='mt-3'>
+            <PrivateCheck isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>

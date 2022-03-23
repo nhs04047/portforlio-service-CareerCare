@@ -2,18 +2,24 @@
   awardRouter에서 넘어온 정보들로 특정 로직을 구성하여 Award.js에서 처리 후 awardRouter로 return
   천준석
   2022/03/16
-*/
+
+ * <project 비공개 설정 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-23
+ * - addAward 함수 : Award 컬렉션 db에 isPrivate필드 추가로 저장 
+ * - getAwardList 함수 : 읽기 권한을 구분하기 위해 현재 로그인한 currentUserId와 params에서 받아오는 user_id의 데이터 반환함수를 분리함.
+ * 
+ */
 
 import { Award } from '../db';
 import { v4 as uuidv4 } from 'uuid'; // 중복되지 않는 아이디 값 사용을 위해 import
 
 class AwardService {
   // user_id, title, description를 받아서 새로운 award 데이터 생성
-  static async addAward({ user_id, title, description }) {
+  static async addAward({ user_id, title, description, isPrivate }) {
     // 유니크한 id값 생성
     const id = uuidv4();
 
-    const newAward = { id, user_id, title, description };
+    const newAward = { id, user_id, title, description, isPrivate };
     // 새로운 Award 데이터 db에 저장
     const createdNewAward = await Award.create({ newAward });
 
@@ -45,7 +51,7 @@ class AwardService {
     // Object.keys를 사용해 field의 수가 많아도 반복문을 이용해 간결하게 update를 진행한다.
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
-      if (toUpdate[myKeys[i]]) {
+      if (toUpdate[myKeys[i]]!==null) {
         const fieldToUpdate = myKeys[i];
         const newValue = toUpdate[myKeys[i]];
         award = await Award.update({ awardId, fieldToUpdate, newValue });
@@ -54,12 +60,21 @@ class AwardService {
 
     return award;
   }
-
-  // user_id를 db의 findManyByUserId와 같은 데이터의 award들을 조회한다.
-  static async getAwardList({ user_id }) {
-    const awards = await Award.findManyByUserId({ user_id });
-
-    return awards;
+  
+  /*
+   * getAwardList
+   *
+   */
+  static async getAwardList({ currentUserId, user_id }) {
+    //currentUserId와 user_id가 동일하면 => isPrivate 필터링 없이 모든 데이터 반환
+    if (currentUserId==user_id) {
+      return Award.findManyByUserId({ user_id });
+    }
+    //currentUserId와 user_id가 동일하지 않으면 => isPrivate 필터링 처리한 데이터 반환
+    else {
+      return Award.findManyByAnotherUserId({ user_id });
+    }
+    
   }
 
   // awardId와 알맞는 award 데이터를 삭제하고 성공 메시지를 반환하는데, 알맞는 ID가 없을 시 에러메시지 반환

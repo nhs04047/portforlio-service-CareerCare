@@ -1,3 +1,12 @@
+/**
+ * <project 비공개 설정 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-23
+ * - projectRouter.post('/project/create') : req.body에서 isPrivate 필드도 받아와서 리턴
+ * - projectRouter.put('/projects/:id') : isPrivate 필드도 업데이트 가능하도록 수정
+ * - projectRouter.get('/projectlist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
+ * 
+ */
+
 import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required';
@@ -19,12 +28,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id } = req.body;
-    const { title } = req.body;
-    const { description } = req.body;
-    const { projectLink } = req.body;
-    const { from_date } = req.body;
-    const { to_date } = req.body;
+    const { user_id, title, description, projectLink, from_date, to_date, isPrivate } = req.body;
 
     // 위 데이터를 프로젝트 db에 추가하기
     const newProject = await projectService.addProject({
@@ -34,6 +38,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
       projectLink,
       from_date,
       to_date,
+      isPrivate,
     });
     if (newProject.errorMessage) {
       throw new Error(newProject.errorMessage);
@@ -80,9 +85,9 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
     const projectLink = req.body.projectLink ?? null;
     const from_date = req.body.from_date ?? null;
     const to_date = req.body.to_date ?? null;
+    const isPrivate = req.body.isPrivate ?? null;
 
-    const toUpdate = { title, description, projectLink, from_date, to_date };
-
+    const toUpdate = { title, description, projectLink, from_date, to_date, isPrivate };
     // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
     const Project = await projectService.setProject({ projectId, toUpdate });
 
@@ -101,9 +106,13 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
  */
 projectRouter.get('/projectlist/:user_id', async function (req, res, next) {
   try {
+    //req에서 currentUserId 가져오기, login_required 파일 참고
+    const currentUserId =req.currentUserId;
     const { user_id } = req.params;
-    const projectList = await projectService.getProjectList({ user_id });
+
+    const projectList = await projectService.getProjectList({ currentUserId, user_id });
     res.status(200).send(projectList);
+    
   } catch (error) {
     next(error);
   }
