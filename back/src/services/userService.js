@@ -83,6 +83,12 @@ class userAuthService {
     return users;
   }
 
+  //user 검색
+  static async getSearchedUsers({user_name}){
+    const searchedUsers = await User.findManyByName({user_name});
+    return searchedUsers
+  }
+
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id });
