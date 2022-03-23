@@ -68,11 +68,11 @@ class AwardService {
   static async getAwardList({ currentUserId, user_id }) {
     //currentUserId와 user_id가 동일하면 => isPrivate 필터링 없이 모든 데이터 반환
     if (currentUserId==user_id) {
-      return Project.findManyByUserId({ user_id });
+      return Award.findManyByUserId({ user_id });
     }
     //currentUserId와 user_id가 동일하지 않으면 => isPrivate 필터링 처리한 데이터 반환
     else {
-      return Project.findManyByAnotherUserId({ user_id });
+      return Award.findManyByAnotherUserId({ user_id });
     }
     
   }
