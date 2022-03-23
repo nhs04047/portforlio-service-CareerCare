@@ -34,13 +34,13 @@ function ChangePw({ user, setEditingPw, setUser }) {
     } else {
       alert('비밀번호가 변경되었습니다!');
       // window.location = '/login';
-    }
-    setUser(updatedUser);
-    setEditingPw(false);
+      setUser(updatedUser);
+      setEditingPw(false);
 
-    await sessionStorage.removeItem('userToken');
-    dispatch({ type: 'LOGOUT' });
-    navigate('/');
+      await sessionStorage.removeItem('userToken');
+      dispatch({ type: 'LOGOUT' });
+      navigate('/');
+    }
   };
 
   return (
