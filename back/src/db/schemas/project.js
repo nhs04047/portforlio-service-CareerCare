@@ -10,6 +10,7 @@ const {
  *description : 상세 내용
  *from_date : -
  *to_date : -
+ *isPrivate : true면 해당 도큐먼트 비공개 설정(나만 보기) 
  */
 
 const ProjectSchema = new Schema(
@@ -43,6 +44,10 @@ const ProjectSchema = new Schema(
     to_date: {
       type: String,
       required: true,
+    },
+    isPrivate: {
+      type: String,
+      default : "false",
     },
   },
   {
