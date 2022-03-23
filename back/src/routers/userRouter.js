@@ -1,5 +1,5 @@
 import is from '@sindresorhus/is';
-import { Router } from 'express';
+import { query, Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { userAuthService } from '../services/userService';
 
@@ -67,6 +67,23 @@ userAuthRouter.get(
     }
   }
 );
+
+// user 검색 기능
+userAuthRouter.get(
+  '/userlist/search/:name',
+  login_required,
+  async function( req, res, next){
+    try{
+      const user_name = req.params.name;
+      const searchedUsers = await userAuthService.getSearchedUsers({
+        user_name,
+      });
+      res.status(200).send(searchedUsers);
+    }catch(error){
+      next(error);
+    }
+  }
+)
 
 userAuthRouter.get(
   '/user/current',

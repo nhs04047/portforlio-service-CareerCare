@@ -20,6 +20,11 @@ class User {
     return user;
   }
 
+  static async findManyByName({ user_name}){
+    const users = await UserModel.find({name: new RegExp(user_name)})
+    return users
+  }
+
   static async findAll() {
     const users = await UserModel.find({});
     return users;
