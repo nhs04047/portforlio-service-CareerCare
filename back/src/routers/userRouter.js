@@ -152,7 +152,7 @@ userAuthRouter.put(
       const toUpdate = {pw, newPw};
 
       const updatedPassword = await userAuthService.setPassword({user_id, toUpdate});
-      console.log(updatedPassword); // 현재 비밀번호가 맞을 때 true, 현재 비밀번호가 다를 때 false
+      // console.log(updatedPassword); // 현재 비밀번호가 맞을 때 true, 현재 비밀번호가 다를 때 false
       res.status(200).json(updatedPassword);
     } catch (error) {
       next(error);
