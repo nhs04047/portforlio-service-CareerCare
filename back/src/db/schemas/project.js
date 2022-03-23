@@ -32,6 +32,10 @@ const ProjectSchema = new Schema(
       required: true,
       default: "상세내역",
     },
+    // 프로젝트 링크를 위한 스키마
+    projectLink: {
+      type: String,
+    },
     from_date: {
       type: String,
       required: true,

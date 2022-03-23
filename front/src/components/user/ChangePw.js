@@ -1,85 +1,102 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
+import { DispatchContext } from '../../App';
+
 import * as Api from '../../api';
 
 function ChangePw({ user, setEditingPw, setUser }) {
-  const [pw, setPw] = useState(false);
-  const [newPw, setNewPw] = useState("")
-  const [confirmNewPw, setConfirmNewPw] = useState("");
-  
+  const [pw, setPw] = useState('');
+  const [newPw, setNewPw] = useState('');
+  const [confirmNewPw, setConfirmNewPw] = useState('');
+  const navigate = useNavigate();
+
   const curPwCheck = pw.length >= 1;
   const pwLengthCheck = newPw.length >= 4;
   const pwSameCheck = confirmNewPw === newPw;
   const pwCheckAll = pwLengthCheck && pwSameCheck && curPwCheck;
 
+  const dispatch = useContext(DispatchContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`현재 비밀번호 : ${pw}`)
-    console.log(`새 비밀번호 : ${newPw}`)
+    //"users/password:id" PUT 요청
+    const res = await Api.put(`users/password/${user.id}`, {
+      pw,
+      newPw,
+    });
 
-    // // "users/유저id" 엔드포인트로 PUT 요청함.
-    // const res = await Api.put(`users/${user.id}`, {
-    //     pw,
-    // });
-    // // 유저 정보는 response의 data임.
-    // const updatedUser = res.data;
-    // // 해당 유저 정보로 user을 세팅함.
-    // setUser(updatedUser);
+    const updatedUser = res.data;    //백엔드에서 현재 비밀번호와 입력 비밀번호 대조, 불리언 값 리턴
+    if (!updatedUser) {
+      alert('현재 비밀번호가 일치하지 않습니다.');    //false면 리로드, 메세지 출력
+      window.location = '/';
+    } else {
+      alert('비밀번호가 변경되었습니다!');    //true면 비밀번호 변경, 
+      setUser(updatedUser);
+      setEditingPw(false);
 
-    // isEditing을 false로 세팅함.
-    setEditingPw(false);
+      await sessionStorage.removeItem('userToken');     //토큰을 지워서 로그아웃 상태로 만들고, 로그인 페이지로 이동
+      dispatch({ type: 'LOGOUT' });
+      navigate('/');
+    }
   };
 
   return (
-    <Card className='mb-2'>
+    <Card className='mb-2 ms-3'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className='mb-3'>
             <Form.Control
               type='password'
-              autoComplete="on"
+              autoComplete='on'
               placeholder='현재 비밀번호'
               onChange={(e) => setPw(e.target.value)}
             />
-             {!curPwCheck && (
-                <Form.Text className="text-success">
-                  현재 비밀번호를 입력하세요.
-                </Form.Text>
-              )}
+            {!curPwCheck && (
+              <Form.Text className='text-success'>
+                현재 비밀번호를 입력하세요.
+              </Form.Text>
+            )}
           </Form.Group>
 
           <Form.Group className='mb-3'>
             <Form.Control
               type='password'
-              autoComplete="on"
+              autoComplete='on'
               placeholder='새 비밀번호'
               value={newPw}
               onChange={(e) => setNewPw(e.target.value)}
             />
             {!pwLengthCheck && (
-                <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
-                </Form.Text>
-              )}
+              <Form.Text className='text-success'>
+                비밀번호는 4글자 이상입니다.
+              </Form.Text>
+            )}
           </Form.Group>
 
           <Form.Group>
             <Form.Control
               type='password'
-              autoComplete="on"
+              autoComplete='on'
               placeholder='새 비밀번호 확인'
               onChange={(e) => setConfirmNewPw(e.target.value)}
             />
             {!pwSameCheck && (
-                <Form.Text className="text-success">
-                  비밀번호가 일치하지 않습니다.
-                </Form.Text>
-              )}
+              <Form.Text className='text-success'>
+                비밀번호가 일치하지 않습니다.
+              </Form.Text>
+            )}
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>
-              <Button variant='primary' type='submit' className='me-3' disabled={!pwCheckAll}>
+              <Button
+                variant='primary'
+                type='submit'
+                className='me-3'
+                disabled={!pwCheckAll}
+              >
                 확인
               </Button>
               <Button variant='secondary' onClick={() => setEditingPw(false)}>

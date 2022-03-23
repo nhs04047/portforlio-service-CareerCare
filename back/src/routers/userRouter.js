@@ -1,5 +1,5 @@
 import is from '@sindresorhus/is';
-import { Router } from 'express';
+import { query, Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { userAuthService } from '../services/userService';
 
@@ -67,6 +67,23 @@ userAuthRouter.get(
     }
   }
 );
+
+// user 검색 기능
+userAuthRouter.get(
+  '/userlist/search/:name',
+  login_required,
+  async function( req, res, next){
+    try{
+      const user_name = req.params.name;
+      const searchedUsers = await userAuthService.getSearchedUsers({
+        user_name,
+      });
+      res.status(200).send(searchedUsers);
+    }catch(error){
+      next(error);
+    }
+  }
+)
 
 userAuthRouter.get(
   '/user/current',
@@ -138,6 +155,48 @@ userAuthRouter.get(
   }
 );
 
+// 클라이언트로부터 현재 비밀번호와 변경할 비밀번호를 입력 받아 userAuthService로 넘겨주고 반환 값으로 errormessage(해당 id 없을 때)/false(현재 비밀번호가 일치하지 않을 때)/true(일치하고 비밀번호가 잘 변경되었을 때)를 return 해준다.
+userAuthRouter.put(
+  '/users/password/:id',
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+
+      const {pw} = req.body;
+      const {newPw} = req.body;
+
+      const toUpdate = {pw, newPw};
+
+      const updatedPassword = await userAuthService.setPassword({user_id, toUpdate});
+      // console.log(updatedPassword); // 현재 비밀번호가 맞을 때 true, 현재 비밀번호가 다를 때 false
+      res.status(200).json(updatedPassword);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+
+userAuthRouter.delete(
+  '/users/:id',
+  //login_required,
+  async function (req, res, next){
+    try{
+      const user_id = req.params.id;
+      //유저 삭제하는 메소드 호출
+      await userAuthService.deleteUser({ user_id });
+
+      //유저 mvp 정보 삭제하는 메소드 호출
+      await userAuthService.deleteUserAllInfo({ user_id });
+      
+      res.status(200).send();
+
+    } catch (error){
+      next(error);
+    }
+});
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
   res
@@ -146,5 +205,7 @@ userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+
 
 export { userAuthRouter };
