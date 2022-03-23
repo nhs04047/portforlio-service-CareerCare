@@ -70,11 +70,11 @@ userAuthRouter.get(
 
 // user 검색 기능
 userAuthRouter.get(
-  '/userlist/search',
+  '/userlist/search/:name',
   login_required,
   async function( req, res, next){
     try{
-      const user_name = req.body.name;
+      const user_name = req.params.name;
       const searchedUsers = await userAuthService.getSearchedUsers({
         user_name,
       });
