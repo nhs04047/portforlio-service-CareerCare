@@ -36,7 +36,7 @@ class Project {
    */
   static async findManyByAnotherUserId({ user_id }) {
     //ProjectModel에서 isPrivate : "true" 인, 즉 비공개인 데이터는 리턴하지 않는다.
-    return ProjectModel.find({ user_id: user_id, isPrivate : "false" });
+    return ProjectModel.find({ user_id: user_id, isPrivate : false });
   }
 
   /*

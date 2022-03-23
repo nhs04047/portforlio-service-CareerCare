@@ -28,13 +28,7 @@ projectRouter.post('/project/create', async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id } = req.body;
-    const { title } = req.body;
-    const { description } = req.body;
-    const { projectLink } = req.body;
-    const { from_date } = req.body;
-    const { to_date } = req.body;
-    const { isPrivate } = req.body;
+    const { user_id, title, description, projectLink, from_date, to_date, isPrivate } = req.body;
 
     // 위 데이터를 프로젝트 db에 추가하기
     const newProject = await projectService.addProject({
@@ -94,7 +88,6 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
     const isPrivate = req.body.isPrivate ?? null;
 
     const toUpdate = { title, description, projectLink, from_date, to_date, isPrivate };
-
     // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
     const Project = await projectService.setProject({ projectId, toUpdate });
 
