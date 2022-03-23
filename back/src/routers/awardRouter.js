@@ -3,7 +3,7 @@
   천준석
   2022/03/16
 
- * <project 비공개 설정 구현>
+ * <award 비공개 설정 구현>
  * 작성자 : 장정민, 일자 : 2022-03-23
  * - awardRouter.post('/award/create') : req.body에서 isPrivate 필드도 받아와서 리턴
  * - awardRouter.put('/awards/:id') : isPrivate 필드도 업데이트 가능하도록 수정
