@@ -12,15 +12,6 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
   // isPrivate가 true이고 isEditable이 true이면 card가 보이고
   // isPrivate가 true이고 isEditable이 false이면 card가 안보여야함!
 
-  // const my = portfolioOwnerId === userState.user?.id
-  // const isPrivate = true;
-  // const [open, setOpen] = useState(false);
-  // if (isPrivate) {
-  //   setOpen(false);
-  // } else {
-  //   setOpen(true);
-  // }
-
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -47,8 +38,6 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
                 <span className='text-muted'>
                   {from_date} ~ {to_date}
                 </span>
-                <br />
-                <span className='text-muted'>{isPrivate}</span>
               </Col>
             )}
             {isEditable && isPrivate && (

@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 
 /**
  * 비공개 기능 구현하는 component
- * isPrivate가 false일 때 공개 true일 때 비공개
+ * isPrivate가 true일 때 비공개
  */
 
 function ProjectCheck({ isPrivate, setIsPrivate }) {
