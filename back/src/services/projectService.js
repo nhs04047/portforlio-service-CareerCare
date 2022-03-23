@@ -48,8 +48,9 @@ class projectService {
     }
 
     const myKeys = Object.keys(toUpdate);
+
     for (let i = 0; i < myKeys.length; i++) {
-      if (toUpdate[myKeys[i]]) {
+      if (toUpdate[myKeys[i]]!==null) {
         const fieldToUpdate = myKeys[i];
         const newValue = toUpdate[myKeys[i]];
         project = await Project.update({ projectId, fieldToUpdate, newValue });
