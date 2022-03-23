@@ -11,14 +11,28 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   const [projectLink, setProjectLink] = useState(project.projectLink);
   const [from_date, setFrom_date] = useState(new Date(project.from_date));
   const [to_date, setTo_date] = useState(new Date(project.to_date));
-
-  const [ischecked, setIsChecked] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(project.isPrivate); //string
 
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
       '0' + d.getDate()
     ).slice(-2)}`;
   }
+  function makeBoolean(str) {
+    if (str === 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function makeString(bol) {
+    if (bol === true) {
+      return 'true';
+    } else {
+      return 'false';
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user_id = project.user_id;
@@ -29,7 +43,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
       projectLink,
       from_date: filterDate(from_date),
       to_date: filterDate(to_date),
-      // isPrivate,
+      isPrivate, //string
     });
     const res = await Api.get('projectlist', user_id);
     //프로젝트 정보는 res.data
@@ -88,7 +102,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
                   onChange={(date) => setTo_date(date)}
                 />
               </Col>
-              <ProjectCheck ischecked={ischecked} setIsChecked={setIsChecked} />
+              <ProjectCheck setIsPrivate={setIsPrivate} />
             </Stack>
           </Form.Group>
 

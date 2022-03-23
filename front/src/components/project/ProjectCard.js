@@ -5,10 +5,16 @@ import ProjectEditForm from './ProjectEditForm';
 import ProjectDel from './ProjectDel';
 
 function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
-  const { title, description, projectLink, from_date, to_date } = project;
+  const { title, description, projectLink, from_date, to_date, isPrivate } =
+    project;
+
+  //isPrivate는 str 먼저 boolean 값으로 변형해주고
+  // isPrivate가 true이고 isEditable이 true이면 card가 보이고
+  // isPrivate가 true이고 isEditable이 false이면 card가 안보여야함!
+
   // const my = portfolioOwnerId === userState.user?.id
-  const isPrivate = true;
-  const [open, setOpen] = useState(false);
+  // const isPrivate = true;
+  // const [open, setOpen] = useState(false);
   // if (isPrivate) {
   //   setOpen(false);
   // } else {
@@ -41,6 +47,8 @@ function ProjectCard({ project, isEditable, setProject, portfolioOwnerId }) {
                 <span className='text-muted'>
                   {from_date} ~ {to_date}
                 </span>
+                <br />
+                <span className='text-muted'>{isPrivate}</span>
               </Col>
             )}
             {isEditable && isPrivate && (
