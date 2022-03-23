@@ -138,7 +138,7 @@ userAuthRouter.get(
   }
 );
 
-
+// 클라이언트로부터 현재 비밀번호와 변경할 비밀번호를 입력 받아 userAuthService로 넘겨주고 반환 값으로 errormessage(해당 id 없을 때)/false(현재 비밀번호가 일치하지 않을 때)/true(일치하고 비밀번호가 잘 변경되었을 때)를 return 해준다.
 userAuthRouter.put(
   '/users/password/:id',
   login_required,
@@ -152,7 +152,7 @@ userAuthRouter.put(
       const toUpdate = {pw, newPw};
 
       const updatedPassword = await userAuthService.setPassword({user_id, toUpdate});
-      console.log(updatedPassword);
+      // console.log(updatedPassword); // 현재 비밀번호가 맞을 때 true, 현재 비밀번호가 다를 때 false
       res.status(200).json(updatedPassword);
     } catch (error) {
       next(error);

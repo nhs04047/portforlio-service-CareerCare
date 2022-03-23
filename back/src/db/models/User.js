@@ -38,10 +38,10 @@ class User {
     return updatedUser;
   }
 
-
-  static async findByPassword({nowPassword}) {
-    const password = await UserModel.findOne({password : nowPassword});
-    return password;
+  // 해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
+  static async findByPassword({user_id}) {
+    const user = await UserModel.findOne({id:user_id});
+    return user.password;
   }
 
   /*
