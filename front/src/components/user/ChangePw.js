@@ -23,6 +23,7 @@ function ChangePw({ user, setEditingPw, setUser }) {
     });
     console.log(user.id)
     const updatedUser = res.data;
+    
     if(!updatedUser) {
       alert("현재 비밀번호가 일치하지 않습니다.");
       window.location = '/';
