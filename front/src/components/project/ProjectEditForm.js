@@ -13,24 +13,12 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
   const [to_date, setTo_date] = useState(new Date(project.to_date));
   const [isPrivate, setIsPrivate] = useState(project.isPrivate); //string
 
+  const [ischecked, setIsChecked] = useState(false);
+
   function filterDate(d) {
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
       '0' + d.getDate()
     ).slice(-2)}`;
-  }
-  function makeBoolean(str) {
-    if (str === 'true') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  function makeString(bol) {
-    if (bol === true) {
-      return 'true';
-    } else {
-      return 'false';
-    }
   }
 
   const handleSubmit = async (e) => {
@@ -102,7 +90,7 @@ function ProjectEditForm({ project, setIsEditing, setProject }) {
                   onChange={(date) => setTo_date(date)}
                 />
               </Col>
-              <ProjectCheck setIsPrivate={setIsPrivate} />
+              <ProjectCheck isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
             </Stack>
           </Form.Group>
 

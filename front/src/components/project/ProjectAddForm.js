@@ -43,11 +43,9 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
         title,
         description,
         projectLink,
-        // from_date,
-        // to_date,
         from_date: filterDate(from_date),
-        // from_date: filterDate(from_date),
         to_date: filterDate(to_date),
+        isPrivate,
       });
       //프로젝트 정보는 res.data
       const res = await Api.get('projectlist', user_id);
