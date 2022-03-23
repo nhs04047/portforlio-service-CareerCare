@@ -4,6 +4,7 @@
 
   2022/03/16
   김보현
+
 */
 import { Schema, model } from "mongoose";
 
@@ -28,6 +29,11 @@ const EducationSchema = new Schema(
     position: {
       type: String,
       required: true,
+    },
+    //isPrivate : true면 해당 도큐먼트 비공개 설정
+    isPrivate: {
+      type: Boolean,
+      default : false,
     },
   },
   {

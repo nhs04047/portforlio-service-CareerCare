@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row, Stack } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
+
+import ProjectCheck from './ProjectCheck';
+
 /**
  * isAdding이 true일 경우 활성화되는 component
  */
@@ -20,6 +23,7 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
   const [projectLink, setProjectLink] = useState('');
   const [from_date, setFrom_date] = useState(new Date());
   const [to_date, setTo_date] = useState(new Date());
+  const [isPrivate, setIsPrivate] = useState(false);
 
   //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
   function filterDate(d) {
@@ -39,11 +43,9 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
         title,
         description,
         projectLink,
-        // from_date,
-        // to_date,
         from_date: filterDate(from_date),
-        // from_date: filterDate(from_date),
         to_date: filterDate(to_date),
+        isPrivate,
       });
       //프로젝트 정보는 res.data
       const res = await Api.get('projectlist', user_id);
@@ -89,21 +91,23 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
           </Form.Group>
 
           <Form.Group as={Row} controlId='projectAddDate'>
-            <Stack direction='horizontal' gap={0}>
-              <DatePicker
-                dateFormat='yyyy/MM/dd'
-                selected={from_date}
-                onChange={(date) => {
-                  setFrom_date(date);
-                  console.log(date);
-                }}
-              />
-              <DatePicker
-                dateFormat='yyyy/MM/dd'
-                selected={to_date}
-                minDate={from_date}
-                onChange={(date) => setTo_date(date)}
-              />
+            <Stack direction='horizontal'>
+              <Col>
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  selected={from_date}
+                  onChange={(date) => {
+                    setFrom_date(date);
+                  }}
+                />
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  selected={to_date}
+                  minDate={from_date}
+                  onChange={(date) => setTo_date(date)}
+                />
+              </Col>
+              <ProjectCheck isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
             </Stack>
           </Form.Group>
 

@@ -1,7 +1,4 @@
 import {Schema, model} from "mongoose";
-const {
-  Types: {ObjectId},
-} = Schema;
 
 /*
  *id : 프로젝트 아이디
@@ -44,6 +41,7 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
+    //isPrivate : true면 해당 도큐먼트 비공개 설정
     isPrivate: {
       type: Boolean,
       default : false,

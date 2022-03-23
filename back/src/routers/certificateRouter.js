@@ -2,7 +2,13 @@
   클라이언트로부터 넘어온 정보들로 certificateService에 넘겨주고, 해당 작업에 맞는 return을 certificateService에 받아서 클라이언트로 보내준다.
   천준석
   2022/03/17
-*/
+ * <certificate 비공개 설정 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-23
+ * - certificateRouter.post('/certificate/create') : req.body에서 isPrivate 필드도 받아와서 리턴
+ * - certificateRouter.put('/certificates/:id') : isPrivate 필드도 업데이트 가능하도록 수정
+ * - certificateRouter.get('/certificatelist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
+ * 
+ */
 import { Router } from 'express';
 import { CertificateService } from '../services/certificateService';
 import { login_required } from '../middlewares/login_required';
@@ -14,10 +20,7 @@ certificateRouter.use(login_required);
 certificateRouter.post('/certificate/create', async function (req, res, next) {
   try {
     // id, title, description, when_date 클라이언트에게 받는다.
-    const { user_id } = req.body;
-    const { title } = req.body;
-    const { description } = req.body;
-    const { when_date } = req.body;
+    const { user_id, title, description, when_date, isPrivate } = req.body;
 
     // db로 가기 전 각 자격증을 구별하기 위해서 CertificateService로 넘겨준다.
     const newCertificate = await CertificateService.addCertificate({
@@ -25,6 +28,7 @@ certificateRouter.post('/certificate/create', async function (req, res, next) {
       title,
       description,
       when_date,
+      isPrivate,
     });
 
     res.status(201).json(newCertificate);
@@ -54,8 +58,9 @@ certificateRouter.put('/certificates/:id', async function (req, res, next) {
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
     const when_date = req.body.when_date ?? null;
+    const isPrivate = req.body.isPrivate ?? null;
 
-    const toUpdate = { title, description, when_date };
+    const toUpdate = { title, description, when_date, isPrivate };
     const certificate = await CertificateService.setCertificate({
       certificateId,
       toUpdate,
@@ -70,10 +75,10 @@ certificateRouter.get(
   '/certificatelist/:user_id',
   async function (req, res, next) {
     try {
+      //req에서 currentUserId 가져오기, login_required 파일 참고
+      const currentUserId =req.currentUserId;
       const user_id = req.params.user_id;
-      const certificateList = await CertificateService.getCertificateList({
-        user_id,
-      });
+      const certificateList = await CertificateService.getCertificateList({ currentUserId, user_id });
       res.status(200).send(certificateList);
     } catch (err) {
       next(err);

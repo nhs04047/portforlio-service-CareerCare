@@ -26,6 +26,11 @@ const AwardSchema = new Schema(
       type: String,
       required: true,
     },
+    //isPrivate : true면 해당 도큐먼트 비공개 설정
+    isPrivate: {
+      type: Boolean,
+      default : false,
+    },
   },
   {
     timestamps: true,

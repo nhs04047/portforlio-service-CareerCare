@@ -15,6 +15,8 @@ function Project({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 project 상태를 생성함
   const [project, setProject] = useState([]);
 
+  // const isOpen = project.isPrivate;
+
   useEffect(() => {
     // "projects/유저id" 엔드포인트로 GET 요청을 하고, project를 response의 data로 세팅함.
     const asynchronous = async () => {
