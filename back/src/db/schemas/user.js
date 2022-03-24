@@ -26,7 +26,7 @@ const UserSchema = new Schema(
     profileImgPath:{
       type: String,
       required: false,
-      default : "/src/uploads/profile_img/default_profile_img.jpg"
+      default : "/src/uploads/profile_img/default_img/default_profile_img.jpg"
     }
   },
   {
