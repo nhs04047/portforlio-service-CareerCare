@@ -7,7 +7,7 @@
  */
 
 
-import { User } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, Like } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
@@ -177,7 +177,95 @@ class userAuthService {
     static async deleteUserAllInfo({ user_id }){
       await User.deleteAllByUserId({ user_id });
     }
-    
+
+    // // status가 true면 처음 좋아요를 누른 사이라서 LikeCount +1하고, false면 이미 눌렀는 관계이므로 -1해서 status와 likeCount return.
+    // static async setLike({nowId, otherId}) {
+    //   // 두 개위 user_id 가입 여부 파악 / 오류 처리
+    //   const now = await User.findById({user_id : nowId});
+    //   const other = await User.findById({user_id : otherId});
+    //   let updateLike = {}
+
+    //   if (!now) {
+    //     const errorMessage =
+    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+    //     return { errorMessage };
+    //   }
+
+    //   if (!other) {
+    //     const errorMessage =
+    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+    //     return { errorMessage };
+    //   }
+
+    //   // 필터 field 선언
+    //   const fieldToUpdate = "likeCount";
+    //   // like 객체(현재 좋아요 o) 또는 null(현재 좋아요 x) 반환
+    //   const liked = await Like.findByUser({now, other});
+      
+      
+    //   if (liked) {
+    //     const value = other.likeCount - 1;
+    //     const user = await User.update({
+    //       user_id: other.id,
+    //       fieldToUpdate,
+    //       value,
+    //     });
+    //     // 현재 user와 클릭 당한 user의 like를 삭제
+    //     await Like.deleteById({liked});
+    //     // status/likeCount 반환
+    //     updateLike = {status : false, likeCount : user.likeCount};
+    //   } else {
+    //     const value = other.likeCount + 1;
+    //     const user = await User.update({
+    //       user_id: other.id,
+    //       fieldToUpdate,
+    //       value,
+    //     });
+    //     // 현재 user와 클릭 당한 user의 like 생성
+    //     await Like.create({now, other});
+    //     // status/likeCount 반환
+    //     updateLike = {status : true, likeCount : user.likeCount};
+    //   }
+    //   return updateLike;
+    // }
+    static async setLike({ currentUserId, otherUserId }) {
+      // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
+      const currentUser = await User.findById({ user_id: currentUserId });
+      const otherUser = await User.findById({ user_id: otherUserId });
+
+      const fieldToUpdate = "likeCount";
+  
+      const isLiked = await Like.findByUser({ currentUser, otherUser });
+  
+      let updatedLike = {};
+      let updatedUser = {};
+  
+      if (isLiked) {
+        const newValue = otherUser.likeCount - 1;
+        console.log(newValue)
+        updatedUser = await User.update({
+          user_id : otherUserId,
+          fieldToUpdate,
+          value : newValue,
+        });
+        await Like.deleteById({ isLiked });
+        updatedLike = { data: false, likeCount: updatedUser.likeCount };
+      } else {
+        const newValue = otherUser.likeCount + 1;
+        console.log(newValue)
+        updatedUser = await User.update({
+          user_id : otherUserId,
+          fieldToUpdate,
+          value : newValue,
+        });
+        await Like.create({ currentUser, otherUser });
+        updatedLike = { data: true, likeCount: updatedUser.likeCount };
+      }
+  
+      return updatedUser;
+    }
+  
+  
 }
 
 export { userAuthService };
