@@ -79,7 +79,7 @@ class userAuthService {
   }
 
   static async getUsers() {
-    const users = await User.findAll();
+    let users = await User.findAll();
     return users;
   }
 
@@ -164,10 +164,18 @@ class userAuthService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-    if (toUpdate){
-      const fieldToUpdate = "profileImg"
-      const newValue = toUpdate
-      user = await User.update({ user_id, fieldToUpdate, newValue})
+
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i < myKeys.length; i++) {
+      if (toUpdate[myKeys[i]]!==null) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        user = await User.update({
+          user_id,
+          fieldToUpdate,
+          newValue,
+        });
+      }
     }
     return user;
   };
