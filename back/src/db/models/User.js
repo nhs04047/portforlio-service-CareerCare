@@ -42,7 +42,7 @@ class User {
     );
     return updatedUser;
   }
-
+  // 유저의 좋아요 수와 status 갱신하기 위한 함수
   static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
     const filter = { id: user_id };
     const update = { [fieldToUpdate]:value };

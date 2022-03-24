@@ -247,13 +247,14 @@ userAuthRouter.post("/users/newpassword", async function (req, res) {
   }
 });
 
-
+// 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
 userAuthRouter.put("/like/:id", login_required, async function (req, res, next) {
   try {
-    // URI로부터 사용자 id를 추출함.
+    // 좋아요를 클릭한 사람의 id
     const currentUserId = req.params.id;
+    // 좋아요를 받은 사람의 id
     const otherUserId = req.body.otherUserId;
-    // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+    // 현재 상태를 나타내는 status와 likeCount 반환
     const updatedUser = await userAuthService.setLike({
       currentUserId,
       otherUserId,
@@ -265,17 +266,16 @@ userAuthRouter.put("/like/:id", login_required, async function (req, res, next) 
   }
 });
 
+// 현재 상태를 나타내는 status와 likeCount 반환
 userAuthRouter.get("/like/:id", login_required, async function (req, res, next) {
   try {
-    // URI로부터 사용자 id를 추출함.
+    // 좋아요를 클릭한 사람의 id
     const otherUserId = req.params.id;
 
-    // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
     const updatedData = await userAuthService.getLike({
       otherUserId,
     });
 
-    console.log("updatedData :" , updatedData);
     res.status(200).json(updatedData);
   } catch (error) {
     next(error);
