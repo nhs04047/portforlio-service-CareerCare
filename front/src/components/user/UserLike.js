@@ -13,7 +13,7 @@ function UserLike({ portfolioOwnerId, user }) {
     const user_id = portfolioOwnerId;
     setOtherUserId(user_id);
 
-    await Api.put(`like/${user.id}`, {
+    await Api.put(`like/${user}`, {
       otherUserId,
     });
     // setLike(!like);

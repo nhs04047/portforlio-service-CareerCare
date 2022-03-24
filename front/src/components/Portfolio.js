@@ -67,6 +67,7 @@ function Portfolio() {
           />
           <UserLike
             portfolioOwnerId={portfolioOwner.id}
+            user={userState.user?.id}
           />
         </Col>
         <Col>
