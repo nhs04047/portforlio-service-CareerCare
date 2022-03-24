@@ -1,5 +1,7 @@
 import is from '@sindresorhus/is';
 import { query, Router } from 'express';
+import sharp from 'sharp'
+import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
 import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
@@ -177,15 +179,26 @@ userAuthRouter.put(
 
 // user 프로필 이미지 변경
 userAuthRouter.put(
-  "/users/profileImg/:id",
+  '/users/profileImg/:id',
   upload.single("img"),
   async function (req, res, next){
     try{
+
+      sharp(req.file.path)  // 압축할 이미지 경로
+      .resize({ width: 600 }) // 비율을 유지하며 가로 크기 줄이기
+      .withMetadata()	// 이미지의 exif데이터 유지
+      .toBuffer((err, buffer) => {
+        if (err) throw err;
+        // 압축된 파일 새로 저장(덮어씌우기)
+        fs.writeFile(req.file.path, buffer, (err) => {
+          if (err) throw err;
+        });
+      });
+
       const user_id = req.params.id;
-      const toUpdate = req.file.path;
-
+      const toUpdate = req.file.filename;
       const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
-
+      
       res.status(200).json(uploadedImg);
     }catch(error){
       next(error)
@@ -193,6 +206,19 @@ userAuthRouter.put(
   }
 )
 
+//user 프로필 사진 불러오기
+userAuthRouter.get(
+  '/users/profileImg/:id',
+  async function(req, res, next){
+    try{
+      const user_id = req.params.id;
+      const profileImgURL = await userAuthService.getProfileImgURL({user_id})
+      res.send(profileImgURL)
+    }catch(error){
+      next(error)
+    }
+  }
+)
 
 userAuthRouter.delete(
   '/users/:id',
@@ -211,7 +237,8 @@ userAuthRouter.delete(
     } catch (error){
       next(error);
     }
-});
+  }
+);
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {

@@ -30,6 +30,12 @@ class User {
     return users;
   }
 
+  static async findProfileImgById({user_id}){
+    const user = await UserModel.findOne({ id: user_id });
+    console.log(user)
+    return user.profileImg;
+  }
+
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
     const update = { [fieldToUpdate]: newValue };
