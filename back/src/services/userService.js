@@ -190,7 +190,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const profileImgsPath = "http://localhost:5001/src/uploads/profile_img"
+    const profileImgsPath = "http://localhost:5001/profileImg/"
     const profileImgURL = profileImgsPath+ profileImg;
 
 
