@@ -199,7 +199,7 @@ userAuthRouter.put(
       const {filename} = req.file
       const profileImgPath = "http://localhost:5001/profileImg/" + filename
       const toUpdate = {
-        file,
+        filename,
         profileImgPath
       };
       const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
