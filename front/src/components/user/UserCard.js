@@ -11,7 +11,7 @@ function UserCard({
   isEditable,
   isNetwork,
   setIsEditProfile,
-  profileUrl,
+  // profileUrl,
 }) {
   const navigate = useNavigate();
   return (
@@ -23,7 +23,7 @@ function UserCard({
       />
       <Card.Body>
         <Row className='justify-content-md-center'>
-          <ProfileImg profileUrl={profileUrl} />
+          <ProfileImg profileUrl={user?.profileImgPath} />
         </Row>
         <div id='cardContents'>
           <Card.Title id='cardTitle'>{user?.name}</Card.Title>

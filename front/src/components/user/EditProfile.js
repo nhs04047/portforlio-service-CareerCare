@@ -4,8 +4,10 @@ import { Card, Row, Button, Col, Form } from 'react-bootstrap';
 import axios from 'axios';
 import * as Api from '../../api';
 
-function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
-  const [files, setFiles] = useState('');
+function EditProfile({ user, setIsEditProfile }) {
+  const [profileImgPath, setProfileImgPath] = useState(user.profileImgPath);
+
+  // const [files, setFiles] = useState('');
 
   const backendPortNumber = '5001';
   const serverUrl =
@@ -29,14 +31,14 @@ function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
   }
 
   const onLoadFile = (e) => {
-    const file = e.target.files;
-    setFiles(file);
-    console.log(`files: ${files}`);
+    const file = e.target.profileImgPath;
+    setProfileImgPath(file);
+    console.log(`files: ${profileImgPath}`);
   };
 
   const handleClick = async (e) => {
     const formData = new FormData();
-    formData.append('img', files[0]);
+    formData.append('img', profileImgPath[0]);
     // console.log(`files[0]: ${files[0]}`);
     // console.log(`formData: ${formData}`);
     // for (const keyValue of formData) console.log(`formData: ${keyValue}`);
@@ -47,8 +49,8 @@ function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
     console.log(res);
 
     const updateProfile = res.data;
-    setProfileUrl(updateProfile);
-    console.log(profileUrl);
+    setProfileImgPath(updateProfile);
+    console.log(profileImgPath);
     setIsEditProfile(false);
     console.log(user);
   };
