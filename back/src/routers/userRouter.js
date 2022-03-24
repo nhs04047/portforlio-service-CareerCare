@@ -1,6 +1,7 @@
 import is from '@sindresorhus/is';
-import { Router } from 'express';
+import { query, Router } from 'express';
 import { login_required } from '../middlewares/login_required';
+import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
 
 const userAuthRouter = Router();
@@ -14,9 +15,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { name } = req.body;
-    const { email } = req.body;
-    const { password } = req.body;
+    const { name, email, password } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
@@ -38,8 +37,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
 userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
-    const { email } = req.body;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
@@ -67,6 +65,23 @@ userAuthRouter.get(
     }
   }
 );
+
+// user 검색 기능
+userAuthRouter.get(
+  '/userlist/search/:name',
+  login_required,
+  async function( req, res, next){
+    try{
+      const user_name = req.params.name;
+      const searchedUsers = await userAuthService.getSearchedUsers({
+        user_name,
+      });
+      res.status(200).send(searchedUsers);
+    }catch(error){
+      next(error);
+    }
+  }
+)
 
 userAuthRouter.get(
   '/user/current',
@@ -156,6 +171,24 @@ userAuthRouter.put(
       res.status(200).json(updatedPassword);
     } catch (error) {
       next(error);
+    }
+  }
+)
+
+// user 프로필 이미지 변경
+userAuthRouter.put(
+  "/users/profileImg/:id",
+  upload.single("img"),
+  async function (req, res, next){
+    try{
+      const user_id = req.params.id;
+      const toUpdate = req.file.path;
+
+      const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
+
+      res.status(200).json(uploadedImg);
+    }catch(error){
+      next(error)
     }
   }
 )

@@ -14,20 +14,18 @@ import { EducationModel } from '../schemas/education';
 class Education {
   //db에 학력 정보 생성 적용
   static async create({ newEducation }) {
-    const createdNewEducation = await EducationModel.create(newEducation);
-    return createdNewEducation;
+    return EducationModel.create(newEducation);
+
   }
 
   //db에서 id로 학력 정보 찾기 적용
   static async findOneById({ educationId }) {
-    const education = await EducationModel.findOne({ id: educationId });
-    return education;
+    return EducationModel.findOne({ id: educationId });
   }
 
   //db에서 user_id로 학력 정보 찾기 적용
-  static async findManyByUserId({ user_id }) {
-    const education = await EducationModel.find({ user_id });
-    return education;
+  static findManyByUserId({ user_id }) {
+    return EducationModel.find({ user_id });
   }
   
   /*
