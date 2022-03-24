@@ -154,6 +154,23 @@ class userAuthService {
     return true;
   }
 
+  // 프로필 이미지 변경
+  static async setProfileImg({user_id, toUpdate}){
+    let user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage =
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+    if (toUpdate){
+      const fieldToUpdate = "profileImgPath"
+      const newValue = toUpdate
+      user = await User.update({ user_id, fieldToUpdate, newValue})
+    }
+    return user;
+  };
+
   /*
    * deleteUser
    *
