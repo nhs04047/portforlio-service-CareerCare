@@ -1,5 +1,7 @@
 import is from '@sindresorhus/is';
 import { query, Router } from 'express';
+import sharp from 'sharp'
+import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
 import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
@@ -181,6 +183,18 @@ userAuthRouter.put(
   upload.single("img"),
   async function (req, res, next){
     try{
+
+      sharp(req.file.path)  // 압축할 이미지 경로
+      .resize({ width: 600 }) // 비율을 유지하며 가로 크기 줄이기
+      .withMetadata()	// 이미지의 exif데이터 유지
+      .toBuffer((err, buffer) => {
+        if (err) throw err;
+        // 압축된 파일 새로 저장(덮어씌우기)
+        fs.writeFile(req.file.path, buffer, (err) => {
+          if (err) throw err;
+        });
+      });
+
       const user_id = req.params.id;
       const toUpdate = req.file.filename;
       const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});

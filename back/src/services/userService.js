@@ -156,6 +156,7 @@ class userAuthService {
 
   // 프로필 이미지 변경
   static async setProfileImg({user_id, toUpdate}){
+
     let user = await User.findById({ user_id });
 
     if (!user) {
