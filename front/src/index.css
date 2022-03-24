@@ -76,3 +76,12 @@ body {
   box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
 }
 
+#userLike {
+  width: 50px !important;
+}
+
+#LikeCard {
+  width: 150px;
+  border: none;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+}

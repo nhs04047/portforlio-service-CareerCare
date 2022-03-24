@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import "../../index.css";
+import UserLike from './UserLike';
 
 function UserCard({ user, setIsEditing, setEditingPw, isEditable, isNetwork }) {
   const navigate = useNavigate();
@@ -43,16 +44,15 @@ function UserCard({ user, setIsEditing, setEditingPw, isEditable, isNetwork }) {
                 </Row>
               </Col>
             )}
-            {isNetwork && (
+            {isNetwork ? (
               <Card.Link
                 className='mt-3'
                 id='cardLink'
-                href='#'
                 onClick={() => navigate(`/users/${user.id}`)}
               >
                 포트폴리오
-              </Card.Link>
-            )}
+              </Card.Link>) : null
+            }
             </div>
         </Card.Body>
       </Card>
