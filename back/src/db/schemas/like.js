@@ -10,11 +10,11 @@ const LikeSchema = new Schema(
   {
     currentUser: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
+      ref: "User",
     },
     otherUser: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
+      ref: "User",
     },
   },
   { timestamps: true }
