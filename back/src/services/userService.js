@@ -185,45 +185,47 @@ class userAuthService {
       const currentUser = await User.findById({ user_id: currentUserId });
       const otherUser = await User.findById({ user_id: otherUserId });
 
-      const fieldToUpdate = "likeCount";
-  
       const isLiked = await Like.findByUser({ currentUser, otherUser });
-  
+
       let updatedLike = {};
       let updatedUser = {};
   
       if (isLiked) {
+        let fieldToUpdate = "likeCount";
         const newValue = otherUser.likeCount - 1;
-        updatedUser = await User.update({
+        const newStatus = false;
+        updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
           value : newValue,
         });
-        const updateStatus = false;
-        updatedUser = await User.update({
+        fieldToUpdate = "status";
+        updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
-          value : updateStatus,
+          value : newStatus,
         });
         await Like.deleteById({ isLiked });
         updatedLike = { status: false, likeCount: updatedUser.likeCount };
       } else {
+        let fieldToUpdate = "likeCount";
         const newValue = otherUser.likeCount + 1;
-        updatedUser = await User.update({
+        const newStatus = true;
+        updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
           value : newValue,
         });
-        const updateStatus = true;
-        updatedUser = await User.update({
+        fieldToUpdate = "status";
+        updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
-          value : updateStatus,
+          value : newStatus,
         });
         await Like.create({ currentUser, otherUser });
         updatedLike = { status: true, likeCount: updatedUser.likeCount };
       }
-      console.log(updatedUser);
+      
       return updatedLike;
     }
 

@@ -43,12 +43,11 @@ class User {
     return updatedUser;
   }
 
-  static async updateStatus({ user_id, fieldToUpdate, newStatus}) {
+  static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
     const filter = { id: user_id };
-    const update = { [fieldToUpdate]: newStatus };
+    const update = { [fieldToUpdate]:value };
     const option = { returnOriginal: false };
  
-
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
@@ -75,7 +74,6 @@ class User {
   // 해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
   static async findByPassword({user_id}) {
     const user = await UserModel.findOne({id:user_id});
-    console.log(user.password);
     return user.password;
   }
 

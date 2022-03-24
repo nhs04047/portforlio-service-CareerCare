@@ -259,7 +259,6 @@ userAuthRouter.put("/like/:id", login_required, async function (req, res, next) 
       otherUserId,
     });
 
-    console.log("updatedUser :" , updatedUser);
     res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
