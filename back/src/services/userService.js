@@ -172,7 +172,7 @@ class userAuthService {
   };
 
   // 프로필 이미지 가져오기
-  static async getProfileImg({user_id}){
+  static async getProfileImgURL({user_id}){
 
     let user = await User.findById({ user_id });
 
@@ -183,13 +183,17 @@ class userAuthService {
     }
 
     const profileImg = await User.findProfileImgById({ user_id });
-    console.log(profileImg)
-    if (!user) {
+    if (!profileImg) {
       const errorMessage =
         '프로필 이미지가 없습니다.';
       return { errorMessage };
     }
-    return profileImg;
+
+    const profileImgsPath = "http://localhost:5001/src/"
+    const profileImgURL = profileImgsPath+ profileImg;
+
+
+    return profileImgURL;
 
   }
 
