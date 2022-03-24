@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import * as Api from '../../api';
 
 function UserLike({ portfolioOwnerId, user }) {
   const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
+  const [renderLike, setRenderLike] = useState(0);
   const [otherUserId, setOtherUserId] = useState(portfolioOwnerId);
+
+  // useEffect(() => {
+  //   async function getUser() {
+  //   const res = await Api.get(`like/${user}`);
+  //   // setRenderLike(res.data);
+  //   console.log(res);
+  //   }
+  //   getUser();
+
+  // }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -17,7 +28,6 @@ function UserLike({ portfolioOwnerId, user }) {
     });
     setCountLike(res.data.likeCount);
     setLike(res.data.status);
-    // console.log(res.data.status)
   };
 
   return (
