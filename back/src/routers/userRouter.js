@@ -206,22 +206,6 @@ userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
     );
 });
 
-// // 좋아요를 클릭 한 user_id와 클릭 당한 user_id를 입력 받아 true/false와 likeCount 객체 반환
-// userAuthRouter.put("/like/:id", login_required, async function (req, res, next) {
-//   try {
-//     // 좋아요를 클릭 한 user_id
-//     const nowId = req.params.id;
-//     // 좋아요를 클릭 당한 user_id
-//     const {otherId} = req.body;
-//     console.log(nowId);
-//     console.log(otherId);
-//     const updatedLike = await userAuthService.setLike({nowId, otherId});
-//     console.log(updatedLike);
-//     res.status(200).json(updatedLike);
-//   } catch (err) {
-//     next(err);
-//   }
-// }) 
 
 userAuthRouter.put("/like/:id", login_required, async function (req, res, next) {
   try {
@@ -240,9 +224,5 @@ userAuthRouter.put("/like/:id", login_required, async function (req, res, next) 
     next(error);
   }
 });
-
-
-
-
 
 export { userAuthRouter };

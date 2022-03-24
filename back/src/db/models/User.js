@@ -31,9 +31,6 @@ class User {
   }
 
   static async update({ user_id, fieldToUpdate, value }) {
-    console.log("user_id : " , user_id);
-    console.log("fieldToUpdate : " , fieldToUpdate);
-    console.log("value : " , value);
     const filter = { id: user_id };
     const update = { [fieldToUpdate]: value };
     const option = { returnOriginal: false };
