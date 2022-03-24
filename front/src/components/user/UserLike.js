@@ -11,7 +11,7 @@ function UserLike({ portfolioOwnerId, user }) {
   }, [portfolioOwnerId]);
 
   useEffect(() => {
-    Api.get('users', portfolioOwnerId).then((res) => setLike(res.data.status));
+    Api.get('like', portfolioOwnerId).then((res) => setLike(res.data.userStatus));
   }, [portfolioOwnerId]);
 
   const handleClick = useCallback(async (e) => {
