@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import "../../index.css";
-import UserLike from './UserLike';
 
 function UserCard({ user, setIsEditing, setEditingPw, isEditable, isNetwork }) {
   const navigate = useNavigate();
