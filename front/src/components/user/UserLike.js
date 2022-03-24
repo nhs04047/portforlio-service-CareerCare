@@ -5,19 +5,19 @@ import * as Api from '../../api';
 function UserLike({ portfolioOwnerId, user }) {
   const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
-  const [otherUserId, setOtherUserId] = useState("");
+  const [otherUserId, setOtherUserId] = useState(portfolioOwnerId);
 
   const handleClick = async (e) => {
     e.preventDefault();
 
     const user_id = portfolioOwnerId;
     setOtherUserId(user_id);
-
-    await Api.put(`like/${user}`, {
+    const res = await Api.put(`like/${user}`, {
       otherUserId,
     });
-    // setLike(!like);
-    // setCountLike((cur) => like ? cur - 1 : cur + 1);
+    setCountLike(res.data.likeCount);
+    setLike(res.data.status);
+    // console.log(res.data.status)
   };
 
   return (
