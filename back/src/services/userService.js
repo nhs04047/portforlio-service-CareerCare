@@ -212,6 +212,16 @@ class userAuthService {
   
       return updatedLike;
     }
+
+    static async getLike({otherUserId}) {
+      const currentUser = await User.findById({ user_id: otherUserId });
+
+      if (!currentUser) {
+        const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        return { errorMessage };
+      }
+      return currentUser.likeCount;
+    }
 }
 
 export { userAuthService };
