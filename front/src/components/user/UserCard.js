@@ -23,7 +23,7 @@ function UserCard({
       />
       <Card.Body>
         <Row className='justify-content-md-center'>
-          <ProfileImg profileUrl={user?.profileImgPath} />
+          <ProfileImg profileUrl={profileUrl} />
         </Row>
         <div id='cardContents'>
           <Card.Title id='cardTitle'>{user?.name}</Card.Title>

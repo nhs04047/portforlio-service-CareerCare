@@ -47,10 +47,10 @@ function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
     console.log(res);
 
     const updateProfile = res.data;
-    console.log(`updateProfile: ${updateProfile}`);
     setProfileUrl(updateProfile);
     console.log(profileUrl);
     setIsEditProfile(false);
+    console.log(user);
   };
 
   return (

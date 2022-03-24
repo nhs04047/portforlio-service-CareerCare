@@ -12,9 +12,7 @@ function User({ portfolioOwnerId, isEditable }) {
   const [isEditProfile, setIsEditProfile] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
-  const [profileUrl, setProfileUrl] = useState(
-    'http://placekitten.com/200/200'
-  );
+  const [profileUrl, setProfileUrl] = useState(null);
 
   useEffect(() => {
     // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
