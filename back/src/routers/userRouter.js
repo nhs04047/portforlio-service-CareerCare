@@ -177,7 +177,7 @@ userAuthRouter.put(
 
 // user 프로필 이미지 변경
 userAuthRouter.put(
-  "/users/profileImg/:id",
+  '/users/profileImg/:id',
   upload.single("img"),
   async function (req, res, next){
     try{
@@ -193,6 +193,21 @@ userAuthRouter.put(
   }
 )
 
+//user 프로필 사진 불러오기
+userAuthRouter.get(
+  '/users/profileImg/:id',
+  async function(req, res, next){
+    try{
+      const user_id = req.params.id;
+      const profileImg = await userAuthService.getProfileImg({user_id})
+      const imgUrl = "http://localhost:5001/src/"
+      const profileImgPath = imgUrl+ profileImg;
+      res.send(profileImgPath)
+    }catch(error){
+      next(error)
+    }
+  }
+)
 
 userAuthRouter.delete(
   '/users/:id',
@@ -211,7 +226,8 @@ userAuthRouter.delete(
     } catch (error){
       next(error);
     }
-});
+  }
+);
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {

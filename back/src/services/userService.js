@@ -164,36 +164,59 @@ class userAuthService {
       return { errorMessage };
     }
     if (toUpdate){
-      const fieldToUpdate = "profileImgPath"
+      const fieldToUpdate = "profileImg"
       const newValue = toUpdate
       user = await User.update({ user_id, fieldToUpdate, newValue})
     }
     return user;
   };
 
+  // 프로필 이미지 가져오기
+  static async getProfileImg({user_id}){
+
+    let user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage =
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+
+    const profileImg = await User.findProfileImgById({ user_id });
+    console.log(profileImg)
+    if (!user) {
+      const errorMessage =
+        '프로필 이미지가 없습니다.';
+      return { errorMessage };
+    }
+    return profileImg;
+
+  }
+
+
   /*
    * deleteUser
    *
    */
-    static async deleteUser({ user_id }) {
-      const user = await User.deleteOneUser({ user_id });
-      // db에서 찾지 못한 경우, 에러 메시지 반환
-      if (!user) {
-        const errorMessage =
-          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
-        return { errorMessage };
-      }
-      return user;
+  static async deleteUser({ user_id }) {
+    const user = await User.deleteOneUser({ user_id });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
     }
-  
+    return user;
+  }
+
     
   /*
    * deleteUserAllInfo
    *
    */
-    static async deleteUserAllInfo({ user_id }){
-      await User.deleteAllByUserId({ user_id });
-    }
+  static async deleteUserAllInfo({ user_id }){
+    await User.deleteAllByUserId({ user_id });
+  }
     
 }
 
