@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // img 경로
-app.use(express.static('src/uploads/'))
+app.use('/profileImg', express.static('uploads/profile_img'));
 
 // 기본 페이지
 app.get("/", (req, res) => {
