@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import '../../index.css';
 
+import ProfileImg from './ProfileImg';
+
 function UserCard({
   user,
   setIsEditing,
@@ -9,6 +11,7 @@ function UserCard({
   isEditable,
   isNetwork,
   setIsEditProfile,
+  profileUrl,
 }) {
   const navigate = useNavigate();
   return (
@@ -20,12 +23,7 @@ function UserCard({
       />
       <Card.Body>
         <Row className='justify-content-md-center'>
-          <Card.Img
-            style={{ width: '10rem', height: '8rem' }}
-            className='mb-4'
-            src='http://placekitten.com/200/200'
-            alt='랜덤 고양이 사진 (http://placekitten.com API 사용)'
-          />
+          <ProfileImg profileUrl={profileUrl} />
         </Row>
         <div id='cardContents'>
           <Card.Title id='cardTitle'>{user?.name}</Card.Title>
