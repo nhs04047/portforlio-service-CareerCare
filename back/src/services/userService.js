@@ -164,7 +164,7 @@ class userAuthService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-
+    console.log(toUpdate)
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
       if (toUpdate[myKeys[i]]!==null) {
