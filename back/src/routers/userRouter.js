@@ -182,10 +182,9 @@ userAuthRouter.put(
   async function (req, res, next){
     try{
       const user_id = req.params.id;
-      const toUpdate = req.file.path;
-
+      const toUpdate = req.file.filename;
       const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
-
+      
       res.status(200).json(uploadedImg);
     }catch(error){
       next(error)
