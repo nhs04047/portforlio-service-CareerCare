@@ -21,8 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 // img 경로
 app.use(express.static('src/uploads/'))
 
-출처: https://avengersrhydon1121.tistory.com/234 [익명의 개발노트]
-
 // 기본 페이지
 app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
