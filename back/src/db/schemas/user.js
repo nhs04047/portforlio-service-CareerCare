@@ -28,6 +28,11 @@ const UserSchema = new Schema(
       required: false,
       default: 0,
     },
+    status: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     timestamps: true,

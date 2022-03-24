@@ -148,8 +148,10 @@ class userAuthService {
       const fieldToUpdate = "password"
       // bcrypt.hash 적용
       const hashednewPassword = await bcrypt.hash(toUpdate.newPw, 10);
+
       const newValue = hashednewPassword;
       user = await User.update({ user_id, fieldToUpdate, newValue });
+  
     }
     return true;
   }
@@ -197,6 +199,12 @@ class userAuthService {
           fieldToUpdate,
           value : newValue,
         });
+        const updateStatus = false;
+        updatedUser = await User.update({
+          user_id : otherUserId,
+          fieldToUpdate,
+          value : updateStatus,
+        });
         await Like.deleteById({ isLiked });
         updatedLike = { status: false, likeCount: updatedUser.likeCount };
       } else {
@@ -206,21 +214,28 @@ class userAuthService {
           fieldToUpdate,
           value : newValue,
         });
+        const updateStatus = true;
+        updatedUser = await User.update({
+          user_id : otherUserId,
+          fieldToUpdate,
+          value : updateStatus,
+        });
         await Like.create({ currentUser, otherUser });
         updatedLike = { status: true, likeCount: updatedUser.likeCount };
       }
-  
+      console.log(updatedUser);
       return updatedLike;
     }
 
     static async getLike({otherUserId}) {
       const currentUser = await User.findById({ user_id: otherUserId });
-
+      const userIike = currentUser.likeCount;
+      const userStatus = currentUser.status;
       if (!currentUser) {
         const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
         return { errorMessage };
       }
-      return currentUser.likeCount;
+      return {userIike, userStatus};
     }
     
 
