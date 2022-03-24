@@ -222,6 +222,33 @@ class userAuthService {
       }
       return currentUser.likeCount;
     }
+    
+
+  /*
+   * setNewPassword
+   * 비밀번호 재발급 시 email로 user정보가 존재하는지 확인하고 새로운 비밀번호를 db에 저장하는 함수
+   * 
+   */
+  static async setNewPassword({ email }){
+    //email로 유저 찾고 
+    let user = await User.findByEmail({ email });
+    //email 정보와 매칭되는 유저가 없으면 에러메세지 리턴
+    if (!user) {
+      const errorMessage =
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+
+    const newPassword = await User.createRandomPassword();
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    //업데이트할 field를 password로 설정
+    const fieldToUpdate = "password"
+    //updatedUser에 password를 업데이트한 user정보 저장
+    const updatedUser = await User.updatePassword({email, fieldToUpdate, hashedNewPassword})
+    
+    return {newPassword, updatedUser};
+  }
 }
 
 export { userAuthService };
