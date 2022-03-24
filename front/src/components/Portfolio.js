@@ -57,7 +57,7 @@ function Portfolio() {
   }
   // 컴포넌트를 불러와서 페이지에 표시해줌.
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <Col md='3' lg='3'>
           <User
@@ -65,7 +65,7 @@ function Portfolio() {
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
-        <Col>
+        <Col md='9' lg='9'>
           <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}

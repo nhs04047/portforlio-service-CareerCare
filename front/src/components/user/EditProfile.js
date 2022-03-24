@@ -1,10 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Row, Button, Col, Form } from 'react-bootstrap';
 
+import axios from 'axios';
 import * as Api from '../../api';
 
 function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
   const [files, setFiles] = useState('');
+
+  const backendPortNumber = '5001';
+  const serverUrl =
+    window.location.protocol +
+    '//' +
+    window.location.hostname +
+    ':' +
+    backendPortNumber +
+    '/';
+
+  async function put(endpoint, data) {
+    console.log(`%cPUT 요청: ${serverUrl + endpoint}`, 'color: #059c4b;');
+    console.log(`%cPUT 요청 데이터: ${data}`, 'color: #059c4b;');
+
+    return axios.put(serverUrl + endpoint, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+  }
 
   const onLoadFile = (e) => {
     const file = e.target.files;
@@ -15,12 +37,20 @@ function EditProfile({ user, setIsEditProfile, profileUrl, setProfileUrl }) {
   const handleClick = async (e) => {
     const formData = new FormData();
     formData.append('img', files[0]);
-    console.log(`formData: ${formData}`);
-    for (const keyValue of formData) console.log(`formData: ${keyValue}`);
+    // console.log(`files[0]: ${files[0]}`);
+    // console.log(`formData: ${formData}`);
+    // for (const keyValue of formData) console.log(`formData: ${keyValue}`);
 
-    const res = await Api.put(`users/profileImg/${user.id}`, formData);
-    const updateProfile = res.data.location;
+    await put(`users/profileImg/${user.id}`, formData);
+
+    const res = await Api.get('users/profileImg', user.id);
+    console.log(res);
+
+    const updateProfile = res.data;
+    console.log(`updateProfile: ${updateProfile}`);
     setProfileUrl(updateProfile);
+    console.log(profileUrl);
+    setIsEditProfile(false);
   };
 
   return (
