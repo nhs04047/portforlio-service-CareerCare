@@ -268,6 +268,7 @@ userAuthRouter.post("/users/newpassword", async function (req, res) {
   try {
     //form에서 받아온 이메일 저장
     const email = req.body.idEmail;
+    const name= req.body.idName;
 
     //1)받아온 이메일이 db에 존재하는지 확인하고 2)새 비밀번호를 업데이트할 함수
     const {newPassword,updatedUser} = await userAuthService.setNewPassword({email});
@@ -280,7 +281,7 @@ userAuthRouter.post("/users/newpassword", async function (req, res) {
     const mailOption = {
       from: "eliceTest@gmail.com",
       to: email,
-      subject: "[포트폴리오 웹] {$이름}님 임시 비밀번호가 생성되었습니다.",
+      subject: `[포트폴리오 웹] ${name}님 임시 비밀번호가 생성되었습니다.`,
       html:`
       <h1>임시비밀번호</h1>
       임시 비밀번호 : ${newPassword}
