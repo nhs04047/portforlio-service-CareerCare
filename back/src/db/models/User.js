@@ -63,7 +63,10 @@ class User {
     return updatedUser;
   }
 
-  //password만 업데이트하는 함수
+  /*
+   * updatePassword()
+   *email 필드로 찾은 데이터의 password만 갱신하는 함수
+   */
   static async updatePassword({ email, fieldToUpdate, hashedNewPassword }) {
     const filter = { email };
     const update = { [fieldToUpdate]: hashedNewPassword };
@@ -108,7 +111,6 @@ class User {
   /*
    * createRandomPassword()
    * 임의 비밀번호 생성 함수
-   *
    */
     static async createRandomPassword() { 
       const randStr = ['a','b','c','d','e','f','g','h','i','j','k','l',

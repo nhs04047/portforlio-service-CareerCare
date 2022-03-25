@@ -1,13 +1,7 @@
+
+
 import {Schema, model} from "mongoose";
 
-/*
- *id : 프로젝트 아이디
- *user_id : 유저 아이디
- *title : 프로젝트 제목
- *description : 상세 내용
- *from_date : -
- *to_date : -
- */
 
 const ProjectSchema = new Schema(
   {

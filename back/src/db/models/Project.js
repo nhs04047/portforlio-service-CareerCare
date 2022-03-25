@@ -30,6 +30,7 @@ class Project {
   static async findManyByUserId({ user_id }) {
     return ProjectModel.find({ user_id });
   }
+  
   /*
    * findManyByAnotherUserId()
    *매개변수로 보낸 user_id(네트워크 페이지에서 접근가능한 다른 유저의 Id)의 project 컬렉션 documents를 return하는 함수
@@ -43,9 +44,6 @@ class Project {
    * update()
    *기존의 project를 수정하고 수정한 project를 return 하는 함수
    *findOneAndUpdate() 메소드를 이용해 수정한 project인 updatedProject를 반환한다.
-   *1. filter 변수 : 수정할 프로젝트의 id
-   *2. update 변수 : 수정 할 내용
-   *3. option 변수 : 기본값 false, 값이 true인 경우 수정된 문서를 반환한다.
    */
   static async update({ projectId, fieldToUpdate, newValue }) {
     const filter = { id: projectId };
