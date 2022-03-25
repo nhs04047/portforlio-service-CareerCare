@@ -5,55 +5,84 @@ import { EducationModel } from '../schemas/education';
 import { ProjectModel } from '../schemas/project';
 
 class User {
-  static async create({ newUser }) {
-    const createdNewUser = await UserModel.create(newUser);
-    return createdNewUser;
+  /*
+  create()
+  user data 생성
+  */
+  static create({ newUser }) {
+    return UserModel.create(newUser);
+
   }
 
-  static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
+  /*
+  findByEmail()
+  user email로 user정보 찾기
+  */
+  static findByEmail({ email }) {
+    return UserModel.findOne({ email });
   }
 
-  static async findById({ user_id }) {
-    const user = await UserModel.findOne({ id: user_id });
-    return user;
+  /*
+  findById()
+  user id로 user정보 찾기
+  */
+  static findById({ user_id }) {
+    return UserModel.findOne({ id: user_id });
   }
 
-  static async findManyByName({ user_name}){
-    const users = await UserModel.find({name: new RegExp(user_name)})
-    return users
-  }
+  /*
+  findManyByName()
+  user 이름름으로 user정보 찾기 - 정렬{ asc, desc, likes, updatedAt}
+  */
+  static async findManyByName({ user_name, sortingOption }) {
+    let users = [];
 
-  static async findAll() {
-    const users = await UserModel.find({});
+    switch (sortingOption) {
+      case "asc":
+        users = await UserModel.find({ name: new RegExp(user_name) }).sort({ name: 1 });     // 이름 순 오름차순
+        break;
+      case "desc":
+        users = await UserModel.find({ name: new RegExp(user_name) }).sort({ name: -1 });    // 이름 순 내림차순
+        break;
+      case "likes":
+        users = await UserModel.find({ name: new RegExp(user_name) }).sort({ likeCount: -1 });  //like count 순
+        break;
+      case "updatedAt":
+        users = await UserModel.find({ name: new RegExp(user_name) }).sort({ updatedAt: -1 });  // update tns
+        break;
+      default:
+        users = await UserModel.find({ name: new RegExp(user_name) });
+        break;
+    }
     return users;
   }
 
-  // user id로 프로필 이미지 이름 찾기
-  static async findProfileImgById({user_id}){
+  /*
+  findAll()
+  모든 user정보 가져오기
+  */
+  static findAll() {
+    return UserModel.find({});
+  }
+
+  /*
+  findProfileImgById()
+  user id로 프로필 이미지 이름 찾기
+  */
+  static async findProfileImgById({ user_id }) {
     const user = await UserModel.findOne({ id: user_id });
     return user.profileImg;
   }
 
+  /*
+  update()
+  user 정보 update
+  */
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
-    const update = { [fieldToUpdate]:newValue };
+    const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
- 
-    const updatedUser = await UserModel.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
-    return updatedUser;
-  }
-  // 유저의 좋아요 수와 status 갱신하기 위한 함수
-  static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
-    const filter = { id: user_id };
-    const update = { [fieldToUpdate]:value };
-    const option = { returnOriginal: false };
- 
+
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
@@ -62,6 +91,7 @@ class User {
     return updatedUser;
   }
 
+<<<<<<< HEAD
   // // 좋아요를 클릭한 사람의 이름 추가
   // static async updateLikeListPush({ user_id, value }) {
   //   const updatedUser = await UserModel.findOneAndUpdate({id:user_id}, {
@@ -74,65 +104,109 @@ class User {
   //     $pull: {liked : {name:value} }});
   //   return updatedUser;
   // }
+=======
+>>>>>>> 1859e9ffabc4b7f63ca981d70dbb476fd9ab4771
   /*
-   * updatePassword()
-   *email 필드로 찾은 데이터의 password만 갱신하는 함수
-   */
+  updateLikeStatus()
+  유저의 좋아요 수와 status 갱신하기 위한 함수
+  */
+  static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
+    const filter = { id: user_id };
+    const update = { [fieldToUpdate]: value };
+    const option = { returnOriginal: false };
+
+    const updatedUser = await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedUser;
+  }
+
+  /*
+  updateLikeListPush()
+  좋아요를 클릭한 사람의 이름 추가
+  */
+  static async updateLikeListPush({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $push: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
+
+  /*
+  updateLikeListDel()
+  좋아요를 클릭한 사람의 이름 삭제
+  */
+  static async updateLikeListDel({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $pull: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
+
+  /*
+  updatePassword()
+  email 필드로 찾은 데이터의 password만 갱신하는 함수
+  */
   static async updatePassword({ email, fieldToUpdate, hashedNewPassword }) {
     const filter = { email };
     const update = { [fieldToUpdate]: hashedNewPassword };
     const option = { returnOriginal: false };
 
-    const updatedPasswordUser =await UserModel.findOneAndUpdate(
+    const updatedPasswordUser = await UserModel.findOneAndUpdate(
       filter,
       update,
       option
     );
-
     return updatedPasswordUser;
   }
 
-  // 해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
-  static async findByPassword({user_id}) {
-    const user = await UserModel.findOne({id:user_id});
+  /*
+  findPasswordById()
+  해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
+  */
+  static async findPasswordById({ user_id }) {
+    const user = await UserModel.findOne({ id: user_id });
     return user.password;
   }
 
   /*
-   * deleteOneUser()
-   *user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
-   */
-   static async deleteOneUser({ user_id }) {
+  deleteOneUser()
+  user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
+  */
+  static async deleteOneUser({ user_id }) {
     const user = await UserModel.deleteOne({ id: user_id });
-   return user;
+    return user;
   }
 
- 
+
   /*
-   * deleteAllByUserId()
-   *각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
-   */
-  static async deleteAllByUserId({ user_id }) {
-    await AwardModel.deleteMany({user_id});
-    await CertificateModel.deleteMany({user_id});
-    await EducationModel.deleteMany({user_id});
-    await ProjectModel.deleteMany({user_id});
+  deleteAllById()
+  각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
+  */
+  static async deleteAllById({ user_id }) {
+    await AwardModel.deleteMany({ user_id });
+    await CertificateModel.deleteMany({ user_id });
+    await EducationModel.deleteMany({ user_id });
+    await ProjectModel.deleteMany({ user_id });
   }
 
   /*
-   * createRandomPassword()
-   * 임의 비밀번호 생성 함수
-   */
-    static async createRandomPassword() { 
-      const randStr = ['a','b','c','d','e','f','g','h','i','j','k','l',
-      'm','n','o','p','q','r','s','t','u','v','w','x','y','z',
-      '1','2','3','4','5','6','7','8','9','0'];
-      let randomPassword="";
-      for (var j=0; j<5; j++)
-      randomPassword += randStr[Math.floor(Math.random()*randStr.length)];
-      return randomPassword;
-    };
- 
+  createRandomPassword()
+  임의 비밀번호 생성 함수
+  */
+  static async createRandomPassword() {
+    const randStr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+      'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    let randomPassword = "";
+    for (var j = 0; j < 5; j++){
+      randomPassword += randStr[Math.floor(Math.random() * randStr.length)];
+    }
+    return randomPassword;
+  }
+
 }
 
 export { User };
