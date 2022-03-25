@@ -81,7 +81,7 @@ class userAuthService {
 
   static async getUsers({hostName}) {
     const users = await User.findAll();
-    users.map((user)=>{
+    users.map((user)=>{   // 프로필 사진 URL 함께 반환
       user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg
     })
     return users;
@@ -91,7 +91,7 @@ class userAuthService {
   static async getSearchedUsers({user_name, sortingOption}, hostName){
     const searchedUsers = await User.findManyByName({user_name, sortingOption});
 
-    searchedUsers.map((user)=>{
+    searchedUsers.map((user)=>{   // 프로필 사진 URL 함께 반환
       user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg
     })
     return searchedUsers
@@ -127,7 +127,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg;
+    user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg;   // 프로필 사진 URL 함께 첨부
 
     return user;
   }
@@ -172,7 +172,7 @@ class userAuthService {
     let user = await User.findById({ user_id });
 
     if (user.profileImg !== "default_img/default_profile_img.jpg")
-    fs.unlink(`./uploads/profile_img/${user.profileImg}`, (error)=>{
+    fs.unlink(`./uploads/profile_img/${user.profileImg}`, (error)=>{    // 기존 프로필 사진 삭제
       if(error){   
         console.log(error)
       }
@@ -218,7 +218,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const profileImgURL = "http://" + hostName + "/profileImg/" + profileImg;
+    const profileImgURL = "http://" + hostName + "/profileImg/" + profileImg;   // 프로필 사진 URL 함께 첨부
     console.log(profileImgURL)
 
     return profileImgURL;
