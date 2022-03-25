@@ -8,7 +8,6 @@ const serverUrl =
   ':' +
   backendPortNumber +
   '/';
-
 async function get(endpoint, params = '') {
   console.log(
     `%cGET 요청 ${serverUrl + endpoint + '/' + params}`,

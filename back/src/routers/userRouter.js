@@ -1,3 +1,10 @@
+/**
+ * <password 재발급 및 이메일 전송 구현>
+ * 작성자 : 장정민, 일자 : 2022-03-24
+ * userAuthRouter.post("/users/newPassword")
+ * 
+ */
+
 import is from '@sindresorhus/is';
 import { query, Router } from 'express';
 import sharp from 'sharp'
@@ -5,6 +12,7 @@ import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
 import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
+import {smtpTransport} from './smtpTransport';
 
 const userAuthRouter = Router();
 
@@ -177,7 +185,7 @@ userAuthRouter.put(
   }
 )
 
-// user 프로필 이미지 변경
+// user 프로필 이미지 리사이징 후 변경
 userAuthRouter.put(
   '/users/profileImg/:id',
   upload.single("img"),
@@ -195,10 +203,10 @@ userAuthRouter.put(
         });
       });
 
-      const user_id = req.params.id;
+      const user_id = req.params.id;  
       const profileImg = req.file.filename
       const profileImgPath = "http://localhost:5001/profileImg/" + profileImg
-      const toUpdate = {
+      const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
         profileImg,
         profileImgPath
       };
@@ -245,15 +253,92 @@ userAuthRouter.delete(
   }
 );
 
+
+userAuthRouter.post("/users/newpassword", async function (req, res) {
+  try {
+    //form에서 받아온 이메일 저장
+    const email = req.body.email;
+
+    //1)받아온 이메일이 db에 존재하는지 확인하고 2)새 비밀번호를 업데이트할 함수
+    const {newPassword,updatedUser} = await userAuthService.setNewPassword({email});
+
+    if (updatedUser.errorMessage) {
+      throw new Error(updatedUser.errorMessage);
+    }
+
+    //메일옵션 => 아래 내용이 수신됨
+    const mailOption = {
+      from: "eliceTest@gmail.com",
+      to: email,
+      subject: "[포트폴리오 웹] {$이름}님 임시 비밀번호가 생성되었습니다.",
+      html:`
+      <h1>임시비밀번호</h1>
+      임시 비밀번호 : ${newPassword}
+      `
+    };
+
+    smtpTransport.sendMail(mailOption, (err, res) => {
+      if (err) {
+        console.log("err", err);
+      } else {
+        console.log("Message send :" + res);
+      }
+      smtpTransport.close();
+    });
+
+    res.status(200).send({
+      result:"ok"
+    });
+
+  } catch (err) {
+    console.log("err", err);
+  }
+});
+
+// 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
+userAuthRouter.put("/like/:id", login_required, async function (req, res, next) {
+  try {
+    // 좋아요를 클릭한 사람의 id
+    const currentUserId = req.params.id;
+    // 좋아요를 받은 사람의 id
+    const otherUserId = req.body.otherUserId;
+    // 현재 상태를 나타내는 status와 likeCount 반환
+    const updatedUser = await userAuthService.setLike({
+      currentUserId,
+      otherUserId,
+    });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 현재 상태를 나타내는 status와 likeCount 반환
+userAuthRouter.get("/like/:id", login_required, async function (req, res, next) {
+  try {
+    // 좋아요를 클릭한 사람의 id
+    const otherUserId = req.params.id;
+
+    const updatedData = await userAuthService.getLike({
+      otherUserId,
+    });
+
+    res.status(200).json(updatedData);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
+userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
-
 
 
 export { userAuthRouter };
