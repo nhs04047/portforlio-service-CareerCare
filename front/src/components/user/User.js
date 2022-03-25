@@ -3,11 +3,13 @@ import UserEditForm from './UserEditForm';
 import ChangePw from './ChangePw';
 import UserCard from './UserCard';
 import * as Api from '../../api';
+import EditProfile from './EditProfile';
 
 function User({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);
   const [editingPw, setEditingPw] = useState(false);
+  const [isEditProfile, setIsEditProfile] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
 
@@ -30,6 +32,7 @@ function User({ portfolioOwnerId, isEditable }) {
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           setEditingPw={setEditingPw}
+          setIsEditProfile={setIsEditProfile}
         />
       )}
       {editingPw ? (
@@ -38,6 +41,14 @@ function User({ portfolioOwnerId, isEditable }) {
           setIsEditing={setIsEditing}
           setUser={setUser}
           setEditingPw={setEditingPw}
+        />
+      ) : null}
+      {isEditProfile ? (
+        <EditProfile
+          user={user}
+          setUser={setUser}
+          setIsEditProfile={setIsEditProfile}
+          portfolioOwnerId={portfolioOwnerId}
         />
       ) : null}
     </>
