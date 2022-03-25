@@ -88,8 +88,11 @@ class userAuthService {
   }
 
   //user 검색
-  static async getSearchedUsers({user_name}){
+  static async getSearchedUsers({user_name}, hostName){
     const searchedUsers = await User.findManyByName({user_name});
+    searchedUsers.map((user)=>{
+      user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg
+    })
     return searchedUsers
   }
 
