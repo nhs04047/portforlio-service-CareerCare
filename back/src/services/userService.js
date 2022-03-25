@@ -212,8 +212,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const profileImgsPath = "http://" + hostName + "/profileImg/"
-    const profileImgURL = profileImgsPath + profileImg;
+    const profileImgURL = "http://" + hostName + "/profileImg/" + profileImg;
     console.log(profileImgURL)
 
     return profileImgURL;

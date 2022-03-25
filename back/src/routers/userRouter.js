@@ -191,6 +191,7 @@ userAuthRouter.put(
 // user 프로필 이미지 리사이징 후 변경
 userAuthRouter.put(
   '/users/profileImg/:id',
+  login_required,
   upload.single("img"),
   async function (req, res, next){
     try{
@@ -228,6 +229,7 @@ userAuthRouter.put(
 //user 프로필 사진 불러오기
 userAuthRouter.get(
   '/users/profileImg/:id',
+  login_required,
   async function(req, res, next){
     try{
       const user_id = req.params.id;
