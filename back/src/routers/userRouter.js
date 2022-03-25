@@ -257,7 +257,7 @@ userAuthRouter.delete(
 userAuthRouter.post("/users/newpassword", async function (req, res) {
   try {
     //form에서 받아온 이메일 저장
-    const email = req.body.email;
+    const email = req.body.idEmail;
 
     //1)받아온 이메일이 db에 존재하는지 확인하고 2)새 비밀번호를 업데이트할 함수
     const {newPassword,updatedUser} = await userAuthService.setNewPassword({email});
