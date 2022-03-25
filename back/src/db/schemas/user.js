@@ -40,11 +40,6 @@ const UserSchema = new Schema(
       required: false,
       default : "default_img/default_profile_img.jpg"
     },
-    profileImgPath:{
-      type: String,
-      required: false,
-      default: "http://localhost:5001/profileImg/default_img/default_profile_img.jpg"
-    }
   },
   {
     timestamps: true,

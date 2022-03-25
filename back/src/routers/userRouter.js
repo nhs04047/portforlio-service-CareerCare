@@ -67,8 +67,11 @@ userAuthRouter.get(
   login_required,
   async function (req, res, next) {
     try {
+
+      const hostName = req.headers.host;
+
       // 전체 사용자 목록을 얻음
-      const users = await userAuthService.getUsers();
+      const users = await userAuthService.getUsers({hostName});
       res.status(200).send(users);
     } catch (error) {
       next(error);
@@ -204,8 +207,11 @@ userAuthRouter.put(
       });
 
       const user_id = req.params.id;  
-      const profileImg = req.file.filename
-      const profileImgPath = "http://localhost:5001/profileImg/" + profileImg
+      const profileImg = req.file.filename;
+
+      const hostName = req.headers.host;
+
+      const profileImgPath = "http://" + hostName + "/profileImg/" + profileImg
       const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
         profileImg,
         profileImgPath
@@ -225,7 +231,9 @@ userAuthRouter.get(
   async function(req, res, next){
     try{
       const user_id = req.params.id;
-      const profileImgURL = await userAuthService.getProfileImgURL({user_id})
+      const hostName = req.headers.host;
+
+      const profileImgURL = await userAuthService.getProfileImgURL({user_id}, hostName)
       res.send(profileImgURL)
     }catch(error){
       next(error)
