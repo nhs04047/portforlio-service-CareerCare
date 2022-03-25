@@ -15,6 +15,7 @@ class Certificate {
   static async create({ newCertificate }) {
     return CertificateModel.create(newCertificate);
   }
+  
   // db에 id가 certificateId에 해당하는 자격증 정보를 반환한다. 실패시 null 리턴
   static async findOneById({ certificateId }) {
     return CertificateModel.findOne({ id: certificateId });

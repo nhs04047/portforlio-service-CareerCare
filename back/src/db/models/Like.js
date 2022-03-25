@@ -16,6 +16,7 @@ class Like {
     });
     return createdNewLike;
   }
+
   // 좋아요 버튼을 클릭한 user와 좋아요를 받은 user의 like 객체가 LikeModel안에 있다면 like 객체 반환/ 아니면 null 반환
   static async findByUser({ currentUser, otherUser }) {
     const like = await LikeModel.findOne({
@@ -23,6 +24,7 @@ class Like {
     });
     return like;
   }
+  
   static async deleteById({ isLiked }) {
     const deleteResult = await LikeModel.deleteOne({
       _id: isLiked._id,

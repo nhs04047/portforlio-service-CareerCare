@@ -67,8 +67,11 @@ userAuthRouter.get(
   login_required,
   async function (req, res, next) {
     try {
+
+      const hostName = req.headers.host;
+
       // 전체 사용자 목록을 얻음
-      const users = await userAuthService.getUsers();
+      const users = await userAuthService.getUsers({hostName});
       res.status(200).send(users);
     } catch (error) {
       next(error);
@@ -188,6 +191,7 @@ userAuthRouter.put(
 // user 프로필 이미지 리사이징 후 변경
 userAuthRouter.put(
   '/users/profileImg/:id',
+  login_required,
   upload.single("img"),
   async function (req, res, next){
     try{
@@ -204,8 +208,11 @@ userAuthRouter.put(
       });
 
       const user_id = req.params.id;  
-      const profileImg = req.file.filename
-      const profileImgPath = "http://localhost:5001/profileImg/" + profileImg
+      const profileImg = req.file.filename;
+
+      const hostName = req.headers.host;
+
+      const profileImgPath = "http://" + hostName + "/profileImg/" + profileImg
       const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
         profileImg,
         profileImgPath
@@ -222,10 +229,13 @@ userAuthRouter.put(
 //user 프로필 사진 불러오기
 userAuthRouter.get(
   '/users/profileImg/:id',
+  login_required,
   async function(req, res, next){
     try{
       const user_id = req.params.id;
-      const profileImgURL = await userAuthService.getProfileImgURL({user_id})
+      const hostName = req.headers.host;
+
+      const profileImgURL = await userAuthService.getProfileImgURL({user_id}, hostName)
       res.send(profileImgURL)
     }catch(error){
       next(error)
@@ -257,7 +267,7 @@ userAuthRouter.delete(
 userAuthRouter.post("/users/newpassword", async function (req, res) {
   try {
     //form에서 받아온 이메일 저장
-    const email = req.body.email;
+    const email = req.body.idEmail;
 
     //1)받아온 이메일이 db에 존재하는지 확인하고 2)새 비밀번호를 업데이트할 함수
     const {newPassword,updatedUser} = await userAuthService.setNewPassword({email});
