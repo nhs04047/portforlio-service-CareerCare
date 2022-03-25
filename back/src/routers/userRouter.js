@@ -393,19 +393,16 @@ userAuthRouter.get("/like/:id", login_required, async function (req, res, next) 
     next(error);
   }
 });
-<<<<<<< HEAD
 // // 좋아요를 받는 user_id를 입력받아 누가 좋아요을 줬는지 name, id 객체 배열 반환
 // userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
 //   try {
-=======
 
 /*
 * 좋아요를 누른 user 목록 반환 컴포넌트
 * 현재 상태를 나타내는 status와 likeCount 반환
 */
-userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
-  try {
->>>>>>> 7ab879c89c2db36a277498e807dd4b71984ef9f4
+// userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
+//   try {
 
 //     const userId = req.params.id;
 
