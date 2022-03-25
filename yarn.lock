@@ -5578,12 +5578,6 @@
     "shellwords" "^0.1.1"
     "which" "^1.3.1"
 
-<<<<<<< HEAD
-nodemailer-smtp-pool@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/nodemailer-smtp-pool/-/nodemailer-smtp-pool-2.8.3.tgz#1d7a1c929e9cd830f275c970acfa3ff6ee976d94"
-  integrity sha1-HXockp6c2DDydclwrPo/9u6XbZQ=
-=======
 "node-releases@^2.0.2":
   "integrity" "sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.2.tgz"
@@ -5598,7 +5592,6 @@ nodemailer-smtp-pool@^2.8.3:
   "integrity" "sha1-z1mU4v0mjQD1zw+nZ6CBae2wfsA="
   "resolved" "https://registry.npmjs.org/nodemailer-shared/-/nodemailer-shared-1.1.0.tgz"
   "version" "1.1.0"
->>>>>>> 6872ba69d0b502097bec04c1659956bcad138462
   dependencies:
     "nodemailer-fetch" "1.6.0"
 

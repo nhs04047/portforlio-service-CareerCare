@@ -32,15 +32,17 @@ function Header() {
     <Navbar bg='light' expand='lg'>
       <Container className='my-2' id='my-nav-container'>
         <Navbar.Brand href='#home' className='my-2'>
-          안녕하세요, 포트폴리오 공유 서비스입니다.
+          careerCare
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav activeKey={location.pathname} className='ms-auto'>
             {isLogin && (
-            <Nav.Item id='my-nav-item'>
-              <Nav.Link onClick={() => navigate('/search')}>유저검색</Nav.Link>
-            </Nav.Item>
+              <Nav.Item id='my-nav-item'>
+                <Nav.Link onClick={() => navigate('/search')}>
+                  유저검색
+                </Nav.Link>
+              </Nav.Item>
             )}
             <Nav.Item id='my-nav-item'>
               <Nav.Link onClick={() => navigate('/')}>나의 페이지</Nav.Link>
@@ -48,7 +50,7 @@ function Header() {
             <Nav.Item id='my-nav-item'>
               <Nav.Link onClick={() => navigate('/network')}>네트워크</Nav.Link>
             </Nav.Item>
-            
+
             {isLogin && (
               <>
                 <Nav.Item id='my-nav-item'>
