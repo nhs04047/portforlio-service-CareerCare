@@ -276,6 +276,7 @@ class userAuthService {
         let fieldToUpdate = "likeCount";
         const newValue = otherUser.likeCount - 1;
         const newStatus = false;
+        const newLike = currentUser.name;
         updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
@@ -286,6 +287,10 @@ class userAuthService {
           user_id : otherUserId,
           fieldToUpdate,
           value : newStatus,
+        });
+        updatedUser = await User.updateLikeListDel({
+          user_id : otherUserId,
+          value : newLike,
         });
         await Like.deleteById({ isLiked });
         updatedLike = { status: false, likeCount: updatedUser.likeCount };
@@ -294,6 +299,7 @@ class userAuthService {
         let fieldToUpdate = "likeCount";
         const newValue = otherUser.likeCount + 1;
         const newStatus = true;
+        const newLike = currentUser.name;
         updatedUser = await User.updateLikeStatus({
           user_id : otherUserId,
           fieldToUpdate,
@@ -304,6 +310,10 @@ class userAuthService {
           user_id : otherUserId,
           fieldToUpdate,
           value : newStatus,
+        });
+        updatedUser = await User.updateLikeListPush({
+          user_id : otherUserId,
+          value : newLike,
         });
         await Like.create({ currentUser, otherUser });
         updatedLike = { status: true, likeCount: updatedUser.likeCount };
@@ -326,9 +336,22 @@ class userAuthService {
       const userStatus = currentUser.status;
       return {userIike, userStatus};
     }
-  static async deleteUserAllInfo({ user_id }){
-    await User.deleteAllByUserId({ user_id });
-  }
+    // 좋아요를 받은 name 객체 배열 반환
+    static async getlikeList({userId}) {
+      // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
+      const currentUser = await User.findById({ user_id: userId });
+
+      if (!currentUser) {
+        const errorMessage =
+          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        return { errorMessage };
+      }
+      return currentUser
+    }
+
+    static async deleteUserAllInfo({ user_id }){
+      await User.deleteAllByUserId({ user_id });
+    }
     
 
   /*
