@@ -153,12 +153,13 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const hostName = req.headers.host;
+
+      const currentUserInfo = await userAuthService.getUserInfo({ user_id }, hostName);
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
       }
-
       res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
