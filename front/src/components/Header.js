@@ -31,8 +31,8 @@ function Header() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container className='my-2' id='my-nav-container'>
-        <Navbar.Brand href='#home' className='my-2'>
-          careerCare
+        <Navbar.Brand className='my-2' id='logo'>
+          <h2>careerCare</h2>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
@@ -61,14 +61,6 @@ function Header() {
                   title={<BsPersonCircle size='2rem' />}
                   id='basic-nav-dropdown'
                 >
-                  <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-                  <NavDropdown.Item href='#action/3.2'>
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href='#action/3.3'>
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
                   <NavDropdown.Item href='#action/3.4'>
                     <UserDel />
                   </NavDropdown.Item>

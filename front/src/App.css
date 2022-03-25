@@ -30,3 +30,28 @@ body {
   box-shadow: rgb(0 0 0 / 5%) 0px 14px 16px 0px;
   transform: translateY(-2%);
 }
+
+#signIn {
+  font-size: 25px;
+  color: rgb(0 0 0 / 50%);
+}
+
+#registerForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc;
+}
+#loginForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc !important;
+}
+
+#logo {
+  background: linear-gradient(to right top, #003ffc, #eff5f8);
+  font-weight: bold;
+  color: transparent;
+  -webkit-background-clip: text;
+}
