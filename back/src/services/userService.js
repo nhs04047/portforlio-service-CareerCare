@@ -14,6 +14,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import fs from 'fs'
+import {utile} from './utile'
 
 class userAuthService {
   /*
@@ -96,10 +97,9 @@ class userAuthService {
   static async getUsers({ hostName }) {
     const users = await User.findAll();
     // 프로필 사진 URL 함께 반환
-    users.map((user) => {   
-      user._doc.profileImgPath = "http://" + hostName + "/profileImg/" + user.profileImg
-    })
-    return users;
+    const newUsers = utile.addImgPathArr(users, hostName);
+    
+    return newUsers;
   }
 
   /*
@@ -109,10 +109,9 @@ class userAuthService {
   static async getSearchedUsers({ user_name, sortingOption }, hostName) {
     const searchedUsers = await User.findManyByName({ user_name, sortingOption });
     // 프로필 사진 URL 함께 반환
-    searchedUsers.map((user) => {   
-      user._doc.profileImgPath = "http://" + hostName + "/profileImg/" + user.profileImg
-    })
-    return searchedUsers
+    const newSearchedUsers = utile.addImgPathArr(searchedUsers, hostName);
+    
+    return newSearchedUsers
   }
 
   /*
@@ -136,8 +135,9 @@ class userAuthService {
       }
     }
     // 프로필 사진 URL 함께 반환
-    user._doc.profileImgPath = "http://" + hostName + "/profileImg/" + user.profileImg;
-    return user;
+    const newUser = utile.addImgPath(user, hostName);
+
+    return newUser;
   }
   /*
   * getUserInfo()
@@ -153,9 +153,9 @@ class userAuthService {
       return { errorMessage };
     }
     // 프로필 사진 URL 함께 반환
-    user._doc.profileImgPath = "http://" + hostName + "/profileImg/" + user.profileImg;
-
-    return user;
+    const newUser = utile.addImgPath(user, hostName);
+    
+    return newUser;
   }
 
   /*
