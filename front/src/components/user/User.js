@@ -12,14 +12,10 @@ function User({ portfolioOwnerId, isEditable }) {
   const [isEditProfile, setIsEditProfile] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
-  const [profileUrl, setProfileUrl] = useState(null);
 
   useEffect(() => {
     // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
     Api.get('users', portfolioOwnerId).then((res) => setUser(res.data));
-    Api.get('users/profileImg', portfolioOwnerId).then((res) =>
-      setProfileUrl(res.data)
-    );
   }, [portfolioOwnerId]);
 
   return (
@@ -37,7 +33,6 @@ function User({ portfolioOwnerId, isEditable }) {
           isEditable={isEditable}
           setEditingPw={setEditingPw}
           setIsEditProfile={setIsEditProfile}
-          profileUrl={profileUrl}
         />
       )}
       {editingPw ? (
@@ -50,10 +45,10 @@ function User({ portfolioOwnerId, isEditable }) {
       ) : null}
       {isEditProfile ? (
         <EditProfile
-          setIsEditProfile={setIsEditProfile}
           user={user}
-          profileUrl={profileUrl}
-          setProfileUrl={setProfileUrl}
+          setUser={setUser}
+          setIsEditProfile={setIsEditProfile}
+          portfolioOwnerId={portfolioOwnerId}
         />
       ) : null}
     </>

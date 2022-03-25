@@ -4,10 +4,8 @@ import { Card, Row, Button, Col, Form } from 'react-bootstrap';
 import axios from 'axios';
 import * as Api from '../../api';
 
-function EditProfile({ user, setIsEditProfile }) {
-  const [profileImgPath, setProfileImgPath] = useState(user.profileImgPath);
-
-  // const [files, setFiles] = useState('');
+function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
+  const [files, setFiles] = useState(user.profileImgPath);
 
   const backendPortNumber = '5001';
   const serverUrl =
@@ -31,30 +29,28 @@ function EditProfile({ user, setIsEditProfile }) {
   }
 
   const onLoadFile = (e) => {
-    const file = e.target.profileImgPath;
-    setProfileImgPath(file);
-    console.log(`files: ${profileImgPath}`);
+    const file = e.target.files;
+    setFiles(file);
+    console.log(`files: ${files}`);
   };
 
-  const handleClick = async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const formData = new FormData();
-    formData.append('img', profileImgPath[0]);
-    // console.log(`files[0]: ${files[0]}`);
-    // console.log(`formData: ${formData}`);
-    // for (const keyValue of formData) console.log(`formData: ${keyValue}`);
+    formData.append('img', files[0]);
 
     await put(`users/profileImg/${user.id}`, formData);
 
     const res = await Api.get('users/profileImg', user.id);
-    console.log(res);
 
     const updateProfile = res.data;
-    setProfileImgPath(updateProfile);
-    console.log(profileImgPath);
-    setIsEditProfile(false);
-    console.log(user);
-  };
+    setFiles(updateProfile);
 
+    Api.get('users', portfolioOwnerId).then((res) => setUser(res.data));
+
+    setIsEditProfile(false);
+  };
   return (
     <Card className='mb-2 ms-3'>
       <Card.Body>
@@ -66,10 +62,10 @@ function EditProfile({ user, setIsEditProfile }) {
           <Col sm={{ span: 20 }}>
             <Button
               variant='primary'
-              type='button'
+              type='submit'
               className='me-3'
               size='sm'
-              onClick={handleClick}
+              onClick={handleSubmit}
             >
               확인
             </Button>

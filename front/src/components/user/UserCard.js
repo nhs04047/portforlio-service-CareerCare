@@ -11,7 +11,6 @@ function UserCard({
   isEditable,
   isNetwork,
   setIsEditProfile,
-  // profileUrl,
 }) {
   const navigate = useNavigate();
   return (
