@@ -1,7 +1,12 @@
-/**
+/*
  * <password 재발급 및 이메일 전송 구현>
- * 작성자 : 장정민, 일자 : 2022-03-24
+ * 작성자 : 장정민
+ * 일자 : 2022-03-24
  * userAuthRouter.post("/users/newPassword")
+ *
+ * <user 검색, 프로필 이미지 변경 구현> 
+ * 작성자 : 김보현
+ * 일자 : 2022-03-25
  * 
  */
 
@@ -16,6 +21,9 @@ import {smtpTransport} from './smtpTransport';
 
 const userAuthRouter = Router();
 
+/*
+*회원가입 컨트롤러
+*/
 userAuthRouter.post('/user/register', async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
@@ -44,6 +52,9 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
   }
 });
 
+/*
+* 로그인 컴포넌트
+*/
 userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
@@ -62,6 +73,9 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
   }
 });
 
+/*
+* user 리스트 반환 컴포넌트
+*/
 userAuthRouter.get(
   '/userlist',
   login_required,
@@ -79,7 +93,9 @@ userAuthRouter.get(
   }
 );
 
-// user 검색 기능
+/*
+* user 이름으로 user 리스트 검색 컴포넌트
+*/
 userAuthRouter.get(
   '/userlist/search/:name/:option',
   login_required,
@@ -101,6 +117,9 @@ userAuthRouter.get(
   }
 )
 
+/*
+* 사용자 정보 반환 컴포넌트
+*/
 userAuthRouter.get(
   '/user/current',
   login_required,
@@ -123,6 +142,9 @@ userAuthRouter.get(
   }
 );
 
+/*
+* user 정보 수정 컴포넌트
+*/
 userAuthRouter.put(
   '/users/:id',
   login_required,
@@ -154,6 +176,9 @@ userAuthRouter.put(
   }
 );
 
+/*
+* user 정보 반환 컴포넌트 
+*/
 userAuthRouter.get(
   '/users/:id',
   login_required,
@@ -174,7 +199,10 @@ userAuthRouter.get(
   }
 );
 
-// 클라이언트로부터 현재 비밀번호와 변경할 비밀번호를 입력 받아 userAuthService로 넘겨주고 반환 값으로 errormessage(해당 id 없을 때)/false(현재 비밀번호가 일치하지 않을 때)/true(일치하고 비밀번호가 잘 변경되었을 때)를 return 해준다.
+/*
+* user 정보 반환 컴포넌트 
+* 클라이언트로부터 현재 비밀번호와 변경할 비밀번호를 입력 받아 userAuthService로 넘겨주고 반환 값으로 errormessage(해당 id 없을 때)/false(현재 비밀번호가 일치하지 않을 때)/true(일치하고 비밀번호가 잘 변경되었을 때)를 return 해준다.
+*/ 
 userAuthRouter.put(
   '/users/password/:id',
   login_required,
@@ -182,8 +210,7 @@ userAuthRouter.put(
     try {
       const user_id = req.params.id;
 
-      const {pw} = req.body;
-      const {newPw} = req.body;
+      const {pw, newPw} = req.body;
 
       const toUpdate = {pw, newPw};
 
@@ -196,7 +223,9 @@ userAuthRouter.put(
   }
 )
 
-// user 프로필 이미지 리사이징 후 변경
+/*
+* user 프로필 이미지 리사이징 후 변경 컴포넌트
+*/
 userAuthRouter.put(
   '/users/profileImg/:id',
   login_required,
@@ -234,7 +263,9 @@ userAuthRouter.put(
   }
 )
 
-//user 프로필 사진 불러오기
+/*
+* user 프로필 사진 불러오기 컴포넌트
+*/
 userAuthRouter.get(
   '/users/profileImg/:id',
   login_required,
@@ -251,6 +282,9 @@ userAuthRouter.get(
   }
 )
 
+/*
+* user 삭제 컴포넌트
+*/
 userAuthRouter.delete(
   '/users/:id',
   //login_required,
@@ -271,8 +305,10 @@ userAuthRouter.delete(
   }
 );
 
-
-userAuthRouter.post("/users/newpassword", async function (req, res) {
+/*
+* password 변경 컴포넌트
+*/
+userAuthRouter.post("/users/newpassword", async function (req, res, next) {
   try {
     //form에서 받아온 이메일 저장
     const email = req.body.idEmail;
@@ -314,7 +350,10 @@ userAuthRouter.post("/users/newpassword", async function (req, res) {
   }
 });
 
-// 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
+/*
+* likes 관리 컴포넌트
+* 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
+*/
 userAuthRouter.put("/like/:id", login_required, async function (req, res, next) {
   try {
     // 좋아요를 클릭한 사람의 id
@@ -333,7 +372,11 @@ userAuthRouter.put("/like/:id", login_required, async function (req, res, next) 
   }
 });
 
-// 현재 상태를 나타내는 status와 likeCount 반환
+/*
+* likeCount 반환 컴포넌트
+* 현재 상태를 나타내는 status와 likeCount 반환
+*/
+
 userAuthRouter.get("/like/:id", login_required, async function (req, res, next) {
   try {
     // 좋아요를 받은 사람의 id
@@ -350,9 +393,19 @@ userAuthRouter.get("/like/:id", login_required, async function (req, res, next) 
     next(error);
   }
 });
+<<<<<<< HEAD
 // // 좋아요를 받는 user_id를 입력받아 누가 좋아요을 줬는지 name, id 객체 배열 반환
 // userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
 //   try {
+=======
+
+/*
+* 좋아요를 누른 user 목록 반환 컴포넌트
+* 현재 상태를 나타내는 status와 likeCount 반환
+*/
+userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
+  try {
+>>>>>>> 7ab879c89c2db36a277498e807dd4b71984ef9f4
 
 //     const userId = req.params.id;
 
