@@ -7,7 +7,10 @@
 
 import is from '@sindresorhus/is';
 import { query, Router } from 'express';
+import sharp from 'sharp'
+import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
+import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
 import {smtpTransport} from './smtpTransport';
 
@@ -22,9 +25,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { name } = req.body;
-    const { email } = req.body;
-    const { password } = req.body;
+    const { name, email, password } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
@@ -46,8 +47,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
 userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
-    const { email } = req.body;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
@@ -185,6 +185,53 @@ userAuthRouter.put(
   }
 )
 
+// user 프로필 이미지 리사이징 후 변경
+userAuthRouter.put(
+  '/users/profileImg/:id',
+  upload.single("img"),
+  async function (req, res, next){
+    try{
+
+      sharp(req.file.path)  // 압축할 이미지 경로
+      .resize({ width: 600 }) // 비율을 유지하며 가로 크기 줄이기
+      .withMetadata()	// 이미지의 exif데이터 유지
+      .toBuffer((err, buffer) => {
+        if (err) throw err;
+        // 압축된 파일 새로 저장(덮어씌우기)
+        fs.writeFile(req.file.path, buffer, (err) => {
+          if (err) throw err;
+        });
+      });
+
+      const user_id = req.params.id;  
+      const profileImg = req.file.filename
+      const profileImgPath = "http://localhost:5001/profileImg/" + profileImg
+      const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
+        profileImg,
+        profileImgPath
+      };
+      const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
+      
+      res.status(200).json(uploadedImg);
+    }catch(error){
+      next(error)
+    }
+  }
+)
+
+//user 프로필 사진 불러오기
+userAuthRouter.get(
+  '/users/profileImg/:id',
+  async function(req, res, next){
+    try{
+      const user_id = req.params.id;
+      const profileImgURL = await userAuthService.getProfileImgURL({user_id})
+      res.send(profileImgURL)
+    }catch(error){
+      next(error)
+    }
+  }
+)
 
 userAuthRouter.delete(
   '/users/:id',
@@ -203,7 +250,8 @@ userAuthRouter.delete(
     } catch (error){
       next(error);
     }
-});
+  }
+);
 
 
 userAuthRouter.post("/users/newpassword", async function (req, res) {

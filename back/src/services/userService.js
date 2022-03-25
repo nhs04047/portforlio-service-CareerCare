@@ -79,7 +79,7 @@ class userAuthService {
   }
 
   static async getUsers() {
-    const users = await User.findAll();
+    let users = await User.findAll();
     return users;
   }
 
@@ -156,21 +156,74 @@ class userAuthService {
     return true;
   }
 
+  // 프로필 이미지 변경
+  static async setProfileImg({user_id, toUpdate}){
+
+    let user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage =
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+    console.log(toUpdate)
+    const myKeys = Object.keys(toUpdate);
+    for (let i = 0; i < myKeys.length; i++) {
+      if (toUpdate[myKeys[i]]!==null) {
+        const fieldToUpdate = myKeys[i];
+        const newValue = toUpdate[myKeys[i]];
+        user = await User.update({
+          user_id,
+          fieldToUpdate,
+          newValue,
+        });
+      }
+    }
+    return user;
+  };
+
+  // 프로필 이미지 가져오기
+  static async getProfileImgURL({user_id}){
+
+    let user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage =
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+
+    const profileImg = await User.findProfileImgById({ user_id });
+    if (!profileImg) {
+      const errorMessage =
+        '프로필 이미지가 없습니다.';
+      return { errorMessage };
+    }
+
+    const profileImgsPath = "http://localhost:5001/profileImg/"
+    const profileImgURL = profileImgsPath+ profileImg;
+
+
+    return profileImgURL;
+
+  }
+
+
   /*
    * deleteUser
    *
    */
-    static async deleteUser({ user_id }) {
-      const user = await User.deleteOneUser({ user_id });
-      // db에서 찾지 못한 경우, 에러 메시지 반환
-      if (!user) {
-        const errorMessage =
-          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
-        return { errorMessage };
-      }
-      return user;
+  static async deleteUser({ user_id }) {
+    const user = await User.deleteOneUser({ user_id });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
     }
-  
+    return user;
+  }
+
     
   /*
    * deleteUserAllInfo
@@ -257,6 +310,9 @@ class userAuthService {
       const userStatus = currentUser.status;
       return {userIike, userStatus};
     }
+  static async deleteUserAllInfo({ user_id }){
+    await User.deleteAllByUserId({ user_id });
+  }
     
 
   /*
