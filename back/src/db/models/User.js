@@ -80,9 +80,9 @@ class User {
   */
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
-    const update = { [fieldToUpdate]: newValue };
+    const update = { [fieldToUpdate]:newValue };
     const option = { returnOriginal: false };
-
+ 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
@@ -91,7 +91,7 @@ class User {
     return updatedUser;
   }
 
-<<<<<<< HEAD
+
   // // 좋아요를 클릭한 사람의 이름 추가
   // static async updateLikeListPush({ user_id, value }) {
   //   const updatedUser = await UserModel.findOneAndUpdate({id:user_id}, {
@@ -104,17 +104,16 @@ class User {
   //     $pull: {liked : {name:value} }});
   //   return updatedUser;
   // }
-=======
->>>>>>> 1859e9ffabc4b7f63ca981d70dbb476fd9ab4771
+
   /*
   updateLikeStatus()
   유저의 좋아요 수와 status 갱신하기 위한 함수
   */
   static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
     const filter = { id: user_id };
-    const update = { [fieldToUpdate]: value };
+    const update = { [fieldToUpdate]:value };
     const option = { returnOriginal: false };
-
+ 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
@@ -123,27 +122,28 @@ class User {
     return updatedUser;
   }
 
+
   /*
   updateLikeListPush()
   좋아요를 클릭한 사람의 이름 추가
   */
-  static async updateLikeListPush({ user_id, value }) {
-    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-      $push: { liked: { name: value } }
-    });
-    return updatedUser;
-  }
+  // static async updateLikeListPush({ user_id, value }) {
+  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+  //     $push: { liked: { name: value } }
+  //   });
+  //   return updatedUser;
+  // }
 
   /*
   updateLikeListDel()
   좋아요를 클릭한 사람의 이름 삭제
   */
-  static async updateLikeListDel({ user_id, value }) {
-    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-      $pull: { liked: { name: value } }
-    });
-    return updatedUser;
-  }
+  // static async updateLikeListDel({ user_id, value }) {
+  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+  //     $pull: { liked: { name: value } }
+  //   });
+  //   return updatedUser;
+  // }
 
   /*
   updatePassword()
