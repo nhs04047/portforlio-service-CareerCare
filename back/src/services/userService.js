@@ -267,7 +267,9 @@ class userAuthService {
       }
       // 두 유저가 서로 좋아요 관계라면 좋아요 객체를 리턴하고, 아니면 null 리턴
       const isLiked = await Like.findByUser({ currentUser, otherUser });
-
+      // console.log("isLiked : ", isLiked);
+      // console.log("currentUser : ", currentUser);
+      // console.log("otherUser : ", otherUser);
       let updatedLike = {};
       let updatedUser = {};
       
@@ -288,10 +290,10 @@ class userAuthService {
           fieldToUpdate,
           value : newStatus,
         });
-        updatedUser = await User.updateLikeListDel({
-          user_id : otherUserId,
-          value : newLike,
-        });
+        // updatedUser = await User.updateLikeListDel({
+        //   user_id : otherUserId,
+        //   value : newLike,
+        // });
         await Like.deleteById({ isLiked });
         updatedLike = { status: false, likeCount: updatedUser.likeCount };
       } // null 이라면 -> likeCount 1증가-> status는 True -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 생성
@@ -311,43 +313,91 @@ class userAuthService {
           fieldToUpdate,
           value : newStatus,
         });
-        updatedUser = await User.updateLikeListPush({
-          user_id : otherUserId,
-          value : newLike,
-        });
+        // updatedUser = await User.updateLikeListPush({
+        //   user_id : otherUserId,
+        //   value : newLike,
+        // });
         await Like.create({ currentUser, otherUser });
         updatedLike = { status: true, likeCount: updatedUser.likeCount };
       }
+      // console.log("updatedUser :", updatedUser);
       // 반환 : 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
       return updatedLike;
     }
 
-    static async getLike({otherUserId}) {
+    // static async showLike({currentUserId, otherUserId}) {
+    //   const currentUser = await User.findById({ user_id: currentUserId });
+    //   const otherUser = await User.findById({ user_id: otherUserId });
+    //   console.log("currentUser :", currentUser);
+    //   console.log("otherUser : ", otherUser);
+    //   let updatedLike = {};
+    //   if (!currentUser) {
+    //     const errorMessage =
+    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+    //     return { errorMessage };
+    //   }
+
+    //   if (!otherUser) {
+    //     const errorMessage =
+    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+    //     return { errorMessage };
+    //   }
+
+    //   const isLiked = await Like.findByUser({ currentUser, otherUser });
+    //   console.log("initial isLiked :" ,isLiked);
+    //   if (isLiked) {
+    //     updatedLike = { userStatus: true};
+    //   } 
+    //   else {
+    //     updatedLike = { userStatus: false};
+    //   }
+    //   return updatedLike;
+    // }
+
+    static async getLike({currentUserId, otherUserId}) {
       // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
-      const currentUser = await User.findById({ user_id: otherUserId });
+      const currentUser = await User.findById({ user_id: currentUserId });
+      const otherUser = await User.findById({ user_id: otherUserId });
+      // console.log("currentUser :", currentUser);
+      // console.log("otherUser : ", otherUser);
+
+      let updatedLike = {};
 
       if (!currentUser) {
         const errorMessage =
           '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
         return { errorMessage };
       }
-      // 반환 : 현재 상태를 나타내는 status와 likeCount 반환
-      const userIike = currentUser.likeCount;
-      const userStatus = currentUser.status;
-      return {userIike, userStatus};
-    }
-    // 좋아요를 받은 name 객체 배열 반환
-    static async getlikeList({userId}) {
-      // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
-      const currentUser = await User.findById({ user_id: userId });
 
-      if (!currentUser) {
+      if (!otherUser) {
         const errorMessage =
           '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
         return { errorMessage };
       }
-      return currentUser
+
+      const isLiked = await Like.findByUser({ currentUser, otherUser });
+      // console.log("initial isLiked :" ,isLiked);
+      if (isLiked) {
+        updatedLike = { userStatus: true};
+      } 
+      else {
+        updatedLike = { userStatus: false};
+      }
+      return updatedLike;
     }
+
+    // // 좋아요를 받은 name 객체 배열 반환
+    // static async getlikeList({userId}) {
+    //   // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
+    //   const currentUser = await User.findById({ user_id: userId });
+
+    //   if (!currentUser) {
+    //     const errorMessage =
+    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+    //     return { errorMessage };
+    //   }
+    //   return currentUser
+    // }
 
     static async deleteUserAllInfo({ user_id }){
       await User.deleteAllByUserId({ user_id });

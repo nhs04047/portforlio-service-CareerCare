@@ -36,9 +36,9 @@ const UserSchema = new Schema(
       required: false,
       default: false,
     },
-    liked: [
-      new mongoose.Schema({name: String})
-    ],
+    // liked: [
+    //   new mongoose.Schema({name: String})
+    // ],
     profileImg:{
       type: String,
       required: false,

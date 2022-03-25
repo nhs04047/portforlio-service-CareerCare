@@ -330,33 +330,35 @@ userAuthRouter.put("/like/:id", login_required, async function (req, res, next) 
 // 현재 상태를 나타내는 status와 likeCount 반환
 userAuthRouter.get("/like/:id", login_required, async function (req, res, next) {
   try {
-    // 좋아요를 클릭한 사람의 id
+    // 좋아요를 받은 사람의 id
     const otherUserId = req.params.id;
-
-    const updatedData = await userAuthService.getLike({
+    const currentUserId = req.currentUserId;
+    // console.log("get currentUserId : " , currentUserId);
+    const updatedLike = await userAuthService.getLike({
+      currentUserId,
       otherUserId,
     });
 
-    res.status(200).json(updatedData);
+    res.status(200).json(updatedLike);
   } catch (error) {
     next(error);
   }
 });
-// 좋아요를 받는 user_id를 입력받아 누가 좋아요을 줬는지 name, id 객체 배열 반환
-userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
-  try {
+// // 좋아요를 받는 user_id를 입력받아 누가 좋아요을 줬는지 name, id 객체 배열 반환
+// userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
+//   try {
 
-    const userId = req.params.id;
+//     const userId = req.params.id;
 
-    const updatedData = await userAuthService.getlikeList({
-      userId,
-    });
-    console.log(updatedData.liked);
-    res.status(200).json(updatedData.liked);
-  } catch (error) {
-    next(error);
-  }
-});
+//     const updatedData = await userAuthService.getlikeList({
+//       userId,
+//     });
+//     console.log(updatedData.liked);
+//     res.status(200).json(updatedData.liked);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
