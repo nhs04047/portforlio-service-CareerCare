@@ -15,7 +15,6 @@ class Education {
   //db에 학력 정보 생성 적용
   static async create({ newEducation }) {
     return EducationModel.create(newEducation);
-
   }
 
   //db에서 id로 학력 정보 찾기 적용
