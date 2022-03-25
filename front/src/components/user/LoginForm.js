@@ -4,6 +4,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import PwReissue from "./PwReissue";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -93,6 +94,8 @@ function LoginForm() {
                 </Form.Text>
               )}
             </Form.Group>
+
+            <PwReissue />
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
