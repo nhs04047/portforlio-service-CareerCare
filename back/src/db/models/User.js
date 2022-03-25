@@ -30,6 +30,7 @@ class User {
     return users;
   }
 
+  // user id로 프로필 이미지 이름 찾기
   static async findProfileImgById({user_id}){
     const user = await UserModel.findOne({ id: user_id });
     console.log(user)
@@ -38,15 +39,43 @@ class User {
 
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
-    const update = { [fieldToUpdate]: newValue };
+    const update = { [fieldToUpdate]:newValue };
     const option = { returnOriginal: false };
-
+ 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
       option
     );
     return updatedUser;
+  }
+  // 유저의 좋아요 수와 status 갱신하기 위한 함수
+  static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
+    const filter = { id: user_id };
+    const update = { [fieldToUpdate]:value };
+    const option = { returnOriginal: false };
+ 
+    const updatedUser = await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedUser;
+  }
+
+  //password만 업데이트하는 함수
+  static async updatePassword({ email, fieldToUpdate, hashedNewPassword }) {
+    const filter = { email };
+    const update = { [fieldToUpdate]: hashedNewPassword };
+    const option = { returnOriginal: false };
+
+    const updatedPasswordUser =await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+
+    return updatedPasswordUser;
   }
 
   // 해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
@@ -75,6 +104,21 @@ class User {
     await EducationModel.deleteMany({user_id});
     await ProjectModel.deleteMany({user_id});
   }
+
+  /*
+   * createRandomPassword()
+   * 임의 비밀번호 생성 함수
+   *
+   */
+    static async createRandomPassword() { 
+      const randStr = ['a','b','c','d','e','f','g','h','i','j','k','l',
+      'm','n','o','p','q','r','s','t','u','v','w','x','y','z',
+      '1','2','3','4','5','6','7','8','9','0'];
+      let randomPassword="";
+      for (var j=0; j<5; j++)
+      randomPassword += randStr[Math.floor(Math.random()*randStr.length)];
+      return randomPassword;
+    };
  
 }
 
