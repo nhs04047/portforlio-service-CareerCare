@@ -177,7 +177,7 @@ userAuthRouter.put(
   }
 )
 
-// user 프로필 이미지 변경
+// user 프로필 이미지 리사이징 후 변경
 userAuthRouter.put(
   '/users/profileImg/:id',
   upload.single("img"),
@@ -195,10 +195,10 @@ userAuthRouter.put(
         });
       });
 
-      const user_id = req.params.id;
+      const user_id = req.params.id;  
       const profileImg = req.file.filename
       const profileImgPath = "http://localhost:5001/profileImg/" + profileImg
-      const toUpdate = {
+      const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
         profileImg,
         profileImgPath
       };
