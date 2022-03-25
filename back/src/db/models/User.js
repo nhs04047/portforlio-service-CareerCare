@@ -33,7 +33,6 @@ class User {
   // user id로 프로필 이미지 이름 찾기
   static async findProfileImgById({user_id}){
     const user = await UserModel.findOne({ id: user_id });
-    console.log(user)
     return user.profileImg;
   }
 

@@ -11,6 +11,7 @@ import { User, Like } from '../db'; // from을 폴더(db) 로 설정 시, 디폴
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
+import fs from 'fs'
 
 class userAuthService {
   static async addUser({ name, email, password }) {
@@ -78,8 +79,11 @@ class userAuthService {
     return loginUser;
   }
 
-  static async getUsers() {
-    let users = await User.findAll();
+  static async getUsers({hostName}) {
+    const users = await User.findAll();
+    users.map((user)=>{
+      user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg
+    })
     return users;
   }
 
@@ -109,7 +113,7 @@ class userAuthService {
     return user;
   }
 
-  static async getUserInfo({ user_id }) {
+  static async getUserInfo({ user_id }, hostName) {
     const user = await User.findById({ user_id });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
@@ -118,6 +122,8 @@ class userAuthService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
+
+    user._doc.profileImgPath = "http://"+hostName+"/profileImg/" + user.profileImg;
 
     return user;
   }
@@ -161,12 +167,18 @@ class userAuthService {
 
     let user = await User.findById({ user_id });
 
+    if (user.profileImg !== "default_img/default_profile_img.jpg")
+    fs.unlink(`./uploads/profile_img/${user.profileImg}`, (error)=>{
+      if(error){   
+        console.log(error)
+      }
+    })
+
     if (!user) {
       const errorMessage =
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-    console.log(toUpdate)
     const myKeys = Object.keys(toUpdate);
     for (let i = 0; i < myKeys.length; i++) {
       if (toUpdate[myKeys[i]]!==null) {
@@ -179,11 +191,13 @@ class userAuthService {
         });
       }
     }
+    
+
     return user;
   };
 
   // 프로필 이미지 가져오기
-  static async getProfileImgURL({user_id}){
+  static async getProfileImgURL({user_id}, hostName){
 
     let user = await User.findById({ user_id });
 
@@ -200,9 +214,8 @@ class userAuthService {
       return { errorMessage };
     }
 
-    const profileImgsPath = "http://localhost:5001/profileImg/"
-    const profileImgURL = profileImgsPath+ profileImg;
-
+    const profileImgURL = "http://" + hostName + "/profileImg/" + profileImg;
+    console.log(profileImgURL)
 
     return profileImgURL;
 
