@@ -139,7 +139,7 @@ class userAuthService {
     let user = await User.findById({user_id});
     const password = toUpdate.pw;
     // 해당 id 유저의 비밀번호와 입력한 현재 비밀번호가 같은지 여부 확인한다.
-    const userPassword = await User.findByPassword({user_id});
+    const userPassword = await User.findPasswordById({user_id});
     // compare(새로 입력된 패스워드, 해쉬된 패스워드) -> 같으면 true, false
     const compareResult = await bcrypt.compare(password, userPassword);
 
@@ -247,7 +247,7 @@ class userAuthService {
    *
    */
     static async deleteUserAllInfo({ user_id }){
-      await User.deleteAllByUserId({ user_id });
+      await User.deleteAllById({ user_id });
     }
 
     static async setLike({ currentUserId, otherUserId }) {
