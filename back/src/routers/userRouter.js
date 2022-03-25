@@ -86,9 +86,10 @@ userAuthRouter.get(
   async function( req, res, next){
     try{
       const user_name = req.params.name;
+      const hostName = req.headers.host;
       const searchedUsers = await userAuthService.getSearchedUsers({
         user_name,
-      });
+      }, hostName);
       res.status(200).send(searchedUsers);
     }catch(error){
       next(error);
