@@ -20,8 +20,28 @@ class User {
     return user;
   }
 
-  static async findManyByName({ user_name}){
-    const users = await UserModel.find({name: new RegExp(user_name)})
+  // user 이름름으로 user정보 찾기 - 정렬{ asc, desc, likes, updatedAt}
+  static async findManyByName({ user_name, sortingOption}){
+      let users = [];
+
+    switch(sortingOption){
+      case "asc":   
+        users = await UserModel.find({name: new RegExp(user_name)}).sort({name:1});     // 이름 순 오름차순
+        break;
+      case "desc":
+        users = await UserModel.find({name: new RegExp(user_name)}).sort({name:-1});    // 이름 순 내림차순
+        break;
+      case "likes":
+        users = await UserModel.find({name: new RegExp(user_name)}).sort({likeCount:-1});  //like count 순
+        break;
+      case "updatedAt":
+        users = await UserModel.find({name: new RegExp(user_name)}).sort({updatedAt:-1});  // update tns
+        break;
+      default:
+        users = await UserModel.find({name: new RegExp(user_name)});
+        break;
+    }
+
     return users
   }
 

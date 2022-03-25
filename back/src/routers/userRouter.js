@@ -81,14 +81,18 @@ userAuthRouter.get(
 
 // user 검색 기능
 userAuthRouter.get(
-  '/userlist/search/:name',
+  '/userlist/search/:name/:option',
   login_required,
   async function( req, res, next){
     try{
       const user_name = req.params.name;
+      const sortingOption = req.params.option;
+
       const hostName = req.headers.host;
+
       const searchedUsers = await userAuthService.getSearchedUsers({
         user_name,
+        sortingOption
       }, hostName);
       res.status(200).send(searchedUsers);
     }catch(error){
