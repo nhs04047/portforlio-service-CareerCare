@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import * as Api from './api';
 import { loginReducer } from './reducer';
-import "./index.css";
+import './index.css';
 
 import Header from './components/Header';
 import LoginForm from './components/user/LoginForm';
@@ -39,9 +39,9 @@ function App() {
         payload: currentUser,
       });
 
-      console.log('%c sessionStorage에 토큰 있음.', 'color: #d93d1a;');
+      // console.log('%c sessionStorage에 토큰 있음.', 'color: #d93d1a;');
     } catch {
-      console.log('%c SessionStorage에 토큰 없음.', 'color: #d93d1a;');
+      // console.log('%c SessionStorage에 토큰 없음.', 'color: #d93d1a;');
     }
     // fetchCurrentUser 과정이 끝났으므로, isFetchCompleted 상태를 true로 바꿔줌
     setIsFetchCompleted(true);

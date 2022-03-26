@@ -17,9 +17,6 @@ function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
     '/';
 
   async function put(endpoint, data) {
-    console.log(`%cPUT 요청: ${serverUrl + endpoint}`, 'color: #059c4b;');
-    console.log(`%cPUT 요청 데이터: ${data}`, 'color: #059c4b;');
-
     return axios.put(serverUrl + endpoint, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -31,7 +28,6 @@ function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
   const onLoadFile = (e) => {
     const file = e.target.files;
     setFiles(file);
-    console.log(`files: ${files}`);
   };
 
   const handleSubmit = async (e) => {
