@@ -27,23 +27,23 @@ function ChangePw({ user, setEditingPw, setUser }) {
       newPw,
     });
 
-    const updatedUser = res.data;    //백엔드에서 현재 비밀번호와 입력 비밀번호 대조, 불리언 값 리턴
+    const updatedUser = res.data; //백엔드에서 현재 비밀번호와 입력 비밀번호 대조, 불리언 값 리턴
     if (!updatedUser) {
-      alert('현재 비밀번호가 일치하지 않습니다.');    //false면 리로드, 메세지 출력
+      alert('현재 비밀번호가 일치하지 않습니다.'); //false면 리로드, 메세지 출력
       window.location = '/';
     } else {
-      alert('비밀번호가 변경되었습니다!');    //true면 비밀번호 변경, 
+      alert('비밀번호가 변경되었습니다!'); //true면 비밀번호 변경,
       setUser(updatedUser);
       setEditingPw(false);
 
-      await sessionStorage.removeItem('userToken');     //토큰을 지워서 로그아웃 상태로 만들고, 로그인 페이지로 이동
+      await sessionStorage.removeItem('userToken'); //토큰을 지워서 로그아웃 상태로 만들고, 로그인 페이지로 이동
       dispatch({ type: 'LOGOUT' });
       navigate('/');
     }
   };
 
   return (
-    <Card className='mb-2 ms-3'>
+    <Card>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className='mb-3'>
