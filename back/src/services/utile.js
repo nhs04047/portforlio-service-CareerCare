@@ -1,6 +1,6 @@
 /*
 *
-* <이미지 URL반환 모듈 작성
+* <이미지 URL반환 모듈 작성>
 * 작성자 : 김보현
 * 작성일 : 2022.03.26
 *
@@ -11,6 +11,7 @@ import fs from "fs"
 class utile{
 
   /*
+  * addImgPathArr()
   * user list에서 각각 user 정보에 프로필 이미지 경로 추가 함수
   */
   static addImgPathArr(users, hostName){
@@ -29,6 +30,7 @@ class utile{
   }
 
   /*
+  * addImgPath()
   * user 정보에 프로필 이미지 경로 추가 함수
   */
   static addImgPath(user, hostName){
