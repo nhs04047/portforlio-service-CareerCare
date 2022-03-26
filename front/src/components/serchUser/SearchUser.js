@@ -42,8 +42,6 @@ function SearchUser() {
             // align='end'
             title='정렬'
             id='dropdown-menu-align-end'
-            // className='ms-5'
-            // style={{ position: 'absolute', top: '20%', left: '12%' }}
             onChange={handleChange}
           >
             <option value='default'>기본</option>
@@ -55,10 +53,7 @@ function SearchUser() {
         </Col>
         <Col lg='6'>
           <Form onSubmit={handleSubmit}>
-            <Form.Group
-            // className='mb-5 mt-5'
-            // style={{ width: '50%', float: 'none', margin: '0 auto' }}
-            >
+            <Form.Group>
               <Form.Control
                 id='searchForm'
                 type='text'
