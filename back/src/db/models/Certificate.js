@@ -43,14 +43,18 @@ class Certificate {
     return updateCertificate;
   }
 
+  /*
+  * findManyByUserId()
+  * user id에 상응하는 자격증 list 반환
+  */
   static async findManyByUserId({ user_id }) {
     return CertificateModel.find({ user_id });
   }
 
   /*
-   * findManyByAnotherUserId()
-   *매개변수로 보낸 user_id(네트워크 페이지에서 접근가능한 다른 유저의 Id)의 certificate 컬렉션 documents를 return하는 함수
-   */
+  * findManyByAnotherUserId()
+  *매개변수로 보낸 user_id(네트워크 페이지에서 접근가능한 다른 유저의 Id)의 certificate 컬렉션 documents를 return하는 함수
+  */
    static async findManyByAnotherUserId({ user_id }) {
     //ProjectModel에서 isPrivate : "true" 인, 즉 비공개인 데이터는 리턴하지 않는다.
     return CertificateModel.find({ user_id: user_id, isPrivate : false });

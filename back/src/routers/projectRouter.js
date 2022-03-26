@@ -1,11 +1,17 @@
-/**
- * <project 비공개 설정 구현>
- * 작성자 : 장정민, 일자 : 2022-03-23
- * - projectRouter.post('/project/create') : req.body에서 isPrivate 필드도 받아와서 리턴
- * - projectRouter.put('/projects/:id') : isPrivate 필드도 업데이트 가능하도록 수정
- * - projectRouter.get('/projectlist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
- * 
- */
+/*
+* Project MVP 컨트롤러
+*
+* <Project CRUD 구현>
+* 직성자 : 장정민
+* 작성일 : 2022.03.17
+* 클라이언트로부터 넘어온 정보들로 projectService에 넘겨주고, 해당 작업에 맞는 return을 projectService으로부터 받아서 클라이언트로 보내준다.
+*
+* <Project 비공개 설정 구현>
+* 작성자 : 장정민
+* 작성일 : 2022.03.23
+* request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
+*
+*/
 
 import is from '@sindresorhus/is';
 import { Router } from 'express';

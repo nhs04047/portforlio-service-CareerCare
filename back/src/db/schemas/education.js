@@ -1,10 +1,7 @@
 /*
-  학력 정보 스키마,
-  데이터 {user id, 학교, 전공, 학위}
-
-  2022/03/16
-  김보현
-
+* <Education MVP 기능 Schema 정의>
+* 작성자 : 김보현
+* 장성일 : 2022.03.16
 */
 import { Schema, model } from "mongoose";
 

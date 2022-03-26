@@ -1,19 +1,26 @@
-/**
- * <project 비공개 설정 구현>
- * 작성자 : 장정민, 일자 : 2022-03-23
- * - addProject 함수 : project 컬렉션 db에 isPrivate필드 추가로 저장 
- * - getProjectList 함수 : 읽기 권한을 구분하기 위해 현재 로그인한 currentUserId와 params에서 받아오는 user_id의 데이터 반환함수를 분리함.
- * 
- */
+/*
+* Project MVP 서비스
+*
+* <Project CRUD 구현>
+* 작성자 : 장정민
+* 작성일 : 2022.03.16
+* projectRouter에서 넘어온 정보들로 특정 로직을 구성하여 Project.js에서 처리 후 projectRouter로 return
+* 
+* <project 비공개 설정 구현>
+* 작성자 : 장정민, 일자 : 2022-03-23
+* addProject 함수 : project 컬렉션 db에 isPrivate필드 추가로 저장 
+* getProjectList 함수 : 읽기 권한을 구분하기 위해 현재 로그인한 currentUserId와 params에서 받아오는 user_id의 데이터 반환함수를 분리함.
+* 
+*/
 
 import { Project } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import { v4 as uuidv4 } from 'uuid';
 
 class projectService {
   /*
-   * addProject
-   *
-   */
+  * addProject()
+  * 프로젝트 정보 추가
+  */
   static async addProject({ user_id, title, description, projectLink, from_date, to_date, isPrivate }) {
     // id 는 유니크 값 부여
     const id = uuidv4();
@@ -27,18 +34,17 @@ class projectService {
   }
 
   /*
-   * getProject
-   *
-   */
-  static async getProject({ projectId }) {
-    const project = await Project.findOneById({ projectId });
-    return project;
+  * getProject()
+  * 프로젝트 가져오기
+  */
+  static getProject({ projectId }) {
+    return Project.findOneById({ projectId }); 
   }
 
   /*
-   * setProject
-   *
-   */
+  * setProject()
+  * 프로젝트 정보 편집
+  */
   static async setProject({ projectId, toUpdate }) {
     let project = await Project.findOneById({ projectId });
 
@@ -61,9 +67,9 @@ class projectService {
   }
 
   /*
-   * getProjectList
-   *
-   */
+  * getProjectList()
+  * 프로젝트 리스트 반환
+  */
   static async getProjectList({ currentUserId, user_id }) {
 
     //currentUserId와 user_id가 동일하면 => isPrivate 필터링 없이 모든 데이터 반환
@@ -78,9 +84,9 @@ class projectService {
   }
 
   /*
-   * deleteProject
-   *
-   */
+  * deleteProject()
+  * 프로젝트 삭제
+  */
   static async deleteProject({ projectId }) {
     const isDataDeleted = await Project.deleteOneById({ projectId });
 

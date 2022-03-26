@@ -1,4 +1,8 @@
-
+/*
+* <Project MVP 기능 Schema 정의>
+* 작성자 : 장정민
+* 장성일 : 2022.03.16
+*/
 
 import {Schema, model} from "mongoose";
 
