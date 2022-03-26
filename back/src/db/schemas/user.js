@@ -1,10 +1,10 @@
 /*
-* <user 정보 Schema 정의>
-* 기본 제공
-*
-*/
-import { Schema, model } from "mongoose";
-import mongoose from "mongoose";
+ * <user 정보 Schema 정의>
+ * 기본 제공
+ *
+ */
+import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
 const UserSchema = new Schema(
   {
@@ -27,7 +27,7 @@ const UserSchema = new Schema(
     description: {
       type: String,
       required: false,
-      default: "설명이 아직 없습니다. 추가해 주세요.",
+      default: '설명이 아직 없습니다. 추가해 주세요.',
     },
     // 좋아요 수를 받는 likeCount
     likeCount: {
@@ -41,13 +41,11 @@ const UserSchema = new Schema(
       required: false,
       default: false,
     },
-    liked: [
-      new mongoose.Schema({name: String})
-    ],
-    profileImg:{
+    liked: [new mongoose.Schema({ name: String })],
+    profileImg: {
       type: String,
       required: false,
-      default : "default_img/default_profile_img.jpg"
+      default: 'default_img/default_profile_img.jpg',
     },
   },
   {
@@ -55,6 +53,6 @@ const UserSchema = new Schema(
   }
 );
 
-const UserModel = model("User", UserSchema);
+const UserModel = model('User', UserSchema);
 
 export { UserModel };

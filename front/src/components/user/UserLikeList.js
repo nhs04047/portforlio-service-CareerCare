@@ -17,21 +17,23 @@ function UserLikeList({ portfolioOwnerId, user }) {
   };
 
   return (
-      <>
-        <Button onClick={handleClick} className="btn btn-secondary">좋아요 한 사람</Button>
-        <Modal show={show} onHide={handleClose} scrollable={true}>
+    <div className='ms-5'>
+      <Button onClick={handleClick} variant='outline-dark'>
+        Who Likes?
+      </Button>
+      <Modal show={show} onHide={handleClose} scrollable={true}>
         <Modal.Header closeButton>
-            <Modal.Title>좋아요 한 사람</Modal.Title>
+          <Modal.Title>Who Likes?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div>
-        {likeList.map((user) => (
-          <li key={user.id}>{user.name}</li> 
-        ))}
-      </div>
+          <div>
+            {likeList.map((user) => (
+              <li key={user.id}>{user.name}</li>
+            ))}
+          </div>
         </Modal.Body>
-        </Modal>
-      </>
+      </Modal>
+    </div>
   );
 }
 

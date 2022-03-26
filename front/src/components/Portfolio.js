@@ -66,14 +66,20 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-          <UserLike
-            portfolioOwnerId={portfolioOwner.id}
-            user={userState.user?.id}
-          />
-          <UserLikeList
-            portfolioOwnerId={portfolioOwner.id}
-            user={userState.user?.id}
-          />
+          <Row>
+            <Col xs={5}>
+              <UserLike
+                portfolioOwnerId={portfolioOwner.id}
+                user={userState.user?.id}
+              />
+            </Col>
+            <Col>
+              <UserLikeList
+                portfolioOwnerId={portfolioOwner.id}
+                user={userState.user?.id}
+              />
+            </Col>
+          </Row>
         </Col>
         <Col md='9' lg='9'>
           <Educations
