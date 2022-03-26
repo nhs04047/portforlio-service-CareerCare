@@ -7,7 +7,7 @@ import * as Api from '../../api';
 function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
   const [files, setFiles] = useState(user.profileImgPath);
 
-  const backendPortNumber = '5001';
+  const backendPortNumber = '5000';
   const serverUrl =
     window.location.protocol +
     '//' +
@@ -52,7 +52,7 @@ function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
     setIsEditProfile(false);
   };
   return (
-    <Card className='mb-2 ms-3'>
+    <Card className='my-3'>
       <Card.Body>
         <form>
           <label htmlFor='img'></label>

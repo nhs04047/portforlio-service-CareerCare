@@ -1,3 +1,57 @@
-.my-nav-item {
-  margin: 0.5rem 10rem;
+* {
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+a {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+body {
+  background-color: #f8f9fa !important;
+}
+
+#networkUser {
+  background-color: #ffffff;
+  /* width: 20rem !important; */
+  height: 23rem !important;
+  /* margin: 16px;s */
+  /* margin-bottom: 15px !important; */
+  /* padding: 0 !important; */
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  display: flex;
+  flex-direction: column;
+}
+
+#networkUser:hover {
+  box-shadow: rgb(0 0 0 / 5%) 0px 14px 16px 0px;
+  transform: translateY(-2%);
+}
+
+#signIn {
+  font-size: 25px;
+  color: rgb(0 0 0 / 50%);
+}
+
+#registerForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc;
+}
+#loginForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc !important;
+}
+
+#logo {
+  background: linear-gradient(to right top, #003ffc, #eff5f8);
+  font-weight: bold;
+  color: transparent;
+  -webkit-background-clip: text;
 }

@@ -2,8 +2,13 @@ import axios from 'axios';
 
 const backendPortNumber = '5000';
 const serverUrl =
-  window.location.protocol + "//" + window.location.hostname + ":" + backendPortNumber + "/";
-async function get(endpoint, params = "") {
+  window.location.protocol +
+  '//' +
+  window.location.hostname +
+  ':' +
+  backendPortNumber +
+  '/';
+async function get(endpoint, params = '') {
   console.log(
     `%cGET 요청 ${serverUrl + endpoint + '/' + params}`,
     'color: #a25cd1;'
