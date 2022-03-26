@@ -91,20 +91,6 @@ class User {
     return updatedUser;
   }
 
-
-  // // 좋아요를 클릭한 사람의 이름 추가
-  // static async updateLikeListPush({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({id:user_id}, {
-  //     $push: {liked : {name:value} }});
-  //   return updatedUser;
-  // }
-  // // 좋아요를 클릭한 사람의 이름 삭제
-  // static async updateLikeListDel({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({id:user_id}, {
-  //     $pull: {liked : {name:value} }});
-  //   return updatedUser;
-  // }
-
   /*
   updateLikeStatus()
   유저의 좋아요 수와 status 갱신하기 위한 함수
