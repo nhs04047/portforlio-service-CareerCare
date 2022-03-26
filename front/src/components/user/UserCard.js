@@ -21,7 +21,6 @@ function UserCard({
         onClick={() => {
           if (isNetwork) {
             navigate(`/users/${user.id}`);
-            console.log('log');
           }
         }}
       >

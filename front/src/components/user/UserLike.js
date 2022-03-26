@@ -33,7 +33,7 @@ function UserLike({ portfolioOwnerId, user }) {
   );
 
   return (
-    <Col id='LikeCard' className='ms-2'>
+    <Col id='LikeCard' className='ms-1'>
       <Button
         id='userLike'
         size='md'
@@ -68,7 +68,7 @@ function UserLike({ portfolioOwnerId, user }) {
           </svg>
         )}
       </Button>
-      <span className='ms-3'>{countLike} Likes</span>
+      <span className='ms-2'>{countLike} Likes</span>
     </Col>
   );
 }
