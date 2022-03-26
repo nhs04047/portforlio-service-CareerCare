@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
-import { Form, Container, Row } from 'react-bootstrap';
+import { Form, Container, Row, DropdownButton, Dropdown } from 'react-bootstrap';
 import UserCard from '../user/UserCard';
 import Network from '../user/Network';
 import * as Api from '../../api';
 
 function SearchUser() {
   const [searchUser, setSerachUser] = useState('');
+  const [searchOption, setSearchOption] = useState('default');
   const [filtered, setFiltered] = useState([]);
   const [searchUI, setSearchUI] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await Api.get(`userlist/search/${searchUser}`);
+    const res = await Api.get(`userlist/search/${searchUser}/${searchOption}`);
     setFiltered(res.data);
     setSerachUser('');
     setSearchUI(true);
   };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchOption(e.target.value)
+  }
 
   return (
     <>
@@ -35,6 +41,14 @@ function SearchUser() {
           />
         </Form.Group>
       </Form>
+
+        <select align="end" title="정렬" id="dropdown-menu-align-end" onChange={handleChange}>
+          <option value="default">기본</option>
+          <option value="asc">이름 (오름차순)</option>
+          <option value="desc">이름 (내림차순)</option>
+          <option value="likes">좋아요</option>
+          <option value="updatedAt">최근 업데이트</option>
+        </select>
 
       {searchUI ? (
         <Container fluid>

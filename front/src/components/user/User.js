@@ -5,8 +5,6 @@ import UserCard from './UserCard';
 import * as Api from '../../api';
 import EditProfile from './EditProfile';
 
-import { Container, Col, Row } from 'react-bootstrap';
-
 function User({ portfolioOwnerId, isEditable }) {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);

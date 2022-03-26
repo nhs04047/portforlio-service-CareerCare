@@ -7,7 +7,7 @@ import * as Api from '../../api';
 function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
   const [files, setFiles] = useState(user.profileImgPath);
 
-  const backendPortNumber = '5001';
+  const backendPortNumber = '5000';
   const serverUrl =
     window.location.protocol +
     '//' +
