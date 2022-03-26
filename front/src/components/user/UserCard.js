@@ -65,7 +65,6 @@ function UserCard({
             <Card.Link
               className='mt-3'
               id='cardLink'
-              href='#'
               onClick={() => navigate(`/users/${user.id}`)}
             >
               포트폴리오
