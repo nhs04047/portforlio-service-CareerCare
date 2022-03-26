@@ -318,6 +318,7 @@ class userAuthService {
         '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
+
     // 두 유저가 서로 좋아요 관계라면 좋아요 객체를 리턴하고, 아니면 null 리턴
     const isLiked = await Like.findByUser({ currentUser, otherUser });
     let updatedLike = {};
@@ -326,7 +327,10 @@ class userAuthService {
     // 좋아요 객체가 있다면 -> likeCount 1감소(왜? 좋아요 버튼을 클릭한 시점에 이미 좋아요 관계니깐 좋아요 취소라는 의미) -> status는 false -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 삭제
     if (isLiked) {
       let fieldToUpdate = "likeCount";
-      const newValue = otherUser.likeCount - 1;
+      let newValue = otherUser.likeCount - 1;
+      if (newValue < 0) {
+        newValue = 0;
+      }
       const newStatus = false;
       const newLike = currentUser.name;
       updatedUser = await User.updateLikeStatus({
@@ -349,7 +353,10 @@ class userAuthService {
     } // null 이라면 -> likeCount 1증가-> status는 True -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 생성
     else {
       let fieldToUpdate = "likeCount";
-      const newValue = otherUser.likeCount + 1;
+      let newValue = otherUser.likeCount + 1;
+      if (newValue < 0) {
+        newValue = 0;
+      }
       const newStatus = true;
       const newLike = currentUser.name;
       updatedUser = await User.updateLikeStatus({
