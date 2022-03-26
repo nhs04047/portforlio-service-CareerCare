@@ -113,23 +113,23 @@ class User {
   updateLikeListPush()
   좋아요를 클릭한 사람의 이름 추가
   */
-  // static async updateLikeListPush({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-  //     $push: { liked: { name: value } }
-  //   });
-  //   return updatedUser;
-  // }
+  static async updateLikeListPush({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $push: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
 
   /*
   updateLikeListDel()
   좋아요를 클릭한 사람의 이름 삭제
   */
-  // static async updateLikeListDel({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-  //     $pull: { liked: { name: value } }
-  //   });
-  //   return updatedUser;
-  // }
+  static async updateLikeListDel({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $pull: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
 
   /*
   updatePassword()

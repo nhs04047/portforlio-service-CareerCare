@@ -334,10 +334,10 @@ class userAuthService {
         fieldToUpdate,
         value : newStatus,
       });
-      // updatedUser = await User.updateLikeListDel({
-      //   user_id : otherUserId,
-      //   value : newLike,
-      // });
+      updatedUser = await User.updateLikeListDel({
+        user_id : otherUserId,
+        value : newLike,
+      });
       await Like.deleteById({ isLiked });
       updatedLike = { status: false, likeCount: updatedUser.likeCount };
     } // null 이라면 -> likeCount 1증가-> status는 True -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 생성
@@ -357,10 +357,10 @@ class userAuthService {
         fieldToUpdate,
         value : newStatus,
       });
-      // updatedUser = await User.updateLikeListPush({
-      //   user_id : otherUserId,
-      //   value : newLike,
-      // });
+      updatedUser = await User.updateLikeListPush({
+        user_id : otherUserId,
+        value : newLike,
+      });
       await Like.create({ currentUser, otherUser });
       updatedLike = { status: true, likeCount: updatedUser.likeCount };
     }

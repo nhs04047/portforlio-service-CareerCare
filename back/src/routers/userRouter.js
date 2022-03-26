@@ -395,20 +395,20 @@ userAuthRouter.get("/like/:id", login_required, async function (req, res, next) 
 * 좋아요를 누른 user 목록 반환 컴포넌트
 * 현재 상태를 나타내는 status와 likeCount 반환
 */
-// userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
-//   try {
+userAuthRouter.get("/likelist/:id", login_required, async function (req, res, next) {
+  try {
 
-//     const userId = req.params.id;
+    const userId = req.params.id;
 
-//     const updatedData = await userAuthService.getlikeList({
-//       userId,
-//     });
-//     console.log(updatedData.liked);
-//     res.status(200).json(updatedData.liked);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    const updatedData = await userAuthService.getlikeList({
+      userId,
+    });
+    console.log(updatedData.liked);
+    res.status(200).json(updatedData.liked);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
