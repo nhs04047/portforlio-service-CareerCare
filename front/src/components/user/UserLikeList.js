@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Row } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
 function UserLikeList({ portfolioOwnerId, user }) {

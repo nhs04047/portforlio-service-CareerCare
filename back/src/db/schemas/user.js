@@ -4,6 +4,7 @@
 *
 */
 import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
 const UserSchema = new Schema(
   {
@@ -40,12 +41,9 @@ const UserSchema = new Schema(
       required: false,
       default: false,
     },
-<<<<<<< HEAD
     liked: [
       new mongoose.Schema({name: String})
     ],
-=======
->>>>>>> back-comment
     profileImg:{
       type: String,
       required: false,
