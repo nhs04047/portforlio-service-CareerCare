@@ -12,6 +12,7 @@
 * request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
 * 
 */
+
 import { Router } from 'express';
 import { CertificateService } from '../services/certificateService';
 import { login_required } from '../middlewares/login_required';

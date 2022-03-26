@@ -1,6 +1,7 @@
 /*
-* <project CRUD 구현>
-* <project 비공개 설정 구현>
+* 프로젝트 모델, 프로젝트 서비스(projectService.js)에서의 필요한 데이터 처리 관련 코드 작성
+*
+* <project CRUD 구현> <project 비공개 설정 구현>
 * 작성자 : 장정민
 * 작성일 : 2022.03.23
 * findManyByAnotherUserId() : 현재 로그인한 유저아이디와 열람하려는 페이지의 유저아이디가 다른 경우 호출하는 함수

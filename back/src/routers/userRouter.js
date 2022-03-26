@@ -1,14 +1,16 @@
 /*
- * <password 재발급 및 이메일 전송 구현>
- * 작성자 : 장정민
- * 일자 : 2022.03.24
- * userAuthRouter.post("/users/newPassword")
- *
- * <user 검색, 프로필 이미지 변경 구현> 
- * 작성자 : 김보현
- * 일자 : 2022.03.25
- * 
- */
+* Project MVP 컨트롤러
+*
+* <Project CRUD 구현> <password 재발급 및 이메일 전송 구현>
+* 작성자 : 장정민
+* 일자 : 2022.03.24
+* userAuthRouter.post("/users/newPassword")
+*
+* <user 검색, 프로필 이미지 변경 구현> 
+* 작성자 : 김보현
+* 일자 : 2022.03.25
+* 
+*/
 
 import is from '@sindresorhus/is';
 import { Router } from 'express';
@@ -17,7 +19,7 @@ import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
 import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
-import {smtpTransport} from './smtpTransport';
+import {smtpTransport} from './utile/smtpTransport';
 
 const userAuthRouter = Router();
 
