@@ -71,7 +71,7 @@ function SearchUser() {
       </select>
 
       {searchUI ? (
-        <Container fluid>
+        <Container>
           <Row xs='auto' className='jusify-content-center'>
             {filtered.map((user) => (
               <UserCard key={user.id} user={user} isNetwork />
