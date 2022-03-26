@@ -1,0 +1,70 @@
+* {
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+#cardLink {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+body {
+  background-color: #f8f9fa !important;
+}
+
+#networkUser {
+  background-color: #ffffff;
+  height: 23rem !important;
+
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  display: flex;
+  flex-direction: column;
+}
+
+#networkUser:hover {
+  box-shadow: rgb(0 0 0 / 5%) 0px 14px 16px 0px;
+  transform: translateY(-2%);
+}
+
+#signIn {
+  font-size: 25px;
+  color: rgb(0 0 0 / 50%);
+}
+
+#registerForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+}
+#loginForm {
+  padding: 1rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background-color: #edf2fc !important;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+}
+
+#likeUserList li:not(hr){
+  list-style: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#svgHeart {
+  color: #DC3545;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  text-align: center;
+}
+
+#logo {
+  background: linear-gradient(to right top, #003ffc, #eff5f8);
+  font-weight: bold;
+  color: transparent;
+  -webkit-background-clip: text;
+}

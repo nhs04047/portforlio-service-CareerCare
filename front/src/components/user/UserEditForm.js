@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
-import * as Api from "../../api";
+import React, { useState } from 'react';
+import { Button, Form, Card, Col, Row } from 'react-bootstrap';
+import * as Api from '../../api';
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
@@ -9,6 +9,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+  const [profileImgPath, setProfileImgPath] = useState(user.profileImgPath);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       name,
       email,
       description,
+      // profileImgPath,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
@@ -29,42 +31,42 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   };
 
   return (
-    <Card className="mb-2">
+    <Card className='mb-2'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
+          <Form.Group controlId='useEditName' className='mb-3'>
             <Form.Control
-              type="text"
-              placeholder="이름"
+              type='text'
+              placeholder='이름'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditEmail" className="mb-3">
+          <Form.Group controlId='userEditEmail' className='mb-3'>
             <Form.Control
-              type="email"
-              placeholder="이메일"
+              type='email'
+              placeholder='이메일'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditDescription">
+          <Form.Group controlId='userEditDescription'>
             <Form.Control
-              type="text"
-              placeholder="정보, 인사말"
+              type='text'
+              placeholder='정보, 인사말'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+              <Button variant='primary' type='submit' className='me-3'>
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button variant='secondary' onClick={() => setIsEditing(false)}>
                 취소
               </Button>
             </Col>

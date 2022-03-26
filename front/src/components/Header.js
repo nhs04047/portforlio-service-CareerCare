@@ -1,7 +1,12 @@
-import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
-import { UserStateContext, DispatchContext } from "../App";
+import React, { useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import { BsPersonCircle } from 'react-icons/bs';
+
+import UserDel from './user/UserDel';
+
+import { UserStateContext, DispatchContext } from '../App';
+// import { Navbar } from 'react-bootstrap';
 
 function Header() {
   const navigate = useNavigate();
@@ -16,30 +21,56 @@ function Header() {
   // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem("userToken");
+    sessionStorage.removeItem('userToken');
     // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: 'LOGOUT' });
     // 기본 페이지로 돌아감.
-    navigate("/");
+    navigate('/');
   };
 
   return (
-    <Nav activeKey={location.pathname}>
-      <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-      </Nav.Item>
-      {isLogin && (
-        <Nav.Item>
-          <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-        </Nav.Item>
-      )}
-    </Nav>
+    <Navbar bg='light' expand='lg'>
+      <Container className='my-2' id='my-nav-container'>
+        <Navbar.Brand className='my-2' id='logo' href='/'>
+          <h2>careerCare</h2>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Nav activeKey={location.pathname} className='ms-auto'>
+            {isLogin && (
+              <Nav.Item id='my-nav-item' className='mx-1 px-1'>
+                <Nav.Link onClick={() => navigate('/search')}>
+                  유저 검색
+                </Nav.Link>
+              </Nav.Item>
+            )}
+            <Nav.Item id='my-nav-item' className='mx-1 px-1'>
+              <Nav.Link onClick={() => navigate('/')}>나의 페이지</Nav.Link>
+            </Nav.Item>
+            <Nav.Item id='my-nav-item' className='mx-1 px-1'>
+              <Nav.Link onClick={() => navigate('/network')}>네트워크</Nav.Link>
+            </Nav.Item>
+
+            {isLogin && (
+              <>
+                <Nav.Item id='my-nav-item'>
+                  <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                </Nav.Item>
+                <NavDropdown
+                  className='ms-1'
+                  title={<BsPersonCircle size='2rem' />}
+                  id='basic-nav-dropdown'
+                >
+                  <NavDropdown.Item href='#action/3.4'>
+                    <UserDel />
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
