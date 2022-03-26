@@ -386,7 +386,6 @@ userAuthRouter.get("/like/:id", login_required, async function (req, res, next) 
       currentUserId,
       otherUserId,
     });
-
     res.status(200).json(updatedLike);
   } catch (error) {
     next(error);
@@ -405,7 +404,6 @@ userAuthRouter.get("/likelist/:id", login_required, async function (req, res, ne
     const updatedData = await userAuthService.getlikeList({
       userId,
     });
-    console.log(updatedData.liked);
     res.status(200).json(updatedData);
   } catch (error) {
     next(error);
