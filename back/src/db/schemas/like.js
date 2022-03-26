@@ -1,7 +1,7 @@
 /*
-  summary : 좋아요를 위한 좋아요 스키마 
-  author : 천준석
-  date : 2022/03/23
+* <좋아요 기능 Schema 정의>
+* 작성자 : 김보현
+* 장성일 : 2022.03.23
 */
 import mongoose from "mongoose";
 import { Schema, model } from "mongoose";

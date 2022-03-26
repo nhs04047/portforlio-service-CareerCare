@@ -62,7 +62,7 @@ class Project {
 
   /*
   * deleteOneById()
-  *project 컬렉션에서 project_id와 매칭되는 document 하나를 삭제하는 함수
+  * project 컬렉션에서 project_id와 매칭되는 document 하나를 삭제하는 함수
   */
   static async deleteOneById({ projectId }) {
     const deleteResult = await ProjectModel.deleteOne({ id: projectId });
