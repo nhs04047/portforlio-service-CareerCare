@@ -25,7 +25,6 @@ function UserLike({ portfolioOwnerId, user }) {
       const res = await Api.put(`like/${user}`, {
         otherUserId: portfolioOwnerId,
       });
-      console.log(res.data.status);
       setCountLike(res.data.likeCount);
       setLike(res.data.status);
     },
