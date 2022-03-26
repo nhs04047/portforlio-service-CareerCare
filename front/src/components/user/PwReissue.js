@@ -37,8 +37,8 @@ function PwReissue() {
 
   return (
     <>
-      <Button variant='light' onClick={handleShow}>
-        비밀번호재발급
+      <Button variant='light' onClick={handleShow} style={{ color: 'grey' }}>
+        비밀번호 재발급
       </Button>
 
       <Modal show={showModal} onHide={handleClose}>

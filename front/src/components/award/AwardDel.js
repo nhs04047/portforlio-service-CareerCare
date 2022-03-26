@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
+/**
+ * Award 삭제 component
+ */
 function AwardDel({ award, setAwards }) {
   const [show, setShow] = useState(false);
 

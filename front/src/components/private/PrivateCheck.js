@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
 
 /**
@@ -7,24 +7,13 @@ import { Form } from 'react-bootstrap';
  */
 
 function PrivateCheck({ isPrivate, setIsPrivate }) {
-  const [ischecked, setIsChecked] = useState(false);
-
-  const handleChange = () => {
-    setIsChecked(!ischecked);
-    if (ischecked === false) {
-      setIsPrivate(false);
-    } else {
-      setIsPrivate(true);
-    }
-    console.log(ischecked);
-  };
   return (
     <>
       <Form.Check
         type='switch'
         id='custom-switch'
         label='비공개'
-        onChange={handleChange}
+        onChange={() => setIsPrivate((curr) => !curr)}
         checked={isPrivate}
       />
     </>

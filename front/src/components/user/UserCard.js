@@ -18,7 +18,6 @@ function UserCard({
       <Card.Link
         className='mt-3'
         id='cardLink'
-        href='#'
         onClick={() => {
           if (isNetwork) {
             navigate(`/users/${user.id}`);

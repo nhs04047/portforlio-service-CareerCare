@@ -114,7 +114,11 @@ function LoginForm() {
                 </Form.Group>
               </div>
               <div className='mt-2 mx-0 px-0 text-center'>
-                <Button variant='light' onClick={() => navigate('/register')}>
+                <Button
+                  variant='light'
+                  onClick={() => navigate('/register')}
+                  style={{ color: 'grey' }}
+                >
                   회원가입
                 </Button>
                 <PwReissue />

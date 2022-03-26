@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
+/**
+ * Education 삭제 컴포넌트
+ */
 function EducationDel({ education, setEducations }) {
   const [show, setShow] = useState(false);
 
