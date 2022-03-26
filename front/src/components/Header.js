@@ -6,7 +6,6 @@ import { BsPersonCircle } from 'react-icons/bs';
 import UserDel from './user/UserDel';
 
 import { UserStateContext, DispatchContext } from '../App';
-// import { Navbar } from 'react-bootstrap';
 
 function Header() {
   const navigate = useNavigate();
