@@ -12,7 +12,7 @@ function CertificateEditForm({ certificate, setCertificate, setIsEditing }) {
   const [title, setTitle] = useState(certificate.title);
   const [description, setDescription] = useState(certificate.description);
   const [when_date, setWhen_date] = useState(new Date(certificate.when_date));
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(certificate.isPrivate);
 
   // new Date로 생성한 date에서 yyyy-mm-dd로 date form을 주는 함수
   function filterDate(d) {

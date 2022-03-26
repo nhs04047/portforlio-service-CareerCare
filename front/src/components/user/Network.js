@@ -23,8 +23,8 @@ function Network() {
   }, [userState, navigate]);
 
   return (
-    <Container fluid>
-      <Row xs='auto' className='jusify-content-center'>
+    <Container>
+      <Row xs='4' className='jusify-content-center'>
         {users.map((user) => (
           <UserCard key={user.id} user={user} isNetwork />
         ))}

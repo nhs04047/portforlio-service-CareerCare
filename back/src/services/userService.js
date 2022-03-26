@@ -198,7 +198,7 @@ class userAuthService {
   * setProfileImg()
   * 프로필 이미지 변경 (이미지 경로 전송)
   */
-  static async setProfileImg({ user_id, toUpdate }) {
+  static async setProfileImg({ user_id, toUpdate }, hostName) {
 
     let user = await User.findById({ user_id });
 
@@ -215,19 +215,17 @@ class userAuthService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-    const myKeys = Object.keys(toUpdate);
-    for (let i = 0; i < myKeys.length; i++) {
-      if (toUpdate[myKeys[i]] !== null) {
-        const fieldToUpdate = myKeys[i];
-        const newValue = toUpdate[myKeys[i]];
-        user = await User.update({
-          user_id,
-          fieldToUpdate,
-          newValue,
-        });
-      }
-    }
-    return user;
+    const fieldToUpdate = "profileImg";
+    const newValue = toUpdate;
+    user = await User.update({
+      user_id,
+      fieldToUpdate,
+      newValue,
+    });
+
+    const newUser = utile.addImgPath(user, hostName);
+
+    return newUser;
   };
 
   /*
