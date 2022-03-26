@@ -1,3 +1,7 @@
+/*
+* <jwt 인증 관련 미들웨어>
+*/
+
 import jwt from "jsonwebtoken";
 
 function login_required(req, res, next) {
