@@ -1,17 +1,17 @@
 /*
-* Project MVP 컨트롤러
-*
-* <Project CRUD 구현>
-* 직성자 : 장정민
-* 작성일 : 2022.03.17
-* 클라이언트로부터 넘어온 정보들로 projectService에 넘겨주고, 해당 작업에 맞는 return을 projectService으로부터 받아서 클라이언트로 보내준다.
-*
-* <Project 비공개 설정 구현>
-* 작성자 : 장정민
-* 작성일 : 2022.03.23
-* request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
-*
-*/
+ * Project MVP 컨트롤러
+ *
+ * <Project CRUD 구현>
+ * 직성자 : 장정민
+ * 작성일 : 2022.03.17
+ * 클라이언트로부터 넘어온 정보들로 projectService에 넘겨주고, 해당 작업에 맞는 return을 projectService으로부터 받아서 클라이언트로 보내준다.
+ *
+ * <Project 비공개 설정 구현>
+ * 작성자 : 장정민
+ * 작성일 : 2022.03.23
+ * request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
+ *
+ */
 
 import is from '@sindresorhus/is';
 import { Router } from 'express';
@@ -34,7 +34,15 @@ projectRouter.post('/project/create', async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id, title, description, projectLink, from_date, to_date, isPrivate } = req.body;
+    const {
+      user_id,
+      title,
+      description,
+      projectLink,
+      from_date,
+      to_date,
+      isPrivate,
+    } = req.body;
 
     // 위 데이터를 프로젝트 db에 추가하기
     const newProject = await projectService.addProject({
@@ -93,7 +101,14 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
     const to_date = req.body.to_date ?? null;
     const isPrivate = req.body.isPrivate ?? null;
 
-    const toUpdate = { title, description, projectLink, from_date, to_date, isPrivate };
+    const toUpdate = {
+      title,
+      description,
+      projectLink,
+      from_date,
+      to_date,
+      isPrivate,
+    };
     // 해당 project 아이디로 사용자 정보를 db에서 찾아 업데이트함. 바뀐 부분 없으면 생략한다.
     const Project = await projectService.setProject({ projectId, toUpdate });
 
@@ -113,12 +128,14 @@ projectRouter.put('/projects/:id', async function (req, res, next) {
 projectRouter.get('/projectlist/:user_id', async function (req, res, next) {
   try {
     //req에서 currentUserId 가져오기, login_required 파일 참고
-    const currentUserId =req.currentUserId;
+    const currentUserId = req.currentUserId;
     const { user_id } = req.params;
 
-    const projectList = await projectService.getProjectList({ currentUserId, user_id });
+    const projectList = await projectService.getProjectList({
+      currentUserId,
+      user_id,
+    });
     res.status(200).send(projectList);
-    
   } catch (error) {
     next(error);
   }

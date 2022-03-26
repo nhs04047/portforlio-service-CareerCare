@@ -12,8 +12,6 @@ import RegisterForm from './components/user/RegisterForm';
 import Portfolio from './components/Portfolio';
 import SearchUser from './components/serchUser/SearchUser';
 
-import './App.css';
-
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
