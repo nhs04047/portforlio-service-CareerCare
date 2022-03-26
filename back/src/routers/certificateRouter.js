@@ -1,14 +1,17 @@
 /*
-  클라이언트로부터 넘어온 정보들로 certificateService에 넘겨주고, 해당 작업에 맞는 return을 certificateService에 받아서 클라이언트로 보내준다.
-  천준석
-  2022/03/17
- * <certificate 비공개 설정 구현>
- * 작성자 : 장정민, 일자 : 2022-03-23
- * - certificateRouter.post('/certificate/create') : req.body에서 isPrivate 필드도 받아와서 리턴
- * - certificateRouter.put('/certificates/:id') : isPrivate 필드도 업데이트 가능하도록 수정
- * - certificateRouter.get('/certificatelist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
- * 
- */
+* Certificate MVP 컨트롤러
+*
+* <Certificate CRUD 구현>
+* 직성자 : 천준석
+* 작성일 : 2022.03.17
+* 클라이언트로부터 넘어온 정보들로 certificateService에 넘겨주고, 해당 작업에 맞는 return을 certificateService으로부터 받아서 클라이언트로 보내준다.
+*
+* <certificate 비공개 설정 구현>
+* 작성자 : 장정민
+* 작성일 : 2022.03.23
+* request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
+* 
+*/
 import { Router } from 'express';
 import { CertificateService } from '../services/certificateService';
 import { login_required } from '../middlewares/login_required';
@@ -16,10 +19,11 @@ import { login_required } from '../middlewares/login_required';
 const certificateRouter = Router();
 certificateRouter.use(login_required);
 
-// 클라이언트로 넘어온 정보들로 바탕으로 db에 저장하고 반환값을 클라이언트에게 돌려준다.
+/*
+* 클라이언트로 넘어온 정보들로 바탕으로 db에 저장하고 반환값을 클라이언트에게 돌려준다.
+*/
 certificateRouter.post('/certificate/create', async function (req, res, next) {
   try {
-    // id, title, description, when_date 클라이언트에게 받는다.
     const { user_id, title, description, when_date, isPrivate } = req.body;
 
     // db로 가기 전 각 자격증을 구별하기 위해서 CertificateService로 넘겨준다.
@@ -36,7 +40,10 @@ certificateRouter.post('/certificate/create', async function (req, res, next) {
     next(error);
   }
 });
-// 클라이언트로 넘어온 자격증 id로 db에 그에 맞는 자격증 정보를 클라이언트에게 돌려준다.
+
+/*
+* 클라이언트로 넘어온 자격증 id로 db에 그에 맞는 자격증 정보를 클라이언트에게 돌려준다.
+*/
 certificateRouter.get('/certificates/:id', async function (req, res, next) {
   try {
     const certificateId = req.params.id;
@@ -51,6 +58,9 @@ certificateRouter.get('/certificates/:id', async function (req, res, next) {
   }
 });
 
+/*
+* 자격증 정보 수정, 변경사항 반환
+*/
 certificateRouter.put('/certificates/:id', async function (req, res, next) {
   try {
     const certificateId = req.params.id;
@@ -71,6 +81,9 @@ certificateRouter.put('/certificates/:id', async function (req, res, next) {
   }
 });
 
+/*
+* uesr id로 자격증 리스트 반환
+*/
 certificateRouter.get(
   '/certificatelist/:user_id',
   async function (req, res, next) {
@@ -86,7 +99,9 @@ certificateRouter.get(
   }
 );
 
-// 해당 certificate 아이디에 맞는 certificate를 삭제하고 성공 메시지 반환
+/*
+* 해당 certificate 아이디에 맞는 certificate를 삭제하고 성공 메시지 반환
+*/
 certificateRouter.delete('/certificates/:id', async function (req, res, next) {
   try {
     // req (request) 에서 id 가져오기

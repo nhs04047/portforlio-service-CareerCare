@@ -1,17 +1,17 @@
 /*
  * <password 재발급 및 이메일 전송 구현>
  * 작성자 : 장정민
- * 일자 : 2022-03-24
+ * 일자 : 2022.03.24
  * userAuthRouter.post("/users/newPassword")
  *
  * <user 검색, 프로필 이미지 변경 구현> 
  * 작성자 : 김보현
- * 일자 : 2022-03-25
+ * 일자 : 2022.03.25
  * 
  */
 
 import is from '@sindresorhus/is';
-import { query, Router } from 'express';
+import { Router } from 'express';
 import sharp from 'sharp'
 import fs from 'fs'
 import { login_required } from '../middlewares/login_required';

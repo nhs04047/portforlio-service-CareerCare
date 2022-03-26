@@ -1,17 +1,17 @@
 /*
-  학력 컨트롤러, 클라이언트의 요청에 맞게 서비스로 해당 요청 전달 후 결과를 다시 응답하는 컨트롤러
-  
-  2022/03/17
-  김보현
-
- * <education 비공개 설정 구현>
- * 작성자 : 장정민, 일자 : 2022-03-23
- * - educationRouter.post('/education/create') : req.body에서 isPrivate 필드도 받아와서 리턴
- * - educationRouter.put('/educations/:id') : isPrivate 필드도 업데이트 가능하도록 수정
- * - educationRouter.get('/educationlist/:user_id') : 파라미터에 currentUserId를 추가해서 1)본인 페이지 접근 2)다른 유저의 페이지 접근 시 db에서 반환하는 데이터를 구분한다.
- * 
- *
- */
+* Education MVP 컨트롤러
+*
+* <Education CRUD 구현>
+* 직성자 : 김보현
+* 작성일 : 2022.03.17
+* 클라이언트로부터 넘어온 정보들로 educationService에 넘겨주고, 해당 작업에 맞는 return을 educationService으로부터 받아서 클라이언트로 보내준다.
+*
+* <education 비공개 설정 구현>
+* 작성자 : 장정민
+* 작성일 : 2022.03.23
+* request로 isPrivate 필드를 받을 수 있도록 변경, 다른 페이지 접근 시 db에서 반환하는 데이터를 구분 할 수 있도록 함.
+*
+*/
 
 import is from "@sindresorhus/is";
 import { Router } from "express";
@@ -21,7 +21,9 @@ import { EducationService} from "../services/educationService"
 const educationRouter = Router();
 educationRouter.use(login_required);
 
-// 학력 정보 create post 요청
+/*
+* 학력 정보 create post 요청
+*/
 educationRouter.post("/education/create", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
@@ -46,7 +48,9 @@ educationRouter.post("/education/create", async function (req, res, next) {
   }
 });
 
-//학력 정보 유니크 id로 학력정보 찾기 
+/*
+* 학력 정보 유니크 id로 학력정보 찾기 
+*/
 educationRouter.get("/educations/:id", async function(req, res, next){
   try{
     const educationId = req.params.id
@@ -62,7 +66,9 @@ educationRouter.get("/educations/:id", async function(req, res, next){
   };
 });
 
-// 특정 user_id를 이용해 학력 정보들을 찾기 위한 get요청
+/*
+* 특정 user_id를 이용해 학력 정보들을 찾기 위한 get요청
+*/
 educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   try {
     //req에서 currentUserId 가져오기, login_required 파일 참고
@@ -75,7 +81,9 @@ educationRouter.get("/educationlist/:user_id", async function (req, res, next) {
   }
 })
 
-// 학력 정보 id를 통해 put요청 (update)
+/*
+* 학력 정보 id를 통해 put요청 (update)
+*/
 educationRouter.put('/educations/:id', async function (req, res, next){
   try {
     const educationId = req.params.id;
@@ -104,7 +112,9 @@ educationRouter.put('/educations/:id', async function (req, res, next){
   }
 });
 
-// 해당 award 아이디에 맞는 award를 삭제하고 성공 메시지 반환
+/*
+* 해당 award 아이디에 맞는 award를 삭제하고 성공 메시지 반환
+*/
 educationRouter.delete('/educations/:id', async function (req, res, next) {
   try {
     // req (request) 에서 id 가져오기
