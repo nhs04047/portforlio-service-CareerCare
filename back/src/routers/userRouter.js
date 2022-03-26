@@ -1,22 +1,22 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { userAuthService } from '../services/userService';
+import is from "@sindresorhus/is";
+import {Router} from "express";
+import {login_required} from "../middlewares/login_required";
+import {userAuthService} from "../services/userService";
 
 const userAuthRouter = Router();
 
-userAuthRouter.post('/user/register', async function (req, res, next) {
+userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
     // req (request) 에서 데이터 가져오기
-    const { name } = req.body;
-    const { email } = req.body;
-    const { password } = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
@@ -35,14 +35,14 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
   }
 });
 
-userAuthRouter.post('/user/login', async function (req, res, next) {
+userAuthRouter.post("/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
-    const { email } = req.body;
-    const { password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
 
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
-    const user = await userAuthService.getUser({ email, password });
+    const user = await userAuthService.getUser({email, password});
 
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
@@ -54,10 +54,7 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
   }
 });
 
-userAuthRouter.get(
-  '/userlist',
-  login_required,
-  async function (req, res, next) {
+userAuthRouter.get("/userlist",login_required,async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
@@ -69,7 +66,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  '/user/current',
+  "/user/current",
   login_required,
   async function (req, res, next) {
     try {
@@ -91,7 +88,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/users/:id',
+  "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -103,10 +100,10 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      const toUpdate = {name, email, password, description};
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      const updatedUser = await userAuthService.setUser({user_id, toUpdate});
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
@@ -120,12 +117,12 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  '/users/:id',
+  "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
       const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const currentUserInfo = await userAuthService.getUserInfo({user_id});
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
@@ -139,7 +136,7 @@ userAuthRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
+userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(
@@ -147,4 +144,4 @@ userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
     );
 });
 
-export { userAuthRouter };
+export {userAuthRouter};

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Card, Button, Stack } from 'react-bootstrap';
 
 import CertificateEditForm from './CertificateEditForm';
-import CertificateDel from './CertificateDel';
-
 /**작성자 - 이예슬
  **기능 - certificate Card를 만들어준다
  * Card의 형태를 나타내줌
  */
-function CertificateCard({ isEditable, certificate, setCertificate }) {
+function CertificateCard({
+  certificate,
+  isEditable,
+  setCertificate,
+  portfolioOwnerId,
+}) {
   const { title, description, when_date } = certificate;
   const [isEditing, setIsEditing] = useState(false);
   return (
@@ -20,36 +23,30 @@ function CertificateCard({ isEditable, certificate, setCertificate }) {
           setIsEditing={setIsEditing}
         />
       ) : (
-        <Card.Text>
-          <Row className='align-items-center'>
-            <Col>
-              <span>{title}</span>
-              <br />
-              <span className='text-muted'>{description}</span>
-              <br />
-              <span className='text-muted'>{when_date}</span>
-            </Col>
-            {isEditable && (
-              <Col xs lg='1'>
-                <Button
-                  variant='outline-info'
-                  size='sm'
-                  onClick={() => {
-                    setIsEditing(true);
-                  }}
-                >
-                  편집
-                </Button>
-                <div className='mb-2' />
-
-                <CertificateDel
-                  certificate={certificate}
-                  setCertificate={setCertificate}
-                />
-              </Col>
-            )}
-          </Row>
-        </Card.Text>
+        <Card className='my-1'>
+          <Card.Body>
+            <Stack direction='horizontal'>
+              <div>
+                <Card.Title>{title}</Card.Title>
+                <Card.Subtitle>{description}</Card.Subtitle>
+                <Card.Text>{when_date}</Card.Text>
+              </div>
+              <div className='ms-auto px-3'>
+                {isEditable && (
+                  <Button
+                    variant='outline-info'
+                    size='sm'
+                    onClick={() => {
+                      setIsEditing(true);
+                    }}
+                  >
+                    편집
+                  </Button>
+                )}
+              </div>
+            </Stack>
+          </Card.Body>
+        </Card>
       )}
     </>
   );
