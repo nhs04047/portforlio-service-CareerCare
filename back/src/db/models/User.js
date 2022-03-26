@@ -1,3 +1,21 @@
+/*
+* user 정보 모델, user 서비스(userService.js)에서의 필요한 데이터 처리 관련 코드 작성
+* 
+* <user list를 조건에 맞게 정렬 반환 구현>
+* <user id로 프로필 이미지 이름 반환 구현>
+* 작성자 : 김보현
+* 작성일 : 2022.03.25
+* user id로 user 스키마의 프로필 이미지 속성 값을 반환
+* sorting option에 맞게 user 목록을 정렬 후 user 서비스로 반환
+*
+* <회원 탈퇴 기능 구현>
+* <비밀번호 변경 기능 구현>
+* 작성자 : 장정민
+* 작성일 : 2022.03.25
+* 회원 정보와 그에 상응하는 데이터 모두 삭제
+* 임시 비밀번호 반환 및 변경
+*/
+
 import { UserModel } from "../schemas/user";
 import { AwardModel } from '../schemas/award';
 import { CertificateModel } from '../schemas/certificate';
@@ -6,8 +24,8 @@ import { ProjectModel } from '../schemas/project';
 
 class User {
   /*
-  create()
-  user data 생성
+  * create()
+  * user data 생성
   */
   static create({ newUser }) {
     return UserModel.create(newUser);
@@ -15,24 +33,24 @@ class User {
   }
 
   /*
-  findByEmail()
-  user email로 user정보 찾기
+  * findByEmail()
+  * user email로 user정보 찾기
   */
   static findByEmail({ email }) {
     return UserModel.findOne({ email });
   }
 
   /*
-  findById()
-  user id로 user정보 찾기
+  * findById()
+  * user id로 user정보 찾기
   */
   static findById({ user_id }) {
     return UserModel.findOne({ id: user_id });
   }
 
   /*
-  findManyByName()
-  user 이름름으로 user정보 찾기 - 정렬{ asc, desc, likes, updatedAt}
+  * findManyByName()
+  * user 이름름으로 user정보 찾기 - 정렬{ asc, desc, likes, updatedAt}
   */
   static async findManyByName({ user_name, sortingOption }) {
     let users = [];
@@ -58,16 +76,16 @@ class User {
   }
 
   /*
-  findAll()
-  모든 user정보 가져오기
+  * findAll()
+  * 모든 user정보 가져오기
   */
   static findAll() {
     return UserModel.find({});
   }
 
   /*
-  findProfileImgById()
-  user id로 프로필 이미지 이름 찾기
+  * findProfileImgById()
+  * user id로 프로필 이미지 이름 찾기
   */
   static async findProfileImgById({ user_id }) {
     const user = await UserModel.findOne({ id: user_id });
@@ -75,8 +93,8 @@ class User {
   }
 
   /*
-  update()
-  user 정보 update
+  * update()
+  * user 정보 update
   */
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
@@ -92,8 +110,8 @@ class User {
   }
 
   /*
-  updateLikeStatus()
-  유저의 좋아요 수와 status 갱신하기 위한 함수
+  * updateLikeStatus()
+  * 유저의 좋아요 수와 status 갱신하기 위한 함수
   */
   static async updateLikeStatus({ user_id, fieldToUpdate, value }) {
     const filter = { id: user_id };
@@ -110,30 +128,30 @@ class User {
 
 
   /*
-  updateLikeListPush()
-  좋아요를 클릭한 사람의 이름 추가
+  * updateLikeListPush()
+  * 좋아요를 클릭한 사람의 이름 추가
   */
-  // static async updateLikeListPush({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-  //     $push: { liked: { name: value } }
-  //   });
-  //   return updatedUser;
-  // }
+  static async updateLikeListPush({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $push: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
 
   /*
   updateLikeListDel()
   좋아요를 클릭한 사람의 이름 삭제
   */
-  // static async updateLikeListDel({ user_id, value }) {
-  //   const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
-  //     $pull: { liked: { name: value } }
-  //   });
-  //   return updatedUser;
-  // }
+  static async updateLikeListDel({ user_id, value }) {
+    const updatedUser = await UserModel.findOneAndUpdate({ id: user_id }, {
+      $pull: { liked: { name: value } }
+    });
+    return updatedUser;
+  }
 
   /*
-  updatePassword()
-  email 필드로 찾은 데이터의 password만 갱신하는 함수
+  * updatePassword()
+  * email 필드로 찾은 데이터의 password만 갱신하는 함수
   */
   static async updatePassword({ email, fieldToUpdate, hashedNewPassword }) {
     const filter = { email };
@@ -149,8 +167,8 @@ class User {
   }
 
   /*
-  findPasswordById()
-  해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
+  * findPasswordById()
+  * 해당 user_id에 맞는 객체를 찾고 암호화 처리된 패스워드를 넘겨준다.
   */
   static async findPasswordById({ user_id }) {
     const user = await UserModel.findOne({ id: user_id });
@@ -158,8 +176,8 @@ class User {
   }
 
   /*
-  deleteOneUser()
-  user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
+  * deleteOneUser()
+  * user 컬렉션에서 user_id와 매칭되는 user 정보 하나를 삭제하는 함수
   */
   static async deleteOneUser({ user_id }) {
     const user = await UserModel.deleteOne({ id: user_id });
@@ -168,8 +186,8 @@ class User {
 
 
   /*
-  deleteAllById()
-  각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
+  * deleteAllById()
+  * 각 컬렉션에서 user_id와 매칭되는 모든 documents를 삭제하는 함수
   */
   static async deleteAllById({ user_id }) {
     await AwardModel.deleteMany({ user_id });
@@ -179,8 +197,8 @@ class User {
   }
 
   /*
-  createRandomPassword()
-  임의 비밀번호 생성 함수
+  * createRandomPassword()
+  * 임의 비밀번호 생성 함수
   */
   static async createRandomPassword() {
     const randStr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',

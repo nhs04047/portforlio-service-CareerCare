@@ -198,7 +198,7 @@ class userAuthService {
   * setProfileImg()
   * 프로필 이미지 변경 (이미지 경로 전송)
   */
-  static async setProfileImg({ user_id, toUpdate }) {
+  static async setProfileImg({ user_id, toUpdate }, hostName) {
 
     let user = await User.findById({ user_id });
 
@@ -215,19 +215,17 @@ class userAuthService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
-    const myKeys = Object.keys(toUpdate);
-    for (let i = 0; i < myKeys.length; i++) {
-      if (toUpdate[myKeys[i]] !== null) {
-        const fieldToUpdate = myKeys[i];
-        const newValue = toUpdate[myKeys[i]];
-        user = await User.update({
-          user_id,
-          fieldToUpdate,
-          newValue,
-        });
-      }
-    }
-    return user;
+    const fieldToUpdate = "profileImg";
+    const newValue = toUpdate;
+    user = await User.update({
+      user_id,
+      fieldToUpdate,
+      newValue,
+    });
+
+    const newUser = utile.addImgPath(user, hostName);
+
+    return newUser;
   };
 
   /*
@@ -274,18 +272,18 @@ class userAuthService {
     return user;
   }
 
-    // // 좋아요를 받은 name 객체 배열 반환
-    // static async getlikeList({userId}) {
-    //   // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
-    //   const currentUser = await User.findById({ user_id: userId });
+    // 좋아요를 받은 name 객체 배열 반환
+    static async getlikeList({userId}) {
+      // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
+      const currentUser = await User.findById({ user_id: userId });
 
-    //   if (!currentUser) {
-    //     const errorMessage =
-    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
-    //     return { errorMessage };
-    //   }
-    //   return currentUser
-    // }
+      if (!currentUser) {
+        const errorMessage =
+          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        return { errorMessage };
+      }
+      return currentUser
+    }
     
   // * deleteUserAllInfo()
   // * user의 학력, 수상, 자격증 등 모든 data 삭제
@@ -336,10 +334,10 @@ class userAuthService {
         fieldToUpdate,
         value : newStatus,
       });
-      // updatedUser = await User.updateLikeListDel({
-      //   user_id : otherUserId,
-      //   value : newLike,
-      // });
+      updatedUser = await User.updateLikeListDel({
+        user_id : otherUserId,
+        value : newLike,
+      });
       await Like.deleteById({ isLiked });
       updatedLike = { status: false, likeCount: updatedUser.likeCount };
     } // null 이라면 -> likeCount 1증가-> status는 True -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 생성
@@ -359,10 +357,10 @@ class userAuthService {
         fieldToUpdate,
         value : newStatus,
       });
-      // updatedUser = await User.updateLikeListPush({
-      //   user_id : otherUserId,
-      //   value : newLike,
-      // });
+      updatedUser = await User.updateLikeListPush({
+        user_id : otherUserId,
+        value : newLike,
+      });
       await Like.create({ currentUser, otherUser });
       updatedLike = { status: true, likeCount: updatedUser.likeCount };
     }
