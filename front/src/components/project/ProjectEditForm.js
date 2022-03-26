@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 function ProjectEditForm({ project, setIsEditing, setProject }) {
-  // useState로 title, description, from_date, to_date 생성
+  // useState로 title, description, from_date, to_date, isPrivate 생성
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
   const [projectLink, setProjectLink] = useState(project.projectLink);

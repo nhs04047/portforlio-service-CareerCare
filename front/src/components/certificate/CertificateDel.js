@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
+/**
+ * Certificate 삭제 component
+ */
 function CertificateDel({ certificate, setCertificate }) {
   const [show, setShow] = useState(false);
 

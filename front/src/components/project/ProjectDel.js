@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Api from '../../api';
 
+/**
+ * Project 삭제 컴포넌트
+ */
 function ProjectDel({ project, setProject }) {
   const [show, setShow] = useState(false);
 
@@ -16,7 +19,7 @@ function ProjectDel({ project, setProject }) {
     const res = await Api.get('projectlist', user_id);
     const updatedProject = res.data;
 
-    await setProject(updatedProject);
+    setProject(updatedProject);
     setShow(false);
   };
 

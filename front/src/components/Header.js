@@ -38,16 +38,16 @@ function Header() {
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav activeKey={location.pathname} className='ms-auto'>
             {isLogin && (
-              <Nav.Item id='my-nav-item'>
+              <Nav.Item id='my-nav-item' className='mx-1 px-1'>
                 <Nav.Link onClick={() => navigate('/search')}>
-                  유저검색
+                  유저 검색
                 </Nav.Link>
               </Nav.Item>
             )}
-            <Nav.Item id='my-nav-item'>
+            <Nav.Item id='my-nav-item' className='mx-1 px-1'>
               <Nav.Link onClick={() => navigate('/')}>나의 페이지</Nav.Link>
             </Nav.Item>
-            <Nav.Item id='my-nav-item'>
+            <Nav.Item id='my-nav-item' className='mx-1 px-1'>
               <Nav.Link onClick={() => navigate('/network')}>네트워크</Nav.Link>
             </Nav.Item>
 

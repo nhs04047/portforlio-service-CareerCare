@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
 import * as Api from '../../api';
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 function EducationEditForm({ setEdit, setEducations, education }) {
   //학교 이름, 전공, 졸업 정보 상태 세팅

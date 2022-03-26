@@ -1,7 +1,7 @@
 * {
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
-a {
+#cardLink {
   color: #000 !important;
   text-decoration: none !important;
 }
@@ -12,11 +12,8 @@ body {
 
 #networkUser {
   background-color: #ffffff;
-  /* width: 20rem !important; */
   height: 23rem !important;
-  /* margin: 16px;s */
-  /* margin-bottom: 15px !important; */
-  /* padding: 0 !important; */
+
   border: 0;
   border-radius: 7px;
   cursor: pointer;

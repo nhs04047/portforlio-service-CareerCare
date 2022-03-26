@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
 import * as Api from '../../api';
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 // 수상이력 추가 컴포넌트 - 작성자: 이영우
 // 기능 - user id를 api에 요청, 입력값을 바탕으로 award 카드를 추가합니다.

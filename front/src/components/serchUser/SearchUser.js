@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Container, Row, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Form, Container, Row } from 'react-bootstrap';
 import UserCard from '../user/UserCard';
 import Network from '../user/Network';
 import * as Api from '../../api';
@@ -21,8 +21,8 @@ function SearchUser() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchOption(e.target.value)
-  }
+    setSearchOption(e.target.value);
+  };
 
   return (
     <>
@@ -42,16 +42,21 @@ function SearchUser() {
         </Form.Group>
       </Form>
 
-        <select align="end" title="정렬" id="dropdown-menu-align-end" onChange={handleChange}>
-          <option value="default">기본</option>
-          <option value="asc">이름 (오름차순)</option>
-          <option value="desc">이름 (내림차순)</option>
-          <option value="likes">좋아요</option>
-          <option value="updatedAt">최근 업데이트</option>
-        </select>
+      <select
+        align='end'
+        title='정렬'
+        id='dropdown-menu-align-end'
+        onChange={handleChange}
+      >
+        <option value='default'>기본</option>
+        <option value='asc'>이름 (오름차순)</option>
+        <option value='desc'>이름 (내림차순)</option>
+        <option value='likes'>좋아요</option>
+        <option value='updatedAt'>최근 업데이트</option>
+      </select>
 
       {searchUI ? (
-        <Container fluid>
+        <Container>
           <Row xs='auto' className='jusify-content-center'>
             {filtered.map((user) => (
               <UserCard key={user.id} user={user} isNetwork />
