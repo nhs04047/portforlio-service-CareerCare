@@ -1,15 +1,20 @@
 /*
- * 2022-03-22 user 탈퇴 기능 구현 
- * - user 데이터 삭제 : 완료
- * - user_id에 따른 mvp 정보 삭제 구현 : 완료 
- * 작성자 : 장정민
- * 
- * <user 검색, 프로필 이미지 변경 구현> 
- * 작성자 : 김보현
- * 일자 : 2022-03-25
- * 
- */
-import { User, Like } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+* User MVP 서비스
+* 
+* <탈퇴 기능 구현 >
+* 작성자 : 장정민
+* 작성일 : 2022.03.22
+* user 데이터 삭제
+* user_id에 따른 mvp 정보 삭제 구현
+* 
+* 
+* <user 검색 기능 구현> <프로필 이미지 변경 구현> 
+* 작성자 : 김보현
+* 작성일 : 2022.03.25
+* 
+*/
+
+import { User, Like } from '../db';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
@@ -139,6 +144,7 @@ class userAuthService {
 
     return newUser;
   }
+  
   /*
   * getUserInfo()
   * user id를 이용한 user 정보 반환
@@ -282,7 +288,10 @@ class userAuthService {
           '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
         return { errorMessage };
       }
+<<<<<<< HEAD
       console.log(currentUser);
+=======
+>>>>>>> 90dcefde30ddb84414d537600cd9de4da16bb70a
       return currentUser
     }
     

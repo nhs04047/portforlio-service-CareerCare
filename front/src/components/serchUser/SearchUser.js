@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Container, Row, DropdownButton, Dropdown } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Form, Container, Row } from 'react-bootstrap';
 import UserCard from '../user/UserCard';
 import Network from '../user/Network';
 import * as Api from '../../api';
@@ -9,20 +9,30 @@ function SearchUser() {
   const [searchOption, setSearchOption] = useState('default');
   const [filtered, setFiltered] = useState([]);
   const [searchUI, setSearchUI] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSearched(true);
+  };
 
+  const handleSearch = useCallback(async () => {
+    if (!searchUser || !isSearched) {
+      return;
+    }
     const res = await Api.get(`userlist/search/${searchUser}/${searchOption}`);
     setFiltered(res.data);
-    setSerachUser('');
     setSearchUI(true);
-  };
+  }, [isSearched, searchOption, searchUser]);
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchOption(e.target.value)
-  }
+    setSearchOption(e.target.value);
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch, searchOption, isSearched]);
 
   return (
     <>
@@ -36,22 +46,32 @@ function SearchUser() {
             type='text'
             autoComplete='on'
             placeholder='유저 이름을 입력하세요.'
-            onChange={(e) => setSerachUser(e.target.value)}
+            onChange={(e) => {
+              setSerachUser(e.target.value);
+              setIsSearched(false);
+            }}
             value={searchUser}
           />
         </Form.Group>
       </Form>
 
-        <select align="end" title="정렬" id="dropdown-menu-align-end" onChange={handleChange}>
-          <option value="default">기본</option>
-          <option value="asc">이름 (오름차순)</option>
-          <option value="desc">이름 (내림차순)</option>
-          <option value="likes">좋아요</option>
-          <option value="updatedAt">최근 업데이트</option>
-        </select>
+      <select
+        align='end'
+        title='정렬'
+        id='dropdown-menu-align-end'
+        className='ms-5'
+        style={{ position: 'absolute', top: '20%', left: '12%' }}
+        onChange={handleChange}
+      >
+        <option value='default'>기본</option>
+        <option value='asc'>이름 (오름차순)</option>
+        <option value='desc'>이름 (내림차순)</option>
+        <option value='likes'>좋아요</option>
+        <option value='updatedAt'>최근 업데이트</option>
+      </select>
 
       {searchUI ? (
-        <Container fluid>
+        <Container>
           <Row xs='auto' className='jusify-content-center'>
             {filtered.map((user) => (
               <UserCard key={user.id} user={user} isNetwork />

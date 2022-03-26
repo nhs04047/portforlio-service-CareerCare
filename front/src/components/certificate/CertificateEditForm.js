@@ -3,7 +3,7 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 /**작성자 - 이예슬
  **기능 - user id를 api에 요청, 입력값을 바탕으로 certificate 카드 수정

@@ -1,3 +1,9 @@
+/*
+* <임시 비밀번호 이메일 발송 모듈>
+* 작성자 : 장정민
+* 작성일 : 2022.03.24
+*/
+
 import nodemailer from 'nodemailer';
 
 const smtpTransport = nodemailer.createTransport({

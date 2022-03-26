@@ -3,7 +3,7 @@ import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
 
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 /**작성자 - 이예슬
  ** certificate 추가 컴포넌트

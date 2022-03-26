@@ -1,3 +1,8 @@
+/*
+* <user 정보 Schema 정의>
+* 기본 제공
+*
+*/
 import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
 

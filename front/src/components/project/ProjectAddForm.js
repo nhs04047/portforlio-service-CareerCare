@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import * as Api from '../../api';
-import PrivateCheck from '../PrivateCheck';
+import PrivateCheck from '../private/PrivateCheck';
 
 /**
  * isAdding이 true일 경우 활성화되는 component
@@ -21,7 +21,6 @@ function ProjectAddForm({ portfolioOwnerId, setIsAdding, setProject }) {
 
   //new Date()를 통해 얻어지는 값이 현재시간을 포함해서 날짜만 얻기 위해 작성한 함수
   function filterDate(d) {
-    // return toLocaleString(d);
     return `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${(
       '0' + d.getDate()
     ).slice(-2)}`;

@@ -60,7 +60,7 @@ function Portfolio() {
   // 컴포넌트를 불러와서 페이지에 표시해줌.
   return (
     <Container>
-      <Row>
+      <Row className='mb-3 py-3'>
         <Col md='3' lg='3'>
           <User
             portfolioOwnerId={portfolioOwner.id}
@@ -93,7 +93,7 @@ function Portfolio() {
           />
           <div className='mb-2' />
           <Certificate
-            className='my-5'
+            className='my-5 py-2'
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />

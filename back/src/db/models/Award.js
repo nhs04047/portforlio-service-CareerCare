@@ -11,6 +11,7 @@
 * 작성일 : 2022-03-23
 * findManyByAnotherUserId() : 현재 로그인한 유저아이디와 열람하려는 페이지의 유저아이디가 다른 경우 호출하는 함수
 */
+
 import {AwardModel} from "../schemas/award";
 
 class Award {
