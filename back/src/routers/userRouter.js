@@ -404,7 +404,7 @@ userAuthRouter.get("/likelist/:id", login_required, async function (req, res, ne
       userId,
     });
     console.log(updatedData.liked);
-    res.status(200).json(updatedData.liked);
+    res.status(200).json(updatedData);
   } catch (error) {
     next(error);
   }

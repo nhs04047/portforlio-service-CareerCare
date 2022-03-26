@@ -272,18 +272,18 @@ class userAuthService {
     return user;
   }
 
-    // // 좋아요를 받은 name 객체 배열 반환
-    // static async getlikeList({userId}) {
-    //   // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
-    //   const currentUser = await User.findById({ user_id: userId });
+    // 좋아요를 받은 name 객체 배열 반환
+    static async getlikeList({userId}) {
+      // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
+      const currentUser = await User.findById({ user_id: userId });
 
-    //   if (!currentUser) {
-    //     const errorMessage =
-    //       '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
-    //     return { errorMessage };
-    //   }
-    //   return currentUser
-    // }
+      if (!currentUser) {
+        const errorMessage =
+          '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        return { errorMessage };
+      }
+      return currentUser
+    }
     
   // * deleteUserAllInfo()
   // * user의 학력, 수상, 자격증 등 모든 data 삭제
