@@ -24,10 +24,10 @@ class Like {
     });
     return like;
   }
-  
+  // 좋아요 버튼을 클릭한 user와 좋아요를 받은 user의 like 객체 삭제
   static async deleteById({ isLiked }) {
     const deleteResult = await LikeModel.deleteOne({
-      _id: isLiked._id,
+      _id : isLiked._id,
     });
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
