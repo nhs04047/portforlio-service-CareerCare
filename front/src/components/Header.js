@@ -31,7 +31,7 @@ function Header() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container className='my-2' id='my-nav-container'>
-        <Navbar.Brand className='my-2' id='logo'>
+        <Navbar.Brand className='my-2' id='logo' href='/'>
           <h2>careerCare</h2>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
