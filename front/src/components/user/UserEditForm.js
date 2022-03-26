@@ -9,6 +9,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+  const [profileImgPath, setProfileImgPath] = useState(user.profileImgPath);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       name,
       email,
       description,
+      // profileImgPath,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;

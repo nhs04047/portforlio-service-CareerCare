@@ -11,6 +11,7 @@ import Educations from './education/Educations';
 import Project from './project/Project';
 import Certificate from './certificate/Certificate';
 import UserLike from './user/UserLike';
+import UserLikeList from './user/UserLikeList';
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -66,6 +67,10 @@ function Portfolio() {
             isEditable={portfolioOwner.id === userState.user?.id}
           />
           <UserLike
+            portfolioOwnerId={portfolioOwner.id}
+            user={userState.user?.id}
+          />
+          <UserLikeList
             portfolioOwnerId={portfolioOwner.id}
             user={userState.user?.id}
           />
