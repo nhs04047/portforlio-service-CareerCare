@@ -52,7 +52,7 @@ function EditProfile({ user, setUser, setIsEditProfile, portfolioOwnerId }) {
     setIsEditProfile(false);
   };
   return (
-    <Card className='mb-2 ms-3'>
+    <Card className='my-3'>
       <Card.Body>
         <form>
           <label htmlFor='img'></label>
