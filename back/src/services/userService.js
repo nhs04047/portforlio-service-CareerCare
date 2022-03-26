@@ -288,10 +288,6 @@ class userAuthService {
           '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
         return { errorMessage };
       }
-<<<<<<< HEAD
-      console.log(currentUser);
-=======
->>>>>>> 90dcefde30ddb84414d537600cd9de4da16bb70a
       return currentUser
     }
     
