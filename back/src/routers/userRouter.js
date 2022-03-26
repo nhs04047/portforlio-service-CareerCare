@@ -19,7 +19,7 @@ import fs from 'fs'
 import { login_required } from '../middlewares/login_required';
 import {upload} from '../middlewares/uploadProfileImg';
 import { userAuthService } from '../services/userService';
-import {smtpTransport} from './utile/smtpTransport';
+import {smtpTransport} from './smtpTransport';
 
 const userAuthRouter = Router();
 
