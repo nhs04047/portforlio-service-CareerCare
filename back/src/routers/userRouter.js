@@ -249,12 +249,9 @@ userAuthRouter.put(
 
       const hostName = req.headers.host;
 
-      const profileImgPath = "http://" + hostName + "/profileImg/" + profileImg
-      const toUpdate = {    // 프로필 이미지 이름과 이미지 경로를 서비스로 전송
-        profileImg,
-        profileImgPath
-      };
-      const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate});
+      const toUpdate = profileImg
+      
+      const uploadedImg = await userAuthService.setProfileImg({user_id, toUpdate}, hostName);
       
       res.status(200).json(uploadedImg);
     }catch(error){
