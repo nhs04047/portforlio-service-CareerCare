@@ -19,6 +19,10 @@
 
 - 2022.03.15 ~ 2022.03.26
 
+## 시연 영상
+
+<a href="https://youtu.be/l4DEORatjfg" target="_blank" rel="noreferrer noopener"><img src="https://user-images.githubusercontent.com/71453094/184404584-064a1427-15f0-49d1-9023-5fdfae1640e6.png"/></a>
+
 ## 주요 사용 기술
 
 1. 프론트엔드
