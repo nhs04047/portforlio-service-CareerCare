@@ -246,11 +246,8 @@ userAuthRouter.put(
       imgResizing(req.file.path);
 
       const user_id = req.params.id;
-      const profileImg = req.file.filename;
-
+      const toUpdate = req.file.filename;
       const hostName = req.headers.host;
-
-      const toUpdate = profileImg;
 
       const uploadedImg = await userAuthService.setProfileImg(
         { user_id, toUpdate },
