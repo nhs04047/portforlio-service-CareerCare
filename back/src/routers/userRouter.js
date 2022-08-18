@@ -12,25 +12,23 @@
  *
  */
 
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import sharp from 'sharp';
-import fs from 'fs';
-import { login_required } from '../middlewares/login_required';
-import { upload } from '../middlewares/uploadProfileImg';
-import { userAuthService } from '../services/userService';
-import { smtpTransport } from './smtpTransport';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { upload } from "../middlewares/uploadProfileImg";
+import { userAuthService } from "../services/userService";
+import { imgResizing, smtpTransport } from "../utils";
 
 const userAuthRouter = Router();
 
 /*
  *회원가입 컨트롤러
  */
-userAuthRouter.post('/user/register', async function (req, res, next) {
+userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
@@ -57,7 +55,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
 /*
  * 로그인 컴포넌트
  */
-userAuthRouter.post('/user/login', async function (req, res, next) {
+userAuthRouter.post("/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const { email, password } = req.body;
@@ -79,7 +77,7 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
  * user 리스트 반환 컴포넌트
  */
 userAuthRouter.get(
-  '/userlist',
+  "/userlist",
   login_required,
   async function (req, res, next) {
     try {
@@ -98,7 +96,7 @@ userAuthRouter.get(
  * user 이름으로 user 리스트 검색 컴포넌트
  */
 userAuthRouter.get(
-  '/userlist/search/:name/:option',
+  "/userlist/search/:name/:option",
   login_required,
   async function (req, res, next) {
     try {
@@ -125,7 +123,7 @@ userAuthRouter.get(
  * 사용자 정보 반환 컴포넌트
  */
 userAuthRouter.get(
-  '/user/current',
+  "/user/current",
   login_required,
   async function (req, res, next) {
     try {
@@ -150,7 +148,7 @@ userAuthRouter.get(
  * user 정보 수정 컴포넌트
  */
 userAuthRouter.put(
-  '/users/:id',
+  "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -187,7 +185,7 @@ userAuthRouter.put(
  * user 정보 반환 컴포넌트
  */
 userAuthRouter.get(
-  '/users/:id',
+  "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -214,7 +212,7 @@ userAuthRouter.get(
  * 클라이언트로부터 현재 비밀번호와 변경할 비밀번호를 입력 받아 userAuthService로 넘겨주고 반환 값으로 errormessage(해당 id 없을 때)/false(현재 비밀번호가 일치하지 않을 때)/true(일치하고 비밀번호가 잘 변경되었을 때)를 return 해준다.
  */
 userAuthRouter.put(
-  '/users/password/:id',
+  "/users/password/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -240,21 +238,12 @@ userAuthRouter.put(
  * user 프로필 이미지 리사이징 후 변경 컴포넌트
  */
 userAuthRouter.put(
-  '/users/profileImg/:id',
+  "/users/profileImg/:id",
   login_required,
-  upload.single('img'),
+  upload.single("img"),
   async function (req, res, next) {
     try {
-      sharp(req.file.path) // 압축할 이미지 경로
-        .resize({ width: 600 }) // 비율을 유지하며 가로 크기 줄이기
-        .withMetadata() // 이미지의 exif데이터 유지
-        .toBuffer((err, buffer) => {
-          if (err) throw err;
-          // 압축된 파일 새로 저장(덮어씌우기)
-          fs.writeFile(req.file.path, buffer, (err) => {
-            if (err) throw err;
-          });
-        });
+      imgResizing(req.file.path);
 
       const user_id = req.params.id;
       const profileImg = req.file.filename;
@@ -279,7 +268,7 @@ userAuthRouter.put(
  * user 프로필 사진 불러오기 컴포넌트
  */
 userAuthRouter.get(
-  '/users/profileImg/:id',
+  "/users/profileImg/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -301,7 +290,7 @@ userAuthRouter.get(
  * user 삭제 컴포넌트
  */
 userAuthRouter.delete(
-  '/users/:id',
+  "/users/:id",
   //login_required,
   async function (req, res, next) {
     try {
@@ -322,7 +311,7 @@ userAuthRouter.delete(
 /*
  * password 변경 컴포넌트
  */
-userAuthRouter.post('/users/newpassword', async function (req, res, next) {
+userAuthRouter.post("/users/newpassword", async function (req, res, next) {
   try {
     //form에서 받아온 이메일 저장
     const email = req.body.idEmail;
@@ -339,7 +328,7 @@ userAuthRouter.post('/users/newpassword', async function (req, res, next) {
 
     //메일옵션 => 아래 내용이 수신됨
     const mailOption = {
-      from: 'eliceTest@gmail.com',
+      from: "eliceTest@gmail.com",
       to: email,
       subject: `[포트폴리오 웹] ${name}님 임시 비밀번호가 생성되었습니다.`,
       html: `
@@ -350,18 +339,18 @@ userAuthRouter.post('/users/newpassword', async function (req, res, next) {
 
     smtpTransport.sendMail(mailOption, (err, res) => {
       if (err) {
-        console.log('err', err);
+        console.log("err", err);
       } else {
-        console.log('Message send :' + res);
+        console.log("Message send :" + res);
       }
       smtpTransport.close();
     });
 
     res.status(200).send({
-      result: 'ok',
+      result: "ok",
     });
   } catch (err) {
-    console.log('err', err);
+    console.log("err", err);
   }
 });
 
@@ -370,7 +359,7 @@ userAuthRouter.post('/users/newpassword', async function (req, res, next) {
  * 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
  */
 userAuthRouter.put(
-  '/like/:id',
+  "/like/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -397,7 +386,7 @@ userAuthRouter.put(
  */
 
 userAuthRouter.get(
-  '/like/:id',
+  "/like/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -421,7 +410,7 @@ userAuthRouter.get(
  * 현재 상태를 나타내는 status와 likeCount 반환
  */
 userAuthRouter.get(
-  '/likelist/:id',
+  "/likelist/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -438,7 +427,7 @@ userAuthRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
+userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(

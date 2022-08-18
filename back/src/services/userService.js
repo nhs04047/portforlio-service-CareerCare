@@ -14,12 +14,12 @@
  *
  */
 
-import { User, Like } from '../db';
-import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
-import jwt from 'jsonwebtoken';
-import fs from 'fs';
-import { utile } from './utile';
+import { User, Like } from "../db";
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
+import fs from "fs";
+import { addImgPath, addImgPathArr } from "../utils";
 
 class userAuthService {
   /*
@@ -31,7 +31,7 @@ class userAuthService {
     const user = await User.findByEmail({ email });
     if (user) {
       const errorMessage =
-        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.';
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
       return { errorMessage };
     }
 
@@ -58,7 +58,7 @@ class userAuthService {
     const user = await User.findByEmail({ email });
     if (!user) {
       const errorMessage =
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -70,12 +70,12 @@ class userAuthService {
     );
     if (!isPasswordCorrect) {
       const errorMessage =
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.';
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
+    const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
     const token = jwt.sign({ user_id: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
@@ -102,7 +102,7 @@ class userAuthService {
   static async getUsers({ hostName }) {
     const users = await User.findAll();
     // 프로필 사진 URL 함께 반환
-    const newUsers = utile.addImgPathArr(users, hostName);
+    const newUsers = addImgPathArr(users, hostName);
 
     return newUsers;
   }
@@ -117,7 +117,7 @@ class userAuthService {
       sortingOption,
     });
     // 프로필 사진 URL 함께 반환
-    const newSearchedUsers = utile.addImgPathArr(searchedUsers, hostName);
+    const newSearchedUsers = addImgPathArr(searchedUsers, hostName);
 
     return newSearchedUsers;
   }
@@ -131,7 +131,7 @@ class userAuthService {
     let user = await User.findById({ user_id });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
     const myKeys = Object.keys(toUpdate);
@@ -143,7 +143,7 @@ class userAuthService {
       }
     }
     // 프로필 사진 URL 함께 반환
-    const newUser = utile.addImgPath(user, hostName);
+    const newUser = addImgPath(user, hostName);
 
     return newUser;
   }
@@ -158,11 +158,11 @@ class userAuthService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
     // 프로필 사진 URL 함께 반환
-    const newUser = utile.addImgPath(user, hostName);
+    const newUser = addImgPath(user, hostName);
 
     return newUser;
   }
@@ -182,7 +182,7 @@ class userAuthService {
 
     // 유저가 없을 시 에러메시지 반환한다.
     if (!user) {
-      const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
     // 입력한 현재 비밀번호가 다르면 false 반환한다.
@@ -192,7 +192,7 @@ class userAuthService {
 
     // 해당 id 유저의 비밀번호를 변경할려는 비밀번호에 hash를 적용하여 db에 모델에 넘겨준다.
     if (toUpdate.newPw) {
-      const fieldToUpdate = 'password';
+      const fieldToUpdate = "password";
       // bcrypt.hash 적용
       const hashednewPassword = await bcrypt.hash(toUpdate.newPw, 10);
 
@@ -209,7 +209,7 @@ class userAuthService {
   static async setProfileImg({ user_id, toUpdate }, hostName) {
     let user = await User.findById({ user_id });
 
-    if (user.profileImg !== 'default_img/default_profile_img.jpg')
+    if (user.profileImg !== "default_img/default_profile_img.jpg")
       // 기존 프로필 사진 삭제
       fs.unlink(`./uploads/profile_img/${user.profileImg}`, (error) => {
         if (error) {
@@ -219,10 +219,10 @@ class userAuthService {
 
     if (!user) {
       const errorMessage =
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-    const fieldToUpdate = 'profileImg';
+    const fieldToUpdate = "profileImg";
     const newValue = toUpdate;
     user = await User.update({
       user_id,
@@ -230,7 +230,7 @@ class userAuthService {
       newValue,
     });
 
-    const newUser = utile.addImgPath(user, hostName);
+    const newUser = addImgPath(user, hostName);
 
     return newUser;
   }
@@ -244,17 +244,17 @@ class userAuthService {
 
     if (!user) {
       const errorMessage =
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
     const profileImg = await User.findProfileImgById({ user_id });
     if (!profileImg) {
-      const errorMessage = '프로필 이미지가 없습니다.';
+      const errorMessage = "프로필 이미지가 없습니다.";
       return { errorMessage };
     }
     // 프로필 사진 URL 함께 첨부
-    const profileImgURL = 'http://' + hostName + '/profileImg/' + profileImg;
+    const profileImgURL = "http://" + hostName + "/profileImg/" + profileImg;
     console.log(profileImgURL);
 
     return profileImgURL;
@@ -269,7 +269,7 @@ class userAuthService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
     return user;
@@ -282,7 +282,7 @@ class userAuthService {
 
     if (!currentUser) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
     return currentUser;
@@ -306,13 +306,13 @@ class userAuthService {
 
     if (!currentUser) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
     if (!otherUser) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -323,7 +323,7 @@ class userAuthService {
 
     // 좋아요 객체가 있다면 -> likeCount 1감소(왜? 좋아요 버튼을 클릭한 시점에 이미 좋아요 관계니깐 좋아요 취소라는 의미) -> status는 false -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 삭제
     if (isLiked) {
-      let fieldToUpdate = 'likeCount';
+      let fieldToUpdate = "likeCount";
       let newValue = otherUser.likeCount - 1;
       if (newValue < 0) {
         newValue = 0;
@@ -335,7 +335,7 @@ class userAuthService {
         fieldToUpdate,
         value: newValue,
       });
-      fieldToUpdate = 'status';
+      fieldToUpdate = "status";
       updatedUser = await User.updateLikeStatus({
         user_id: otherUserId,
         fieldToUpdate,
@@ -349,7 +349,7 @@ class userAuthService {
       updatedLike = { status: false, likeCount: updatedUser.likeCount };
     } // null 이라면 -> likeCount 1증가-> status는 True -> 좋아요를 받은 user 정보 갱신 -> 두 유저의 좋아요 객체 생성
     else {
-      let fieldToUpdate = 'likeCount';
+      let fieldToUpdate = "likeCount";
       let newValue = otherUser.likeCount + 1;
       if (newValue < 0) {
         newValue = 0;
@@ -361,7 +361,7 @@ class userAuthService {
         fieldToUpdate,
         value: newValue,
       });
-      fieldToUpdate = 'status';
+      fieldToUpdate = "status";
       updatedUser = await User.updateLikeStatus({
         user_id: otherUserId,
         fieldToUpdate,
@@ -392,13 +392,13 @@ class userAuthService {
 
     if (!currentUser) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
     if (!otherUser) {
       const errorMessage =
-        '해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -421,7 +421,7 @@ class userAuthService {
     //email 정보와 매칭되는 유저가 없으면 에러메세지 리턴
     if (!user) {
       const errorMessage =
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -429,7 +429,7 @@ class userAuthService {
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
     //업데이트할 field를 password로 설정
-    const fieldToUpdate = 'password';
+    const fieldToUpdate = "password";
     //updatedUser에 password를 업데이트한 user정보 저장
     const updatedUser = await User.updatePassword({
       email,

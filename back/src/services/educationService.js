@@ -12,8 +12,8 @@
  * getEducationList 함수 : 읽기 권한을 구분하기 위해 현재 로그인한 currentUserId와 params에서 받아오는 user_id의 데이터 반환함수를 분리함.
  */
 
-import { Education } from '../db';
-import { v4 as uuidv4 } from 'uuid';
+import { Education } from "../db";
+import { v4 as uuidv4 } from "uuid";
 
 class EducationService {
   /*
@@ -43,7 +43,7 @@ class EducationService {
   static async getEducation({ educationId }) {
     const education = await Education.findOneById({ educationId });
     if (!education) {
-      const errorMessage = '해당 id를 가진 학력 정보는 없습니다.';
+      const errorMessage = "해당 id를 가진 학력 정보는 없습니다.";
       return { errorMessage };
     }
     return education;
@@ -72,7 +72,7 @@ class EducationService {
     let education = await Education.findOneById({ educationId });
 
     if (!education) {
-      const errorMessage = '해당 id를 가진 학력 정보는 없습니다.';
+      const errorMessage = "해당 id를 가진 학력 정보는 없습니다.";
       return { errorMessage };
     }
 
@@ -101,11 +101,11 @@ class EducationService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!isDataDeleted) {
-      const errorMessage = '해당 id를 가진 데이터는 없습니다.';
+      const errorMessage = "해당 id를 가진 데이터는 없습니다.";
       return { errorMessage };
     }
 
-    return { status: 'ok' };
+    return { status: "ok" };
   }
 }
 
